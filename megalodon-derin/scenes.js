@@ -189,7 +189,7 @@
   add(L(2) - 0.2, (ctx, t, lt) => {
     oceanBg(ctx, -2000, 0.65, { t });
     snow(ctx, t, 26, 0.25);
-    const mpx = 52, x0 = 60, len = 18 * mpx; // 18 m drawn
+    const mpx = 44, x0 = 80, len = 18 * mpx; // 18 m drawn
     const sc = len / 1000, cam = 1 + 0.03 * seg(t, L(2), L(4));
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(cam, cam); ctx.translate(-W / 2, -H / 2);
     // era counter first (line 2)
@@ -210,7 +210,7 @@
       ctx.fillStyle = K.lime; ctx.fillRect(x0 + 15 * mpx, y - 6, 5 * mpx * seg(t, L(3) + 0.8, L(3) + 1.6), 16);
       label(ctx, '15–20 M', x0 + 20 * mpx, y - 30, { align: 'right', color: K.lime, alpha: seg(t, L(3) + 1.2, L(3) + 1.8) });
       // city bus (12 m) as paper outline underneath, for scale
-      const bb = seg(t, L(3) + 2.0, L(3) + 3.0, E.out);
+      const bb = seg(t, L(3) + 4.6, L(3) + 5.4, E.out);
       if (bb > 0) {
         ctx.save(); ctx.globalAlpha = bb; ctx.strokeStyle = K.paper; ctx.lineWidth = 4;
         const bx = x0, by = 1460, bw = 12 * mpx, bh = 150;
@@ -235,11 +235,11 @@
       const rp = seg(t, L(4) + 0.8, L(4) + 2.0);
       ctx.fillStyle = K.ink; ctx.fillRect(820, 1350 - 720 * rp, 8, 720 * rp);
       for (let cm = 0; cm <= 18; cm++) if (cm * 40 <= 720 * rp) ctx.fillRect(820, 1350 - cm * 40, cm % 3 ? 22 : 40, 4);
-      P.printText(ctx, '18 CM', W / 2, 1520, seg(t, L(4) + 1.8, L(4) + 2.4), { size: 120, color: K.ink, align: 'center' });
+      P.printText(ctx, '18 CM', W / 2, 1520, seg(t, L(4) + 3.8, L(4) + 4.3), { size: 120, color: K.ink, align: 'center' });
       label(ctx, 'TEK BİR DİŞ', 160, 470, { color: K.olive, alpha: tp });
-      ctx.fillStyle = K.lime; ctx.fillRect(W / 2 - 110, 1545, 220 * seg(t, L(4) + 2.2, L(4) + 2.8), 12);
+      ctx.fillStyle = K.lime; ctx.fillRect(W / 2 - 110, 1545, 220 * seg(t, L(4) + 4.2, L(4) + 4.8), 12);
     } else {
-      const op = seg(t, L(5), L(5) + 1.6, E.inOut), cam = lerp(0.82, 1.05, seg(t, L(5), L(6)));
+      const op = seg(t, L(5), L(5) + 1.6, E.inOut), cam = lerp(1.0, 1.2, seg(t, L(5), L(6)));
       jaws(ctx, W / 2, 1080, cam, op, { eyes: true });
       const np = seg(t, L(5) + 1.0, L(5) + 2.2, E.out);
       title(ctx, Math.round(100000 * np).toLocaleString('tr-TR') + '+ N', W / 2, 400, 140, { align: 'center', alpha: clamp(np * 3, 0, 1) });
@@ -289,7 +289,7 @@
     ctx.beginPath(); ctx.arc(956, 930, 34, 0, 7); ctx.fill();
     label(ctx, 'OKYANUS SOĞUDU', 80, 360, { alpha: seg(t, L(7) + 0.2, L(7) + 0.8) });
     // great white (line 8) slides in, sleeker, olive
-    const wp = seg(t, L(8) - 0.2, L(8) + 1.6, E.out);
+    const wp = seg(t, L(8) + 1.2, L(8) + 2.8, E.out);
     if (wp > 0 && t < L(9) + 0.6) {
       ctx.save(); ctx.translate(lerp(1500, 690, wp), 1360); ctx.scale(-0.42, 0.42);
       shark(ctx, { fill: K.olive, rim: K.paper, teeth: false }); ctx.restore();
@@ -346,7 +346,7 @@
     title(ctx, depth.toLocaleString('tr-TR') + ' M', W / 2, 330, 150, { align: 'center' });
     label(ctx, 'MARİANA ÇUKURU', W / 2, 395, { align: 'center', color: K.lime });
     // conditions (lines 12–13)
-    const conds = [['SONSUZ KARANLIK', L(12) + 1.5], ['1.000+ ATM', L(13)], ['1–4 °C', L(13) + 2.2]];
+    const conds = [['SONSUZ KARANLIK', L(12) + 2.6], ['1.000+ ATM', L(13)], ['1–4 °C', L(13) + 3.4]];
     conds.forEach(([s, a], i) => { const c = seg(t, a, a + 0.6, E.out); if (c > 0 && t < L(14)) label(ctx, s, W / 2, 1500 + i * 70, { align: 'center', size: 40, track: 8, alpha: c }); });
     // the shadow waiting at the bottom (line 14)
     const sh = seg(t, L(14) + 0.4, L(14) + 2.4, E.inOut);
@@ -358,15 +358,15 @@
 
   // G — "Peki bu mümkün mü?" / "Hayır."
   add(L(15) - 0.2, (ctx, t, lt) => {
-    const no = t >= L(16) + 0.9;
+    const no = t >= L(16) + 1.9;
     ctx.fillStyle = no ? K.paper : K.ink; ctx.fillRect(0, 0, W, H);
     if (!no) {
       P.printText(ctx, 'MÜMKÜN', W / 2, 860, seg(t, L(15), L(15) + 0.4), { size: 230, align: 'center', color: K.paper });
       P.printText(ctx, 'MÜ?', W / 2, 1100, seg(t, L(15) + 0.3, L(15) + 0.7), { size: 230, align: 'center', color: K.lime });
     } else {
-      P.printText(ctx, 'HAYIR.', W / 2, 1000, seg(t, L(16) + 0.9, L(16) + 1.2), { size: 300, align: 'center', color: K.ink });
-      label(ctx, 'BENİM GÖRÜŞÜM', W / 2, 1100, { align: 'center', color: K.olive, alpha: seg(t, L(16) + 1.4, L(16) + 2.0) });
-      const why = seg(t, L(16) + 2.6, L(16) + 3.4);
+      P.printText(ctx, 'HAYIR.', W / 2, 1000, seg(t, L(16) + 1.9, L(16) + 2.2), { size: 300, align: 'center', color: K.ink });
+      label(ctx, 'BENİM GÖRÜŞÜM', W / 2, 1100, { align: 'center', color: K.olive, alpha: seg(t, L(16) + 2.4, L(16) + 3.0) });
+      const why = seg(t, L(16) + 3.4, L(16) + 4.2);
       ctx.fillStyle = K.lime; ctx.fillRect(W / 2 - 160, 1140, 320 * why, 12);
     }
   });
@@ -388,7 +388,7 @@
       label(ctx, 'ÇEVRESİNDEN SICAK BİR VÜCUT', 80, 420, { alpha: hp, color: K.lime });
     }
     // fuel (line 18)
-    const fp = seg(t, L(18), L(18) + 0.8, E.out);
+    const fp = seg(t, L(18) + 2.4, L(18) + 3.0, E.out);
     if (fp > 0) {
       title(ctx, 'YÜZLERCE KİLO', 80, 1540, 140, { alpha: fp });
       label(ctx, 'ET · HER GÜN', 84, 1600, { color: K.lime, alpha: fp });
@@ -411,7 +411,7 @@
     ctx.setLineDash([18, 16]); ctx.strokeStyle = K.olive; ctx.lineWidth = 5; ctx.stroke(P.poly(sharkPts(0, 0))); ctx.restore();
     label(ctx, 'YİYECEK NEREDEYSE YOK', W / 2, 420, { align: 'center', alpha: seg(t, L(19), L(19) + 0.6), size: 34 });
     // tiny snailfish (line 20) with its depth
-    const sp = seg(t, L(20), L(20) + 1.0, E.out);
+    const sp = seg(t, L(20) + 5.0, L(20) + 6.0, E.out);
     if (sp > 0) {
       const fx = 300 + Math.sin(t * 0.7) * 8, fy = 1500;
       ctx.save(); ctx.translate(fx, fy); ctx.globalAlpha = sp; ctx.fillStyle = K.paper;
@@ -437,14 +437,14 @@
     }
     title(ctx, 'BİNLERCE DİŞ', 80, 420, 130, { alpha: seg(t, L(21), L(21) + 0.6) });
     // line 22: the found teeth get stamped FOSİL
-    const st = seg(t, L(22) + 2.2, L(22) + 2.6, E.out);
+    const st = seg(t, L(22) + 8.4, L(22) + 8.8, E.out);
     if (st > 0) {
       ctx.save(); ctx.translate(W / 2, 1000); ctx.rotate(-0.12); ctx.scale(lerp(1.6, 1, st), lerp(1.6, 1, st)); ctx.globalAlpha = st;
       ctx.strokeStyle = K.lime; ctx.lineWidth = 14; ctx.strokeRect(-330, -110, 660, 220);
       title(ctx, 'HEPSİ FOSİL', 0, 52, 140, { align: 'center', color: K.lime });
       ctx.restore();
     }
-    label(ctx, 'TAZE DİŞ: YOK', 84, 480, { color: K.lime, alpha: seg(t, L(22) + 0.6, L(22) + 1.2) });
+    label(ctx, 'TAZE DİŞ: YOK', 84, 480, { color: K.lime, alpha: seg(t, L(22) + 5.0, L(22) + 5.6) });
   });
 
   // K — why we still believe: unmapped seafloor; the mind fills darkness with monsters
@@ -465,7 +465,7 @@
     }
     label(ctx, 'HARİTALANMAMIŞ DİP', 60, 270, { color: K.lime, alpha: mp });
     // pareidolia: unmapped cells darken into a silhouette (line 25 second half)
-    const pr = seg(t, L(25) + 3.5, Le(25) + 0.5, E.inOut);
+    const pr = seg(t, L(25) + 5.5, Le(25) + 0.5, E.inOut);
     if (pr > 0) {
       ctx.save(); ctx.globalAlpha = pr; ctx.translate(540, 1000); ctx.scale(0.8, 0.8);
       ctx.fillStyle = '#050604'; ctx.fill(P.poly(sharkPts(Math.sin(t) * 0.4, 0.3)));
@@ -493,11 +493,11 @@
     P.halftone(ctx, 0, 900, W, 1020, (x, y) => 0.18 * P.vnoise(x / 40, y / 40), K.ink, 10);
     const tp = seg(t, L(27), L(27) + 1.6, E.out);
     tooth(ctx, W / 2, lerp(1500, 1320, tp), 420, { blade: K.ink, root: '#3a4034', band: K.olive, shade: '#2b3128' });
-    const tt = seg(t, L(28) + 1.2, L(28) + 1.8, E.out);
+    const tt = seg(t, L(28) + 3.3, L(28) + 3.9, E.out);
     const fit = Math.min(230, 230 * 940 / P.measure(ctx, 'MEGALODON', 230, P.FONT.title, 400, 4));
     P.printText(ctx, 'MEGALODON', W / 2, 560, seg(t, L(27) + 0.4, L(27) + 1.0, E.out), { size: fit, align: 'center', color: K.ink, track: 4 });
     P.printText(ctx, 'BİR ZAMANLAR GERÇEKTİ.', W / 2, 680, tt, { size: 64, fam: P.FONT.label, w: 700, align: 'center', color: K.olive, track: 4 });
-    ctx.fillStyle = K.lime; ctx.fillRect(W / 2 - 120, 720, 240 * seg(t, L(28) + 1.8, L(28) + 2.4), 12);
+    ctx.fillStyle = K.lime; ctx.fillRect(W / 2 - 120, 720, 240 * seg(t, L(28) + 4.0, L(28) + 4.6), 12);
   });
 
   function drawFrame(ctx, t) {
