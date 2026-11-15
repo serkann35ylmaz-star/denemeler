@@ -1,0 +1,72 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>Yasak Yemin 7. Bölüm</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:600;src:url(fonts/playfair-display-latin-600-italic.woff2) format("woff2");unicode-range:U+0000-00FF,U+2026}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:600;src:url(fonts/playfair-display-latin-ext-600-italic.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Work Sans";font-weight:500;src:url(fonts/work-sans-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+2013-2026}
+@font-face{font-family:"Work Sans";font-weight:500;src:url(fonts/work-sans-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Work Sans";font-weight:700;src:url(fonts/work-sans-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+2013-2026}
+@font-face{font-family:"Work Sans";font-weight:700;src:url(fonts/work-sans-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+html,body{margin:0;height:100%;background:#000;color:#eee;font:15px "Work Sans",sans-serif}
+#wrap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px;height:100%;box-sizing:border-box}
+#cv{height:calc(100% - 64px);max-width:100%;aspect-ratio:9/16}
+#bar{display:flex;gap:10px;align-items:center;width:min(560px,100%)}
+button{background:#7a1f22;color:#f3e6c8;border:0;padding:8px 14px;font:700 14px "Work Sans";cursor:pointer}input{flex:1}
+</style></head><body><div id="wrap"><canvas id="cv" width="1080" height="1920"></canvas>
+<div id="bar"><button id="play">Oynat</button><input id="seek" type="range" min="0" max="30" step="0.01" value="0"><span id="time"></span></div></div>
+<audio id="au" src="out/audio.wav" preload="auto"></audio>
+<script src="timeline.js"></script>
+<script>
+const W=1080,H=1920,cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const GOLD='#E6D2A6',MAROON='#7A1F22';
+const LOC={1:'Konak · Salon',2:'Konak · Salon',3:'Konak · Salon',4:'Yatak odası',5:'Teras · Gece',6:'Koridor · Gece'};
+// where the face sits in each crop (0..1), so the push-in drifts toward it
+const FOCUS={1:[0.45,0.45],2:[0.72,0.4],3:[0.5,0.42],4:[0.55,0.45],5:[0.55,0.45],6:[0.38,0.4]};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),seg=(t,a,b)=>clamp((t-a)/(b-a),0,1),ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const IMG={},BG={};
+function load(){return Promise.all(TL.scenes.map(s=>new Promise(r=>{const im=new Image();im.onload=()=>{IMG[s.s]=im;
+  // blurred, darkened cover background, cached once
+  const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+  const sc=Math.max(W/im.width,H/im.height)*1.15;g.filter='blur(38px) brightness(0.42) saturate(0.85)';
+  g.drawImage(im,(W-im.width*sc)/2,(H-im.height*sc)/2,im.width*sc,im.height*sc);BG[s.s]=c;r()};im.src='ref/s'+s.s+'.png'})))}
+// grain: fixed noise tiles cycled per frame (deterministic)
+const GR=[];for(let k=0;k<6;k++){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),d=g.createImageData(256,256);let s=(k+1)*99991;for(let i=0;i<d.data.length;i+=4){s=(s*1103515245+12345)>>>0;const v=128+((s>>>16)%64)-32;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}g.putImageData(d,0,0);GR.push(c)}
+function wrap(s,maxW){const ws=s.split(' '),out=[];let l='';for(const w of ws){const t=l?l+' '+w:w;if(ctx.measureText(t).width>maxW&&l){out.push(l);l=w}else l=t}out.push(l);return out}
+function header(a){ctx.save();ctx.globalAlpha=a;
+  ctx.font='italic 600 104px "Playfair Display"';ctx.textAlign='center';ctx.fillStyle=GOLD;ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=18;ctx.fillText('Yasak Yemin',W/2,240);
+  // maroon brush bar with episode number
+  ctx.shadowBlur=0;ctx.fillStyle=MAROON;ctx.beginPath();ctx.moveTo(330,282);for(let x=330;x<=750;x+=15)ctx.lineTo(x,282+Math.sin(x*.21)*3);for(let x=750;x>=330;x-=15)ctx.lineTo(x,350+Math.sin(x*.17+1)*4);ctx.closePath();ctx.fill();
+  ctx.font='italic 600 52px "Playfair Display"';ctx.fillStyle=GOLD;ctx.fillText('7. Bölüm',W/2,333);ctx.restore()}
+function scene(s,t){
+  const lt=t-s.start,p=lt/s.dur,im=IMG[s.s];ctx.drawImage(BG[s.s],0,0);
+  const bw=W,bh=700,by=Math.round(900-bh/2);
+  // push-in toward the face; scene 6 accelerates at the end before the cut
+  let z=1+0.07*ease(p);if(s.s===6)z+=0.16*Math.pow(seg(lt,s.dur-1.4,s.dur),2);
+  const [fx,fy]=FOCUS[s.s];ctx.save();ctx.beginPath();ctx.rect(0,by,bw,bh);ctx.clip();
+  const cov=Math.max(bw/im.width,bh/im.height)*z,dw=im.width*cov,dh=im.height*cov;ctx.drawImage(im,(bw-dw)*fx,by+(bh-dh)*fy,dw,dh);ctx.restore();
+  // thin gold rules framing the band
+  ctx.fillStyle='rgba(230,210,166,.55)';ctx.fillRect(60,by-14,W-120,2);ctx.fillRect(60,by+bh+12,W-120,2);
+  // location label
+  ctx.font='700 26px "Work Sans"';ctx.textAlign='left';ctx.fillStyle='rgba(230,210,166,.85)';ctx.letterSpacing='3px';ctx.fillText((s.s+'. SAHNE  ·  '+LOC[s.s]).toLocaleUpperCase('tr-TR'),64,by-34);ctx.letterSpacing='0px';
+  // subtitle: speaker + line, fades in with the voice
+  const a=seg(t,s.speechStart-0.05,s.speechStart+0.25);ctx.save();ctx.globalAlpha=a;ctx.textAlign='center';
+  ctx.font='700 34px "Work Sans"';ctx.fillStyle=GOLD;ctx.letterSpacing='4px';ctx.fillText(s.who.toLocaleUpperCase('tr-TR'),W/2,by+bh+110);ctx.letterSpacing='0px';
+  ctx.font='500 50px "Work Sans"';ctx.fillStyle='#F7F2E8';ctx.shadowColor='rgba(0,0,0,.8)';ctx.shadowBlur=12;
+  wrap('“'+s.text+'”',940).forEach((ln,i)=>ctx.fillText(ln,W/2,by+bh+185+i*66));ctx.restore();
+  // dip to black at scene start (except the very first, which fades from black)
+  const dip=1-seg(lt,0,0.22);if(dip>0){ctx.fillStyle='rgba(0,0,0,'+dip+')';ctx.fillRect(0,0,W,H)}}
+window.seek=t=>{t=clamp(t,0,TL.total-1e-6);ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  const e=TL.endCard;
+  if(t<e.start){const s=TL.scenes.find(s=>t>=s.start&&t<s.start+s.dur)||TL.scenes[TL.scenes.length-1];scene(s,t);header(1)}
+  else{const a=seg(t,e.start+0.15,e.start+0.7);ctx.save();ctx.globalAlpha=a;ctx.textAlign='center';ctx.font='italic 600 96px "Playfair Display"';ctx.fillStyle=GOLD;ctx.fillText('Devam edecek…',W/2,H/2);
+    ctx.font='700 28px "Work Sans"';ctx.letterSpacing='6px';ctx.fillStyle='rgba(230,210,166,.7)';ctx.fillText('YASAK YEMİN  ·  7. BÖLÜM',W/2,H/2+80);ctx.restore()}
+  // consistent grade: warm tint, vignette, light grain
+  ctx.save();ctx.globalCompositeOperation='soft-light';ctx.fillStyle='rgba(200,150,90,.18)';ctx.fillRect(0,0,W,H);ctx.restore();
+  const v=ctx.createRadialGradient(W/2,H*.46,H*.3,W/2,H*.5,H*.75);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.45)');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalCompositeOperation='overlay';ctx.globalAlpha=.10;ctx.fillStyle=ctx.createPattern(GR[Math.floor(t*30)%6],'repeat');ctx.fillRect(0,0,W,H);ctx.restore();
+  document.getElementById('seek').value=t;document.getElementById('time').textContent=t.toFixed(1)+' / 30.0'};
+let playing=false,au=document.getElementById('au');
+document.getElementById('play').onclick=()=>{playing=!playing;if(playing){au.currentTime=+document.getElementById('seek').value;au.play().catch(()=>{});(function f(){if(!playing)return;seek(au.currentTime);if(au.currentTime>=30)playing=false;requestAnimationFrame(f)})()}else au.pause()};
+document.getElementById('seek').oninput=e=>{seek(+e.target.value);au.currentTime=+e.target.value};
+Promise.all(['italic 600 40px "Playfair Display"','500 40px "Work Sans"','700 40px "Work Sans"'].map(f=>document.fonts.load(f,'ĞÜŞİÖÇğüşıöç…'))).then(load).then(()=>{seek(0);window.READY=true});
+</script></body></html>

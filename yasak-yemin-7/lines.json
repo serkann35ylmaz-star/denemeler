@@ -1,0 +1,8 @@
+[
+ {"s":1,"who":"Asya","text":"Bana hâlâ bir yabancı gibi davranmana artık dayanamıyorum, Ateş!","voice":"tr-TR-EmelNeural","rate":"-4%","pitch":"-2Hz"},
+ {"s":2,"who":"Ateş","text":"Sen bu evde sadece babamın karısısın. Benden başka bir şey bekleme!","voice":"tr-TR-AhmetNeural","rate":"-6%","pitch":"-5Hz"},
+ {"s":3,"who":"Nihat","text":"İkiniz de artık şunu bilin! Bu evde kuralları ben koyarım.","voice":"tr-TR-AhmetNeural","rate":"-10%","pitch":"-16Hz"},
+ {"s":4,"who":"Asya","text":"Bu evlilik gerçekten sadece bir anlaşma mıydı?","voice":"tr-TR-EmelNeural","rate":"-12%","pitch":"-4Hz"},
+ {"s":5,"who":"Ateş","text":"Neden onu bu kadar önemsiyorum? Bu his neyin nesi?","voice":"tr-TR-AhmetNeural","rate":"-12%","pitch":"-7Hz"},
+ {"s":6,"who":"Derin","text":"Sakın unutma Asya... Ateş'in geçmişinde ben varım. Ve bu hikâye henüz bitmedi!","voice":"tr-TR-EmelNeural","rate":"-4%","pitch":"+6Hz"}
+]
