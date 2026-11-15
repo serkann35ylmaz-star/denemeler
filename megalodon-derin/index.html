@@ -1,0 +1,29 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>Megalodon</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Anton";src:url(fonts/anton-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+2013-2014}
+@font-face{font-family:"Anton";src:url(fonts/anton-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Oswald";font-weight:500;src:url(fonts/oswald-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+2013-2014}
+@font-face{font-family:"Oswald";font-weight:500;src:url(fonts/oswald-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Oswald";font-weight:700;src:url(fonts/oswald-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+2013-2014}
+@font-face{font-family:"Oswald";font-weight:700;src:url(fonts/oswald-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+html,body{margin:0;height:100%;background:#0b0d0a;color:#F3F0E6;font:15px Oswald,sans-serif}
+#wrap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px;height:100%;box-sizing:border-box}
+#cv{height:calc(100% - 64px);max-width:100%;aspect-ratio:9/16}
+#bar{display:flex;gap:10px;align-items:center;width:min(560px,100%)}
+button{background:#D5FA73;color:#111410;border:0;padding:8px 14px;font:700 14px Oswald;cursor:pointer}
+input[type=range]{flex:1}#time{min-width:96px;text-align:right;font-variant-numeric:tabular-nums}
+</style></head><body><div id="wrap"><canvas id="cv" width="1080" height="1920"></canvas>
+<div id="bar"><button id="play">OYNAT</button><input id="seek" type="range" min="0" step="0.01" value="0"><span id="time"></span></div></div>
+<audio id="vo" src="vo/narration.wav" preload="auto"></audio>
+<script src="timings.js" onerror="0"></script>
+<script src="poster.js"></script><script src="scenes.js"></script>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),D=Scenes.DURATION,au=document.getElementById('vo'),sk=document.getElementById('seek');
+sk.max=D;let t=0,playing=false;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+window.seek=x=>{t=Math.max(0,Math.min(D,x));Scenes.drawFrame(ctx,t);sk.value=t;document.getElementById('time').textContent=fmt(t)+' / '+fmt(D)};
+function loop(){if(!playing)return;seek(au.paused?t+1/60:au.currentTime);if(t>=D){playing=false}requestAnimationFrame(loop)}
+document.getElementById('play').onclick=()=>{playing=!playing;if(playing){au.currentTime=t;au.play().catch(()=>{});loop()}else au.pause()};
+sk.oninput=e=>{seek(+e.target.value);au.currentTime=t};
+Promise.all(['400 40px Anton','500 40px Oswald','700 40px Oswald'].map(f=>document.fonts.load(f,'ĞÜŞİÖÇğüşıöç'))).then(()=>{seek(0);window.READY=true});
+</script></body></html>
