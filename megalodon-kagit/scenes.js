@@ -88,7 +88,14 @@
       P.text(ctx, '23 milyon yıl önce', 104, 1756, { size: 32, w: 500, alpha: seg(lt, 9, 9.6) });
       P.text(ctx, '3,6 milyon yıl önce', 976, 1756, { size: 32, w: 700, align: 'right', color: C.terraDark, alpha: seg(lt, 10.4, 11) });
     }
-    // closing beat of scene: the tooth tilts toward the next scene
+    // serration callout
+    const sc = P.liftIn(lt, 11.8, 0.6, [-60, 0]);
+    if (sc.alpha > 0) { ctx.save(); ctx.globalAlpha = sc.alpha; ctx.translate(sc.x, 0);
+      A.card(ctx, 's1ser', 64, 700, 236, 120, C.card, { depth: sc.depth, r: 10 });
+      P.text(ctx, 'tırtıklı kenar', 84, 746, { size: 28, w: 700 });
+      P.text(ctx, 'eti testere gibi keser', 84, 790, { size: 21, w: 500, color: C.charcoalSoft });
+      ctx.restore();
+      ctx.save(); ctx.strokeStyle = C.terracotta; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(300, 760); ctx.lineTo(lerp(300, 318, seg(lt, 12.2, 12.8)), lerp(760, 800, seg(lt, 12.2, 12.8))); ctx.stroke(); ctx.restore(); }
     progress(ctx, SCENES[0].start + lt);
   }
 
@@ -138,10 +145,10 @@
       P.text(ctx, 'ISIRMA KUVVETİ (TAHMİN)', 104, 1508, { size: 30, w: 700, track: 3 });
       const maxN = 182000, bw = 860, g = seg(lt, 8.8, 11.0, E.out);
       // megalodon range bar: solid to 108k, lighter extension to 182k
-      A.card(ctx, 's2b1', 104, 1540, bw * (108000 / maxN) * g, 56, C.terracotta, { depth: 3, r: 6 });
-      A.card(ctx, 's2b1x' + Math.round(g * 20), 104 + bw * (108000 / maxN) * g, 1540, bw * (74000 / maxN) * seg(lt, 10, 11.5, E.out), 56, P.shade(C.terracotta, 0.45), { depth: 2, r: 6 });
+      A.card(ctx, 's2b1' + Math.round(g * 60), 104, 1540, bw * (108000 / maxN) * g, 56, C.terracotta, { depth: 3, r: 6 });
+      A.card(ctx, 's2b1x' + Math.round(g * 20) + '_' + Math.round(seg(lt, 10, 11.5, E.out) * 40), 104 + bw * (108000 / maxN) * g, 1540, bw * (74000 / maxN) * seg(lt, 10, 11.5, E.out), 56, P.shade(C.terracotta, 0.45), { depth: 2, r: 6 });
       P.text(ctx, 'Megalodon  108.000–182.000 N', 104, 1640, { size: 34, w: 700, alpha: seg(lt, 10.5, 11.2) });
-      A.card(ctx, 's2b2', 104, 1664, bw * (18000 / maxN) * seg(lt, 11.5, 12.4, E.out), 40, C.blue, { depth: 3, r: 6 });
+      A.card(ctx, 's2b2' + Math.round(seg(lt, 11.5, 12.4, E.out) * 30), 104, 1664, bw * (18000 / maxN) * seg(lt, 11.5, 12.4, E.out), 40, C.blue, { depth: 3, r: 6 });
       P.text(ctx, 'Büyük beyaz  ~18.000 N', 220, 1696, { size: 32, w: 500, alpha: seg(lt, 12, 12.6) });
       P.text(ctx, 'Wroe ve ark., 2008', 976, 1755, { size: 24, w: 500, align: 'right', color: C.charcoalSoft, alpha: seg(lt, 12.5, 13) });
       ctx.restore();
@@ -328,11 +335,34 @@
     progress(ctx, SCENES[4].start + lt);
   }
 
+  const TRANS = [[17, C.blue], [35, C.mustard], [53, C.blueDark], [74, C.sage]], TW = 0.9;
+  function sheet(ctx, key, p, col) { // torn paper sheet passing bottom -> top, fully covering at p=0.5
+    const y = lerp(H + 40, -H * 1.25 - 40, p);
+    ctx.save(); ctx.translate(0, y);
+    P.paper(ctx, P.cutPath(key + 'a', [[-60, 40], [W + 60, 0], [W + 60, H * 1.25], [-60, H * 1.25 + 30]], { j: 7, seg: 26 }), P.shade(col, 0.35), { depth: 16, tex: 0.3 });
+    P.paper(ctx, P.cutPath(key + 'b', [[-60, 110], [W + 60, 70], [W + 60, H * 1.25 - 60], [-60, H * 1.25 - 40]], { j: 7, seg: 26 }), col, { depth: 10, tex: 0.3 });
+    ctx.restore();
+  }
   function drawFrame(ctx, t) {
     t = P.clamp(t, 0, DURATION - 1e-6);
-    const s = SCENES.find(s => t >= s.start && t < s.end) || SCENES[SCENES.length - 1];
-    ctx.save(); s.draw(ctx, t - s.start); ctx.restore();
+    const s = SCENES.find(s => t >= s.start && t < s.end) || SCENES[SCENES.length - 1], lt = t - s.start;
+    const drift = 1 + 0.018 * E.sine(P.clamp(lt / (s.end - s.start), 0, 1));
+    ctx.save(); ctx.translate(540, 900); ctx.scale(drift, drift); ctx.translate(-540, -900);
+    s.draw(ctx, lt); ctx.restore();
+    for (const [b, col] of TRANS) if (Math.abs(t - b) < TW / 2) sheet(ctx, 'tr' + b, (t - (b - TW / 2)) / TW, col);
+    // final gentle fade to cream
+    if (t > DURATION - 0.6) { ctx.fillStyle = P.rgba(C.cream, seg(t, DURATION - 0.6, DURATION)); ctx.fillRect(0, 0, W, H); }
   }
 
-  G.Scenes = { W, H, DURATION, SCENES, drawFrame };
+  // sound cues: [time, file, gain]
+  const SFX = [
+    [0.15, 'paper_flip', 0.7], [0.65, 'paper_thump', 0.9], [2.2, 'paper_slide', 0.6], [3.6, 'tick', 0.8], [4.6, 'paper_slide', 0.5], [6.0, 'paper_flip', 0.6], [6.6, 'paper_thump', 0.6], [8.5, 'paper_slide', 0.5], [11.8, 'paper_flip', 0.5],
+    [16.6, 'whoosh', 0.8], [17.3, 'paper_slide', 0.5], [18.8, 'paper_slide', 0.6], [21.2, 'tick', 0.7], [22.4, 'paper_flip', 0.5], [25.0, 'paper_thump', 0.6], [25.8, 'paper_slide', 0.5],
+    [34.6, 'whoosh', 0.8], [35.3, 'paper_slide', 0.6], [37.0, 'paper_flip', 0.5], [43.0, 'paper_slide', 0.5], [44.3, 'paper_slide', 0.5], [45.6, 'paper_slide', 0.5], [47.5, 'stamp', 1.0],
+    [52.6, 'whoosh', 0.8], [54.2, 'paper_thump', 0.6], [54.8, 'rumble', 0.7], [57.6, 'sonar', 0.6], [59.4, 'sonar', 0.5], [61.2, 'sonar', 0.45], [63.0, 'sonar', 0.6], [64.0, 'rumble', 0.6], [66.0, 'stamp', 0.6], [66.5, 'paper_slide', 0.5],
+    [73.6, 'whoosh', 0.8], [74.8, 'paper_thump', 0.6], [75.0, 'click', 0.7], [75.5, 'paper_thump', 0.6], [75.7, 'click', 0.7], [76.2, 'paper_thump', 0.6], [76.4, 'click', 0.7], [77.0, 'paper_slide', 0.4],
+    [78.6, 'paper_thump', 0.6], [80.5, 'stamp', 0.35], [81.9, 'stamp', 0.35], [83.3, 'stamp', 0.35], [85.0, 'stamp', 1.0], [86.4, 'paper_slide', 0.5]
+  ];
+
+  G.Scenes = { W, H, DURATION, SCENES, drawFrame, SFX };
 })(window);

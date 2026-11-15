@@ -107,7 +107,7 @@
   }
 
   // ---------- small UI paper pieces ----------
-  function card(ctx, key, x, y, w, h, col, o) { P.paper(ctx, P.cutPath(key, P.roundRectPts(x, y, w, h, o && o.r != null ? o.r : 16, 4), { j: 1.1, seg: 26 }), col, Object.assign({ depth: 6, tex: 0.22 }, o)); }
+  function card(ctx, key, x, y, w, h, col, o) { if (w < 4 || h < 4) return; P.paper(ctx, P.cutPath(key, P.roundRectPts(x, y, w, h, o && o.r != null ? o.r : 16, 4), { j: 1.1, seg: 26 }), col, Object.assign({ depth: 6, tex: 0.22 }, o)); }
   function tab(ctx, key, x, y, label, col, size, tcol) {
     size = size || 30; const w = P.measure(ctx, label, size, 700, P.F.body, 3) + size * 1.4;
     card(ctx, key, x, y, w, size * 1.7, col, { r: 6, depth: 4 });

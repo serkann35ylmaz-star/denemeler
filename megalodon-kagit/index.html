@@ -1,0 +1,31 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>Megalodon ve Mariana</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Fraunces";font-weight:900;src:url(fonts/fraunces-latin-900-normal.woff2) format("woff2");unicode-range:U+0000-00FF}
+@font-face{font-family:"Fraunces";font-weight:600;src:url(fonts/fraunces-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF}
+@font-face{font-family:"Fraunces";font-weight:600;src:url(fonts/fraunces-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Fraunces";font-weight:900;src:url(fonts/fraunces-latin-ext-900-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Work Sans";font-weight:500;src:url(fonts/work-sans-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF}
+@font-face{font-family:"Work Sans";font-weight:500;src:url(fonts/work-sans-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+@font-face{font-family:"Work Sans";font-weight:700;src:url(fonts/work-sans-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF}
+@font-face{font-family:"Work Sans";font-weight:700;src:url(fonts/work-sans-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-024F}
+html,body{margin:0;height:100%;background:#20282c;color:#F3EBDD;font:15px "Work Sans",sans-serif}
+#wrap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px;height:100%;box-sizing:border-box}
+#cv{height:calc(100% - 64px);max-width:100%;aspect-ratio:9/16;border-radius:8px;background:#F3EBDD}
+#bar{display:flex;gap:10px;align-items:center;width:min(560px,100%)}
+button{background:#C56B50;color:#FFF8EB;border:0;border-radius:6px;padding:8px 12px;font:700 14px "Work Sans";cursor:pointer}
+input[type=range]{flex:1}#time{font-variant-numeric:tabular-nums;min-width:96px;text-align:right}
+</style></head><body><div id="wrap"><canvas id="cv" width="1080" height="1920"></canvas>
+<div id="bar"><button id="play">Oynat</button><button id="re">Baştan</button><input id="seek" type="range" min="0" max="90" step="0.01" value="0"><span id="time">0:00 / 1:30</span></div></div>
+<script src="paper.js"></script><script src="art.js"></script><script src="scenes.js"></script>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),D=Scenes.DURATION;
+let t=0,playing=false,last=0;
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+window.seek=x=>{t=Math.max(0,Math.min(D,x));Scenes.drawFrame(ctx,t);document.getElementById('seek').value=t;document.getElementById('time').textContent=fmt(t)+' / '+fmt(D)};
+function loop(now){if(!playing)return;t+=(now-last)/1000;last=now;if(t>=D){t=D;playing=false;document.getElementById('play').textContent='Oynat'}seek(t);if(playing)requestAnimationFrame(loop)}
+document.getElementById('play').onclick=()=>{playing=!playing;document.getElementById('play').textContent=playing?'Duraklat':'Oynat';if(playing){if(t>=D)t=0;last=performance.now();requestAnimationFrame(loop)}};
+document.getElementById('re').onclick=()=>{seek(0)};
+document.getElementById('seek').oninput=e=>{seek(+e.target.value)};
+Promise.all(['900 40px Fraunces','600 40px Fraunces','500 40px "Work Sans"','700 40px "Work Sans"'].map(f=>document.fonts.load(f,'Ağışçöü'))).then(()=>{seek(0);window.READY=true});
+</script></body></html>
