@@ -22,3 +22,4 @@ Bu depo; Claude Code ajanları (`.claude/agents/`) ve becerileri (`.claude/skill
 - `headroom` (bağlam sıkıştırma proxy'si): `uv tool install --python 3.13 "headroom-ai[all]"`
 - `jcodemunch-mcp` (sembol düzeyinde kod okuma MCP'si, yalnız ticari olmayan kullanım): `uv tool install jcodemunch-mcp`
 - `cto` (claude-token-optimizer): `npm install -g claude-token-optimizer`, sonra `cto measure`
+- `claude-mem` (oturumlar arası hafıza; sağlayıcı: Anthropic planı, telemetri açık): `npx claude-mem install --provider claude`
