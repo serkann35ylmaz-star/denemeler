@@ -23,3 +23,4 @@ Bu depo; Claude Code ajanları (`.claude/agents/`) ve becerileri (`.claude/skill
 - `jcodemunch-mcp` (sembol düzeyinde kod okuma MCP'si, yalnız ticari olmayan kullanım): `uv tool install jcodemunch-mcp`
 - `cto` (claude-token-optimizer): `npm install -g claude-token-optimizer`, sonra `cto measure`
 - `claude-mem` (oturumlar arası hafıza; sağlayıcı: Anthropic planı, telemetri açık): `npx claude-mem install --provider claude`
+- `claude-code-video-toolkit` (Remotion şablonları, AI seslendirme/görsel/müzik araçları, `/setup`, `/video` komutları): `git clone https://github.com/digitalsamba/claude-code-video-toolkit.git && cd claude-code-video-toolkit && uv sync`. Komutları kendi `.claude/` klasöründe; Claude Code'u o klasörde açarak kullan. Bulut GPU/R2 ayarı için `/setup`.
