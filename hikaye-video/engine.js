@@ -434,10 +434,10 @@ function titleCards(sc, t) {
 // ---------- görsel çekimler (yapay zekâ / kendi görsellerin) ----------
 // sahne.gorsel ilk çekim; herhangi bir olayda "gorsel" verilirse o anda yeni çekime kesilir.
 function shotAt(sc, t) {
-  let shot = sc.gorsel ? { src: sc.gorsel, start: sc.start, hareket: sc.hareket } : null, end = sc.end;
+  let shot = sc.gorsel ? { src: sc.gorsel, start: sc.start, hareket: sc.hareket, oynat: sc.oynat } : null, end = sc.end;
   for (const ev of sc.olaylar) {
     if (!ev.gorsel) continue;
-    if (ev.start <= t) shot = { src: ev.gorsel, start: ev.start, hareket: ev.hareket };
+    if (ev.start <= t) shot = { src: ev.gorsel, start: ev.start, hareket: ev.hareket, oynat: ev.oynat };
     else { end = ev.start; break; }
   }
   if (shot) shot.end = end;
@@ -448,12 +448,20 @@ const MOVES = ['yaklas', 'saga', 'uzaklas', 'sola', 'yukari'];
 const DEPTH = {}, warpOut = { img: null };
 function prepDepth(src) {
   const img = IMAGES[src], dimg = DEPTH_IMG[src]; if (!img || !dimg) return null;
+  const fg = FG_IMG[src], base = fg && BG_IMG[src] ? BG_IMG[src] : img;
   const k = Math.max(W / img.width, H / img.height) * 1.14, w = img.width * k, h = img.height * k, x = (W - w) / 2, y = (H - h) / 2;
   const c = mk(W, H), g = c.getContext('2d', { willReadFrequently: true });
-  g.drawImage(img, x, y, w, h); const col = new Uint32Array(g.getImageData(0, 0, W, H).data.buffer.slice(0));
+  g.drawImage(base, x, y, w, h); const col = new Uint32Array(g.getImageData(0, 0, W, H).data.buffer.slice(0));
   g.clearRect(0, 0, W, H); g.drawImage(dimg, x, y, w, h); const dd = g.getImageData(0, 0, W, H).data;
   const dep = new Float32Array(W * H); for (let i = 0; i < dep.length; i++) dep[i] = dd[i * 4] / 255;
-  return (DEPTH[src] = { col, dep });
+  let box = null;
+  if (fg && BG_IMG[src]) { // öznenin kutusu: oynatma ekseni alt-orta noktası
+    g.clearRect(0, 0, W, H); g.drawImage(fg, x, y, w, h); const fa = g.getImageData(0, 0, W, H).data;
+    let x0 = W, x1 = 0, y0 = H, y1 = 0, n = 0, my = 0;
+    for (let yy = 0; yy < H; yy += 2) for (let xx = 0; xx < W; xx += 2) if (fa[(yy * W + xx) * 4 + 3] > 128) { x0 = Math.min(x0, xx); x1 = Math.max(x1, xx); y0 = Math.min(y0, yy); y1 = Math.max(y1, yy); n++; my += yy; }
+    if (n) box = { x0, x1, y0, y1, cx: (x0 + x1) / 2 };
+  }
+  return (DEPTH[src] = { col, dep, fg: box && fg, box, place: [x, y, w, h] });
 }
 function drawShotDepth(shot, t, D2) {
   const p = clamp((t - shot.start) / Math.max(.5, shot.end - shot.start)), e = p * .8 + smooth(p) * .2;
@@ -476,6 +484,28 @@ function drawShotDepth(shot, t, D2) {
     }
   }
   ctx.putImageData(warpOut.img, 0, 0);
+  if (D2.fg) drawPuppet(shot, t, D2, zg * punch * (1 + kz * .85), vx * .85, vy * .85, cx, cy);
+}
+// Kesilmiş özneyi ayrı katman olarak oynat. Eksen: öznenin alt-orta noktası.
+function drawPuppet(shot, t, D2, z, vx, vy, cx, cy) {
+  const { box, fg, place } = D2, lt = t - shot.start, dur = Math.max(.5, shot.end - shot.start), p = clamp(lt / dur);
+  const mode = shot.oynat || 'nefes', ax = box.cx, ay = box.y1, hgt = box.y1 - box.y0;
+  let sx = 1, sy = 1, rot = 0, dx = 0, dy = 0, grow = 1;
+  const ph = hash(shot.src) % 100;
+  if (mode === 'nefes') { sy = 1 + Math.sin(lt * 2.4 + ph) * .012; sx = 1 - Math.sin(lt * 2.4 + ph) * .004; rot = Math.sin(lt * .9 + ph) * .008; }
+  else if (mode === 'surus') { grow = lerp(1, 1.22, smooth(p)); dy = Math.sin(lt * 31) * 2.2 + Math.abs(Math.sin(lt * 5.3)) * -5; dx = Math.sin(lt * 23) * 1.6; rot = Math.sin(lt * 3.1) * .015; }
+  else if (mode === 'git') { grow = lerp(1, .8, smooth(p)); dy = Math.sin(lt * 31) * 1.8; dx = Math.sin(lt * 23) * 1.2; rot = Math.sin(lt * 3.1) * .012; }
+  else if (mode === 'ilerle') { grow = lerp(1, 1.15, smooth(p)); dy = Math.abs(Math.sin(lt * 5)) * -6; rot = Math.sin(lt * 5) * .01; }
+  else if (mode === 'yuru') { dy = -Math.abs(Math.sin(lt * 5.2)) * hgt * .025; rot = Math.sin(lt * 5.2) * .025; dx = lerp(-W * .04, W * .04, p); }
+  else if (mode === 'titre') { dx = Math.sin(lt * 41) * 2.5; dy = Math.cos(lt * 37) * 1.5; sy = 1 + Math.sin(lt * 2.4) * .01; }
+  else if (mode === 'salin') { rot = Math.sin(lt * 1.6 + ph) * .03; sy = 1 + Math.sin(lt * 2.4) * .01; }
+  else if (mode === 'yukari') { dy = lerp(hgt * .04, -hgt * .04, smooth(p)); sy = 1 + Math.sin(lt * 2.4) * .01; }
+  else if (mode === 'yok') { }
+  ctx.save();
+  ctx.translate(cx - vx, cy - vy); ctx.scale(z, z); ctx.translate(-cx, -cy);   // arka planla aynı kamera
+  ctx.translate(ax + dx, ay + dy); ctx.rotate(rot); ctx.scale(sx * grow, sy * grow); ctx.translate(-ax, -ay);
+  ctx.drawImage(fg, place[0], place[1], place[2], place[3]);
+  ctx.restore();
 }
 function drawShot(shot, t) {
   const img = IMAGES[shot.src]; if (!img) return;
@@ -506,7 +536,9 @@ function chunks(ev) {
     cur.push(wt); const txt = cur.map(x => x[0]).join(' ').replace(/\*/g, '');
     if (cur.length >= 3 || txt.length >= 16 || /[.,!?;:…]$/.test(wt[0])) { out.push(cur); cur = []; }
   }
-  if (cur.length) { const prev = out[out.length - 1]; if (cur.length === 1 && prev && prev.length < 4) prev.push(...cur); else out.push(cur); } // tek kalan kelimeyi öncekine ekle
+  if (cur.length) out.push(cur);
+  const last = out[out.length - 1], prev = out[out.length - 2];
+  if (out.length > 1 && last.length === 1 && prev.length < 4) prev.push(...out.pop()); // tek kalan son kelimeyi öncekine ekle
   return (ev._chunks = out);
 }
 function boldSubtitles(sc, t) {
@@ -580,10 +612,11 @@ function seek(t) {
 }
 
 // ---------- başlatma ----------
-const IMAGES = {}, DEPTH_IMG = {};
+const IMAGES = {}, DEPTH_IMG = {}, FG_IMG = {}, BG_IMG = {};
 const imgs = [...new Set(D.sahneler.flatMap(s => [s.mekan && s.mekan.resim, s.gorsel, ...s.olaylar.map(e => e.gorsel)]).filter(Boolean))];
 const TR = 'Aa ıİşŞğĞüÜöÖçÇ';
 Promise.all([document.fonts.load(`700 40px Nunito`, TR), document.fonts.load(`900 40px Nunito`, TR), document.fonts.load(`italic 700 40px Nunito`, TR).catch(() => 0), document.fonts.load(`400 40px Anton`, TR).catch(() => 0),
+  ...imgs.flatMap(src => [['.fg.png', FG_IMG], ['.bg.jpg', BG_IMG]].map(([ext, store]) => new Promise(ok => { const im = new Image(); im.onload = () => { store[src] = im; ok(); }; im.onerror = () => ok(); im.src = src.replace(/\.[a-z]+$/i, ext); }))),
   ...imgs.map(src => new Promise(ok => { const di = new Image(); di.onload = () => { DEPTH_IMG[src] = di; ok(); }; di.onerror = () => ok(); di.src = src.replace(/\.[a-z]+$/i, '.depth.png'); })),
   ...imgs.map(src => new Promise(ok => { const im = new Image(); im.onload = () => { IMAGES[src] = im; ok(); }; im.onerror = () => { console.warn('Görsel yok, yer tutucu kullanılıyor: ' + src); IMAGES[src] = placeholder(src); ok(); }; im.src = src; }))])
   .then(() => { D.sahneler.forEach(s => { if (!s.gorsel) getSet(s); }); seek(0); window.READY = true; if (!/render/.test(location.hash)) player(); });

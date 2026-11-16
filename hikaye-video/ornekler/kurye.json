@@ -36,10 +36,12 @@
           "metin": "Ara sokağa saptığında, çamurun içinde *bir çanta* görüyorsun.",
           "gorsel": "gorseller/kurye/02.jpg",
           "hareket": "asagi",
-          "gorselPrompt": "Top-down shot of a dark narrow alley in the rain: a black leather bag lying open in a puddle, bundles of banknotes spilling out, a single amber streetlamp, [KURYE]'s boots at the edge of the frame."
+          "gorselPrompt": "Top-down shot of a dark narrow alley in the rain: a black leather bag lying open in a puddle, bundles of banknotes spilling out, a single amber streetlamp, [KURYE]'s boots at the edge of the frame.",
+          "oynat": "nefes"
         }
       ],
-      "efekt": "yagmur"
+      "efekt": "yagmur",
+      "oynat": "surus"
     },
     {
       "id": "karar",
@@ -57,7 +59,8 @@
           "metin": "Ama çantanın cebinden *bir fotoğraf* düşüyor.",
           "gorsel": "gorseller/kurye/04.jpg",
           "hareket": "yaklas",
-          "gorselPrompt": "Macro shot: a worn family photograph on wet cobblestones showing [AMCA] smiling with a little girl in front of a small corner grocery store, raindrops on the photo, warm nostalgic light."
+          "gorselPrompt": "Macro shot: a worn family photograph on wet cobblestones showing [AMCA] smiling with a little girl in front of a small corner grocery store, raindrops on the photo, warm nostalgic light.",
+          "oynat": "salin"
         }
       ],
       "efekt": "yagmur"
@@ -78,14 +81,16 @@
           "metin": "O gece sana para kazandırmadı. Ama *kim olduğunu* gösterdi.",
           "gorsel": "gorseller/kurye/06.jpg",
           "hareket": "uzaklas",
-          "gorselPrompt": "Wide heroic shot: [KURYE] riding away on the motorcycle down an empty street at dawn, rain stopped, golden sunrise breaking through clouds, puddles reflecting the sky, hopeful mood."
+          "gorselPrompt": "Wide heroic shot: [KURYE] riding away on the motorcycle down an empty street at dawn, rain stopped, golden sunrise breaking through clouds, puddles reflecting the sky, hopeful mood.",
+          "oynat": "git"
         },
         {
           "tip": "bekle",
           "sure": 1.2
         }
       ],
-      "efekt": null
+      "efekt": null,
+      "oynat": "nefes"
     }
   ]
 }
