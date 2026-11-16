@@ -37,7 +37,7 @@ story.sahneler.forEach((sc, si) => {
       case 'replik': case 'anlatici': {
         const id = lineId(ev), rec = db[id];
         if (!rec) { missing++; dur = 0.5 + ev.metin.length * 0.062; ev.env = []; }
-        else { dur = rec.dur; ev.env = rec.env; if (!rec.sessiz) ev.dosya = `vo/${id}.wav`; }
+        else { dur = rec.dur; ev.env = rec.env; if (rec.kelimeler) ev.kelimeler = rec.kelimeler; if (!rec.sessiz) ev.dosya = `vo/${id}.wav`; }
         ev.konusma = r3(dur);
         lines.push({ start: ev.start, end: r3(t + dur), kim: ev.kim || null, metin: ev.metin, dosya: ev.dosya });
         dur += ev.ara ?? GAP;
@@ -68,11 +68,33 @@ const fmt = story.format === '9:16' ? [1080, 1920] : [1920, 1080];
 const data = {
   baslik: story.baslik || 'Hikaye', W: fmt[0], H: fmt[1], fps: story.fps || 30, total,
   sinemaBantlari: story.sinemaBantlari ?? (story.format !== '9:16'),
-  altyazi: story.altyazi ?? true, karakterler: chars, sahneler: scenes,
+  altyazi: story.altyazi ?? true, altyaziStil: story.altyaziStil || (story.format === '9:16' ? 'vurgulu' : 'klasik'),
+  baslikBant: story.baslikBant || null, karakterler: chars, sahneler: scenes,
 };
 fs.mkdirSync('out', { recursive: true });
 fs.writeFileSync('out/zaman.js', 'window.DATA=' + JSON.stringify(data) + ';\n');
 fs.writeFileSync('out/zaman.json', JSON.stringify({ total, scenes: scenes.map(s => ({ id: s.id, start: s.start, end: s.end })), lines }, null, 1));
+
+// --- görsel promptları: her çekim için İngilizce prompt (stil + karakter + mekan bloğu) ---
+const shots = [];
+scenes.forEach(sc => {
+  if (sc.gorsel) shots.push({ dosya: sc.gorsel, prompt: sc.gorselPrompt, sahne: sc.id });
+  sc.olaylar.forEach(ev => { if (ev.gorsel) shots.push({ dosya: ev.gorsel, prompt: ev.gorselPrompt, sahne: sc.id, metin: ev.metin }); });
+});
+if (shots.length) {
+  const style = story.gorselStil || '';
+  const blocks = Object.entries(chars).filter(([, c]) => c.gorselTarif).map(([k, c]) => [k.toUpperCase(), c.gorselTarif]);
+  const fill = p => blocks.reduce((s, [k, d]) => s.split(`[${k}]`).join(d), p || '');
+  const seen = new Set(), md = [`# ${story.baslik} · görsel promptları`, '', `Format: ${story.format === '9:16' ? 'dikey 9:16 (1080x1920)' : 'yatay 16:9 (1920x1080)'}. Her görseli belirtilen dosya adıyla kaydet.`, ''];
+  for (const sh of shots) {
+    if (seen.has(sh.dosya)) continue; seen.add(sh.dosya);
+    const have = fs.existsSync(sh.dosya);
+    md.push(`## ${sh.dosya} ${have ? '✓' : '(eksik)'}`, sh.metin ? `> ${sh.metin.replace(/\*/g, '')}` : '', '', '```', [fill(sh.prompt), style].filter(Boolean).join(' '), '```', '');
+  }
+  fs.writeFileSync('out/gorsel-promptlari.md', md.join('\n'));
+  const missing = [...seen].filter(f => !fs.existsSync(f)).length;
+  console.log(`${seen.size} görsel (${missing} eksik) -> out/gorsel-promptlari.md`);
+}
 
 // --- ses karışımı: her satır kendi başlangıç anına, isteğe bağlı müzik altta ---
 const voiced = lines.filter(l => l.dosya && fs.existsSync(l.dosya));

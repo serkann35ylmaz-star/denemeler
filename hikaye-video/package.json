@@ -12,6 +12,7 @@
     "hepsi": "python3 ses.py && node build.js && node render.js"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.2.5",
     "@fontsource/nunito": "^5.3.0"
   }
 }

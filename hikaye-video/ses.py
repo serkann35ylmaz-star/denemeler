@@ -54,7 +54,7 @@ def lines_of(story):
             else:
                 continue
             v = (c.get('ses', 'tr-TR-AhmetNeural'), ev.get('hiz', c.get('hiz', '+0%')), ev.get('perde', c.get('perde', '+0Hz')))
-            out.append({'id': line_id(v, ev['metin']), 'v': v, 'text': ev['metin'], 'kim': key, 'c': c, 'duygu': ev.get('duygu', 'notr')})
+            out.append({'id': line_id(v, ev['metin']), 'v': v, 'text': ev['metin'], 'speak': ev['metin'].replace('*', ''), 'kim': key, 'c': c, 'duygu': ev.get('duygu', 'notr')})
     return out
 
 
@@ -145,13 +145,14 @@ def cb_generate(item, out_wav, takes=3):
     ref, best = reference(item), None
     for k in range(takes):
         torch.manual_seed(int(item['id'][:6], 16) + k * 101)
-        w = _tts.generate(item['text'], language_id='tr', audio_prompt_path=ref, exaggeration=ex, cfg_weight=cfg, temperature=.7)
+        w = _tts.generate(item['speak'], language_id='tr', audio_prompt_path=ref, exaggeration=ex, cfg_weight=cfg, temperature=.7)
         tmp = f'{out_wav}.take{k}.wav'
         ta.save(tmp, w, _tts.sr)
-        segs, _ = _asr.transcribe(tmp, language='tr', beam_size=3, word_timestamps=True)
+        pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', tmp, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'], check=True, capture_output=True).stdout
+        segs, _ = _asr.transcribe(np.frombuffer(pcm, np.int16).astype(np.float32) / 32768, language='tr', beam_size=3, word_timestamps=True)
         words = [x for sg in segs for x in sg.words]
         heard = ' '.join(x.word for x in words)
-        score = difflib.SequenceMatcher(None, norm(item['text']), norm(heard)).ratio()
+        score = difflib.SequenceMatcher(None, norm(item['speak']), norm(heard)).ratio()
         print(f'  deneme {k + 1}: uyum %{score * 100:.0f}', flush=True)
         if best is None or score > best[0]:
             best = (score, tmp, words, heard)
@@ -169,7 +170,8 @@ def cb_generate(item, out_wav, takes=3):
     for k in range(takes):
         if os.path.exists(f'{out_wav}.take{k}.wav'):
             os.remove(f'{out_wav}.take{k}.wav')
-    return round(score, 3)
+    rel = [[x.word.strip(), round(max(0, x.start - start), 2), round(x.end - start, 2)] for x in words]
+    return round(score, 3), rel
 
 
 def main():
@@ -193,15 +195,15 @@ def main():
             continue
         print(f'[{i + 1}/{len(items)}] {motor} · {it["kim"]}: {text[:60]}', flush=True)
         if SESSIZ:
-            dur, env = fake(text)
+            dur, env = fake(it['speak'])
             db[lid] = {'dur': round(dur, 3), 'env': env, 'sessiz': True, 'metin': text}
         elif motor == 'chatterbox':
-            score = cb_generate(it, f'vo/{lid}.wav')
+            score, words = cb_generate(it, f'vo/{lid}.wav')
             dur, env = envelope(f'vo/{lid}.wav')
-            db[lid] = {'dur': round(dur, 3), 'env': env, 'metin': text, 'motor': motor, 'uyum': score}
+            db[lid] = {'dur': round(dur, 3), 'env': env, 'metin': text, 'motor': motor, 'uyum': score, 'kelimeler': words}
         else:
             mp3 = f'vo/{lid}.mp3'
-            asyncio.run(tts(text, v, mp3))
+            asyncio.run(tts(it['speak'], v, mp3))
             to_wav(mp3, f'vo/{lid}.wav')
             os.remove(mp3)
             dur, env = envelope(f'vo/{lid}.wav')

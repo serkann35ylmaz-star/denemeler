@@ -431,10 +431,87 @@ function titleCards(sc, t) {
   }
 }
 
+// ---------- görsel çekimler (yapay zekâ / kendi görsellerin) ----------
+// sahne.gorsel ilk çekim; herhangi bir olayda "gorsel" verilirse o anda yeni çekime kesilir.
+function shotAt(sc, t) {
+  let shot = sc.gorsel ? { src: sc.gorsel, start: sc.start, hareket: sc.hareket } : null, end = sc.end;
+  for (const ev of sc.olaylar) {
+    if (!ev.gorsel) continue;
+    if (ev.start <= t) shot = { src: ev.gorsel, start: ev.start, hareket: ev.hareket };
+    else { end = ev.start; break; }
+  }
+  if (shot) shot.end = end;
+  return shot;
+}
+const MOVES = ['yaklas', 'saga', 'uzaklas', 'sola', 'yukari'];
+function drawShot(shot, t) {
+  const img = IMAGES[shot.src]; if (!img) return;
+  const p = clamp((t - shot.start) / Math.max(.5, shot.end - shot.start)), e = p * .85 + smooth(p) * .15;
+  const mv = shot.hareket || MOVES[hash(shot.src) % MOVES.length];
+  let z = 1.08, dx = 0, dy = 0;
+  if (mv === 'yaklas') z = lerp(1.02, 1.16, e); else if (mv === 'uzaklas') z = lerp(1.16, 1.02, e);
+  else if (mv === 'sola') { z = 1.12; dx = lerp(.04, -.04, e); } else if (mv === 'saga') { z = 1.12; dx = lerp(-.04, .04, e); }
+  else if (mv === 'yukari') { z = 1.12; dy = lerp(.04, -.04, e); } else if (mv === 'asagi') { z = 1.12; dy = lerp(-.04, .04, e); }
+  const punch = 1 + .04 * Math.max(0, 1 - (t - shot.start) / .25); // kesmede küçük vuruş
+  const k = Math.max(W / img.width, H / img.height) * z * punch, w = img.width * k, h = img.height * k;
+  ctx.drawImage(img, (W - w) / 2 + dx * W + Math.sin(t * .8) * 3, (H - h) / 2 + dy * H + Math.sin(t * .6 + 1) * 3, w, h);
+}
+
+// Kelime zamanları: Whisper kelimeleri metinle aynı sayıdaysa onları, değilse harf sayısına göre dağıt
+function wordTimes(ev) {
+  const toks = ev.metin.split(/\s+/).filter(Boolean), kw = ev.kelimeler || [];
+  if (kw.length === toks.length) return toks.map((w, i) => [w, kw[i][1], kw[i][2]]);
+  const tot = toks.reduce((a, w) => a + w.length + 1, 0); let acc = 0;
+  return toks.map(w => { const a = acc / tot * ev.konusma; acc += w.length + 1; return [w, a, acc / tot * ev.konusma]; });
+}
+function chunks(ev) {
+  if (ev._chunks) return ev._chunks;
+  const out = []; let cur = [];
+  for (const wt of wordTimes(ev)) {
+    cur.push(wt); const txt = cur.map(x => x[0]).join(' ').replace(/\*/g, '');
+    if (cur.length >= 3 || txt.length >= 16 || /[.,!?;:…]$/.test(wt[0])) { out.push(cur); cur = []; }
+  }
+  if (cur.length) { const prev = out[out.length - 1]; if (cur.length === 1 && prev && prev.length < 4) prev.push(...cur); else out.push(cur); } // tek kalan kelimeyi öncekine ekle
+  return (ev._chunks = out);
+}
+function boldSubtitles(sc, t) {
+  for (const ev of sc.olaylar) {
+    if ((ev.tip !== 'replik' && ev.tip !== 'anlatici') || t < ev.start || t > ev.start + ev.konusma + .25) continue;
+    const cs = chunks(ev), lt = t - ev.start;
+    let ci = cs.findIndex((c, i) => lt < (cs[i + 1] ? cs[i + 1][0][1] : ev.konusma + .25)); if (ci < 0) continue;
+    const c = cs[ci], since = lt - c[0][1], pop = 1 - .08 * Math.max(0, 1 - since / .12);
+    const fs = Math.round(W * .058), y = H * (D.altyaziY || .7);
+    ctx.font = `900 ${fs}px ${FONT}`; ctx.textBaseline = 'middle';
+    let hl = false; const parts = [];
+    for (const [w] of c) { let txt = w; if (txt.startsWith('*')) hl = true; const on = hl || txt.includes('*'); if (txt.endsWith('*') || txt.replace(/^\*/, '').includes('*')) hl = false; parts.push([txt.replace(/\*/g, ''), on]); }
+    const sp = ctx.measureText(' ').width, widths = parts.map(([w]) => ctx.measureText(w).width), tw = widths.reduce((a, b) => a + b, 0) + sp * (parts.length - 1);
+    ctx.save(); ctx.translate(W / 2, y); ctx.scale(pop, pop);
+    const pad = fs * .35, bw = tw + pad * 2, bh = fs * 1.35;
+    ctx.fillStyle = 'rgba(12,12,16,.78)'; ctx.beginPath(); ctx.roundRect(-bw / 2, -bh / 2, bw, bh, fs * .25); ctx.fill();
+    let x = -tw / 2; ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 6;
+    parts.forEach(([w, on], i) => { ctx.fillStyle = on ? (D.vurguRenk || '#ff9a2e') : '#fff'; ctx.fillText(w, x, fs * .04); x += widths[i] + sp; });
+    ctx.restore();
+  }
+}
+function banner(sc, t) {
+  const b = sc.bant !== undefined ? sc.bant : D.baslikBant; if (!b) return;
+  const txt = (typeof b === 'string' ? b : b.metin).toLocaleUpperCase('tr'), fs = Math.round(W * .1);
+  ctx.font = `400 ${fs}px Anton, Impact, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const lines = wrap(txt, W * .78), lh = fs * 1.02, w = Math.max(...lines.map(l => ctx.measureText(l).width)) + fs * .5, h = lines.length * lh + fs * .3, y = H * .12;
+  const a = smooth(clamp(t / .4));
+  ctx.globalAlpha = a; ctx.fillStyle = (b && b.renk) || '#c8243a'; ctx.fillRect(W / 2 - w / 2, y - fs * .15, w, h);
+  ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 8;
+  lines.forEach((l, i) => ctx.fillText(l, W / 2, y + lh * (i + .5)));
+  ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+}
+
 // ---------- ana çizim ----------
 function seek(t) {
-  const [sc, si] = sceneAt(t), set = getSet(sc);
+  const [sc, si] = sceneAt(t), shot = shotAt(sc, t);
+  if (shot) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); drawShot(shot, t); }
+  const set = shot ? null : getSet(sc);
   const { cast, order } = castAt(sc, t), cam = camAt(sc, t, cast);
+  if (!shot) {
   drawSky(set, cam, t);
   for (const [d, c] of set.layers) withLayer(cam, d, () => ctx.drawImage(c, -LW / 2, -(LH - LG)));
   if (set.rays) godRays(t, set.light);
@@ -446,9 +523,10 @@ function seek(t) {
     for (const [k] of list) { const c = cast[k]; if (c.vis && D.karakterler[k]) drawCharacter(D.karakterler[k], c, t); }
   });
   for (const [d, c] of set.fg || []) withLayer(cam, d, () => ctx.drawImage(c, -LW / 2, -(LH - LG)));
-  particles(sc.efekt === undefined ? set.efekt : sc.efekt, t);
+  }
+  particles(sc.efekt === undefined ? (set && set.efekt) : sc.efekt, t);
   // renk tonu + vinyet + film greni
-  const [gc, ga] = sc.ton || set.grade; ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = ga * 2.2; ctx.fillStyle = gc; ctx.fillRect(0, 0, W, H);
+  const [gc, ga] = sc.ton || (set ? set.grade : ['#000', 0]); ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = ga * 2.2; ctx.fillStyle = gc; ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.drawImage(vignette, 0, 0);
   ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = .07; ctx.fillStyle = ctx.createPattern(grains[Math.floor(t * D.fps) % 4], 'repeat'); ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
@@ -462,17 +540,27 @@ function seek(t) {
   // sinema bantları
   let barH = 0;
   if (D.sinemaBantlari) { barH = (H - W / 2.39) / 2 * smooth(clamp(t / 1.2)); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, barH); ctx.fillRect(0, H - barH, W, barH); }
-  subtitles(sc, t, barH);
+  if (D.altyaziStil === 'vurgulu') boldSubtitles(sc, t); else subtitles(sc, t, barH);
+  banner(sc, t);
 }
 
 // ---------- başlatma ----------
 const IMAGES = {};
-const imgs = D.sahneler.map(s => s.mekan && s.mekan.resim).filter(Boolean);
+const imgs = [...new Set(D.sahneler.flatMap(s => [s.mekan && s.mekan.resim, s.gorsel, ...s.olaylar.map(e => e.gorsel)]).filter(Boolean))];
 const TR = 'Aa ıİşŞğĞüÜöÖçÇ';
-Promise.all([document.fonts.load(`700 40px Nunito`, TR), document.fonts.load(`900 40px Nunito`, TR), document.fonts.load(`italic 700 40px Nunito`, TR).catch(() => 0),
-  ...imgs.map(src => new Promise((ok, no) => { const im = new Image(); im.onload = () => { IMAGES[src] = im; ok(); }; im.onerror = () => no(new Error('Görsel yüklenemedi: ' + src)); im.src = src; }))])
-  .then(() => { D.sahneler.forEach(getSet); seek(0); window.READY = true; if (!/render/.test(location.hash)) player(); });
+Promise.all([document.fonts.load(`700 40px Nunito`, TR), document.fonts.load(`900 40px Nunito`, TR), document.fonts.load(`italic 700 40px Nunito`, TR).catch(() => 0), document.fonts.load(`400 40px Anton`, TR).catch(() => 0),
+  ...imgs.map(src => new Promise(ok => { const im = new Image(); im.onload = () => { IMAGES[src] = im; ok(); }; im.onerror = () => { console.warn('Görsel yok, yer tutucu kullanılıyor: ' + src); IMAGES[src] = placeholder(src); ok(); }; im.src = src; }))])
+  .then(() => { D.sahneler.forEach(s => { if (!s.gorsel) getSet(s); }); seek(0); window.READY = true; if (!/render/.test(location.hash)) player(); });
 window.seek = seek;
+// Görsel henüz üretilmediyse: hangi dosyanın eksik olduğunu gösteren koyu kare
+function placeholder(src) {
+  const c = mk(W, H), g = c.getContext('2d'), r = rng(hash(src));
+  g.fillStyle = vgrad(g, 0, H, [[0, '#1b2433'], [1, '#0b0d12']]); g.fillRect(0, 0, W, H);
+  for (let i = 0; i < 6; i++) { g.fillStyle = `rgba(255,170,90,${.04 + r() * .05})`; g.beginPath(); g.arc(r() * W, r() * H, 80 + r() * 260, 0, 7); g.fill(); }
+  g.fillStyle = 'rgba(255,255,255,.55)'; g.font = `700 ${Math.round(W * .035)}px ${FONT}`; g.textAlign = 'center';
+  g.fillText('GÖRSEL BEKLENİYOR', W / 2, H * .42); g.fillStyle = 'rgba(255,255,255,.35)'; g.fillText(src, W / 2, H * .42 + W * .05);
+  return c;
+}
 
 // Tarayıcıda açınca oynatıcı: boşluk = oynat/durdur, tıkla = o ana atla
 function player() {
