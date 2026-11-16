@@ -9,7 +9,7 @@ const PREVIEW = args.includes('--onizle') || times.length;
 const TMP = 'out/kareler', WORKERS = Math.max(1, Math.min(4, os.cpus().length));
 if (!fs.existsSync('out/zaman.js')) { console.error('Önce: node build.js'); process.exit(1); }
 (async () => {
-  const b = await chromium.launch();
+  const b = await chromium.launch({ args: ['--allow-file-access-from-files'] }); // yerel görseller tuvali kirletmesin
   const D = await (async () => { const p = await b.newPage(); await p.goto('file://' + path.resolve('index.html') + '#render'); await p.waitForFunction('window.READY', null, { timeout: 120000 }); const d = await p.evaluate(() => ({ W: DATA.W, H: DATA.H, fps: DATA.fps, total: DATA.total, baslik: DATA.baslik, sc: DATA.sahneler.map(s => [s.id, s.start, s.end]) })); await p.close(); return d; })();
   const open = async () => { const p = await b.newPage({ viewport: { width: D.W, height: D.H } }); p.on('pageerror', e => console.error('HATA:', e.message)); p.on('console', m => m.type() === 'warning' && console.warn(m.text()));
     await p.goto('file://' + path.resolve('index.html') + '#render'); await p.waitForFunction('window.READY', null, { timeout: 120000 }); return p; };
