@@ -9,6 +9,7 @@ Bu depo; Claude Code ajanları (`.claude/agents/`) ve becerileri (`.claude/skill
 - **claudex-loop / claudex-route:** Planı Codex ile çapraz incelemek için (Codex CLI kurulu ve oturum açık olmalı).
 - **unslop:** Yazılan metinleri yapay zekâ kalıplarından temizlemek için.
 - **stil:** Görselden animasyonlu video stili çıkarmak için.
+- **hikaye-video:** Hikayeyi 2D sinematik, sesli animasyon videosuna çevirmek için (`hikaye-video/README.md`).
 
 ## Token tasarrufu (drona23/claude-token-efficient)
 - Read existing files before writing. Don't re-read unless changed.

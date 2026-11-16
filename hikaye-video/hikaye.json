@@ -1,0 +1,56 @@
+{
+  "baslik": "Kayıp Fener",
+  "format": "16:9",
+  "fps": 30,
+  "anlatici": { "ses": "tr-TR-AhmetNeural", "hiz": "-10%", "perde": "-6Hz" },
+  "karakterler": {
+    "ela": {
+      "ad": "Ela", "ses": "tr-TR-EmelNeural", "hiz": "-4%", "perde": "+0Hz",
+      "ten": "#f3c9a6", "sac": "#5a2e1b", "sacStil": "at-kuyrugu", "kiyafet": "#c4473a", "pantolon": "#2d3550", "boy": 0.95
+    },
+    "bilge": {
+      "ad": "Bilge Dede", "ses": "tr-TR-AhmetNeural", "hiz": "-14%", "perde": "-14Hz",
+      "ten": "#e0b08c", "sac": "#d9d4cc", "sacStil": "kel", "sakal": "#e8e4dc", "gozluk": true,
+      "kiyafet": "#4b5d3a", "pantolon": "#3a2f28", "pelerin": "#2f3a5c", "boy": 1.02
+    }
+  },
+  "sahneler": [
+    {
+      "id": "giris", "mekan": "orman-gece",
+      "kamera": { "x": -200, "zoom": 1.0, "son": { "x": 100, "zoom": 1.15 } },
+      "oyuncular": [ { "kim": "ela", "x": -1300, "yon": 1 } ],
+      "olaylar": [
+        { "tip": "yazi", "metin": "Kayıp Fener", "alt": "kısa bir masal", "sure": 3 },
+        { "tip": "anlatici", "metin": "Ormanın en karanlık gecesinde, küçük bir ışık kaybolmuştu." },
+        { "tip": "yuru", "kim": "ela", "x": -100, "sure": 4.2, "paralel": true },
+        { "tip": "anlatici", "metin": "Ve Ela, onu bulmaya kararlıydı." },
+        { "tip": "bekle", "sure": 0.6 },
+        { "tip": "replik", "kim": "ela", "metin": "Fenerim burada bir yerde olmalı...", "duygu": "dusunceli", "jest": "dusun" }
+      ]
+    },
+    {
+      "id": "karsilasma", "mekan": "orman-gece", "gecis": "kesme",
+      "kamera": { "x": 0, "zoom": 1.1 },
+      "oyuncular": [ { "kim": "ela", "x": -220, "yon": 1 }, { "kim": "bilge", "x": 900, "yon": -1 } ],
+      "olaylar": [
+        { "tip": "yuru", "kim": "bilge", "x": 220, "sure": 3 },
+        { "tip": "replik", "kim": "ela", "metin": "Kim var orada?", "duygu": "korkmus", "plan": "yakin" },
+        { "tip": "replik", "kim": "bilge", "metin": "Korkma çocuğum. Aradığın ışık, ateş böceklerinin yanında.", "duygu": "mutlu", "jest": "isaret", "plan": "orta" },
+        { "tip": "replik", "kim": "ela", "metin": "Gerçekten mi? Hemen gidelim!", "duygu": "mutlu", "jest": "el-salla" },
+        { "tip": "kamera", "x": 0, "zoom": 0.95, "sure": 1.2 }
+      ]
+    },
+    {
+      "id": "final", "mekan": "gunbatimi", "gecis": "karart",
+      "kamera": { "x": 0, "zoom": 1.25, "son": { "x": 250, "zoom": 1.0 } },
+      "oyuncular": [ { "kim": "ela", "x": -500, "yon": 1 }, { "kim": "bilge", "x": -700, "yon": 1, "z": -1 } ],
+      "olaylar": [
+        { "tip": "yuru", "kim": "ela", "x": 700, "sure": 6, "paralel": true },
+        { "tip": "yuru", "kim": "bilge", "x": 480, "sure": 6.4, "paralel": true },
+        { "tip": "bekle", "sure": 1 },
+        { "tip": "anlatici", "metin": "Bazen kaybolan ışığı bulmak için, yolda bir dost yeter." },
+        { "tip": "bekle", "sure": 1.2 }
+      ]
+    }
+  ]
+}

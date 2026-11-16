@@ -1,0 +1,128 @@
+# Hikaye Video: 2D sinematik animasyon sistemi
+
+Bir hikayeyi sesli, altyazılı, kamera hareketli 2D animasyon videosuna (MP4) çevirir.
+Her şey kodla çizilir. Görsel üretme servisi ya da ücretli bir API gerekmez.
+
+```
+hikaye.json  ──ses.py──▶  vo/ (karakter sesleri)  ──build.js──▶  out/zaman.js + out/ses.wav  ──render.js──▶  out/<başlık>.mp4
+```
+
+## Nasıl çalışır?
+
+1. Sen hikayeyi düz metin olarak yazarsın.
+2. Claude hikayeyi `hikaye.json` sahne dosyasına çevirir: karakterler, mekanlar, replikler, kamera.
+3. Üç komutla video çıkar:
+
+```bash
+cd hikaye-video
+npm install                 # bir kez (yazı tipi)
+pip install edge-tts numpy  # bir kez (seslendirme)
+python3 ses.py              # her replik için ses üretir (Edge TTS, ücretsiz)
+node build.js               # zaman çizelgesi + ses karışımı
+node render.js --onizle     # her sahneden bir kare: out/onizleme/
+node render.js              # tam video: out/<başlık>.mp4
+```
+
+İnternet yoksa `python3 ses.py --sessiz` süreleri tahmin eder, böylece sessiz önizleme yapılabilir.
+`index.html` dosyasını tarayıcıda açarsan video gerçek zamanlı oynar (boşluk: oynat/durdur).
+
+## Neler var?
+
+- **Karakterler:** Kodla çizilen, eklemli 2D kuklalar. Yürüme döngüsü, nefes alma, göz kırpma, konuşurken sese göre açılan ağız (dudak senkronu), duygular, el kol hareketleri.
+- **Sinematik görünüm:** Derinlikli paralaks katmanlar, bulanık ön plan (alan derinliği), 2.39:1 sinema bantları, renk tonu, vinyet, film greni, el kamerası titreşimi.
+- **Kamera:** Yavaş yaklaşma ve kaydırma, yakın ve orta çekim, kesme geçişleri, sarsıntı.
+- **Efektler:** Ateş böceği, yağmur, kar, toz, kıvılcım, ışık huzmesi.
+- **Ses:** Her karaktere ayrı Türkçe ses. Anlatıcı, isteğe bağlı fon müziği.
+- **Format:** 16:9 (YouTube) veya 9:16 (Reels/TikTok/Shorts).
+
+## hikaye.json başvuru kılavuzu
+
+### Üst düzey
+
+| alan | açıklama |
+|---|---|
+| `baslik` | Video adı, çıktı dosyasının adı da buradan gelir |
+| `format` | `"16:9"` (varsayılan) veya `"9:16"` |
+| `fps` | Saniyedeki kare sayısı, varsayılan 30 |
+| `anlatici` | `{ "ses", "hiz", "perde" }` |
+| `karakterler` | Karakter tanımları (aşağıda) |
+| `sahneler` | Sahne listesi (aşağıda) |
+| `muzik`, `muzikSeviyesi` | İsteğe bağlı fon müziği dosyası (ör. `muzik/fon.mp3`) ve ses seviyesi (0.18) |
+| `altyazi`, `sinemaBantlari` | `true`/`false` |
+| `repliklerArasi` | Replikler arasındaki boşluk (sn), varsayılan 0.35 |
+
+### Karakter
+
+```json
+"ela": {
+  "ad": "Ela", "ses": "tr-TR-EmelNeural", "hiz": "-4%", "perde": "+0Hz",
+  "ten": "#f3c9a6", "sac": "#5a2e1b", "sacStil": "at-kuyrugu",
+  "kiyafet": "#c4473a", "pantolon": "#2d3550", "boy": 0.95
+}
+```
+
+- **Sesler:** `tr-TR-EmelNeural` (kadın), `tr-TR-AhmetNeural` (erkek). Yaşlı ses için `perde` değerini düşür (`-14Hz`), çocuk sesi için yükselt (`+25Hz`). `hiz` ile konuşma hızı ayarlanır.
+- **Saç stilleri** (`sacStil`): `kisa`, `uzun`, `topuz`, `at-kuyrugu`, `kivircik`, `kel`
+- **Ek seçenekler:** `sakal` (renk), `gozluk` (true), `etek` (true, rengi `pantolon`), `pelerin` (renk), `goz` (renk), `ayakkabi` (renk), `renk` (altyazıdaki isim rengi), `boy` (0.7 çocuk, 1.0 yetişkin)
+
+### Sahne
+
+```json
+{
+  "id": "karsilasma", "mekan": "orman-gece", "gecis": "karart", "efekt": "ates-bocegi",
+  "kamera": { "x": 0, "zoom": 1.1, "son": { "x": 200, "zoom": 1.3 } },
+  "oyuncular": [ { "kim": "ela", "x": -220, "yon": 1, "duygu": "notr" } ],
+  "olaylar": [ ... ]
+}
+```
+
+- **Mekanlar:** `orman-gece`, `orman-gunduz`, `sehir-gece`, `oda`, `gunbatimi`, `deniz`. Kendi görselini kullanmak için: `"mekan": { "resim": "arkaplan/saray.jpg" }`
+- **Geçiş** (`gecis`): `karart`, `beyaz`, `kesme`
+- **Efekt** (`efekt`): `ates-bocegi`, `yagmur`, `kar`, `toz`, `kivilcim`, efektsiz için `null`
+- **Konum:** `x` sahne ortasına göre piksel cinsindendir. Ekran yaklaşık −900 ile +900 arasını gösterir. `yon` 1 ise sağa, −1 ise sola bakar. `z` ile önde/arkada durma sırası verilir (büyük olan önde).
+- **Kamera:** `x`, `y`, `zoom` (1 = geniş plan). `son` verilirse sahne boyunca oraya doğru yavaşça kayar. `sarsinti` piksel cinsinden titreme miktarıdır.
+- `ton: ["#ff8040", 0.2]` sahnenin renk tonunu değiştirir.
+
+### Olaylar (sırayla oynar)
+
+Her olay bir öncekinin bittiği anda başlar. `"paralel": true` eklenen olay bir sonrakini bekletmez (ör. biri yürürken anlatıcı konuşur).
+
+| tip | alanlar | ne yapar |
+|---|---|---|
+| `replik` | `kim`, `metin`, `duygu`, `jest`, `plan` | Karakter konuşur. Süre sesten gelir, ağız sese göre oynar |
+| `anlatici` | `metin` | Anlatıcı konuşur, altyazı italik görünür |
+| `yuru` | `kim`, `x`, `sure` (veya `hiz`), `sonYon` | Karakter verilen x konumuna yürür. Sahneye girip çıkmak için ekran dışındaki bir x kullan |
+| `duygu` | `kim`, `duygu` | Yüz ifadesini değiştirir |
+| `jest` | `kim`, `jest`, `sure` | Konuşmadan el kol hareketi |
+| `bak` | `kim`, `yon` veya `hedef` | Bir yöne ya da bir karaktere döner |
+| `kamera` | `x`, `y`, `zoom`, `sure`, `kesme`, `hedef`, `sarsinti` | Kamera hareketi. `hedef: "ela"` karakteri kadraja alır, `kesme: true` anında geçer |
+| `yazi` | `metin`, `alt`, `sure`, `arkaplan: "siyah"`, `konum: "ust"` | Başlık ya da ara yazı |
+| `bekle` | `sure` | Duraklama |
+| `goster` / `gizle` | `kim` | Karakteri görünür ya da görünmez yapar |
+
+- **Duygular:** `notr`, `mutlu`, `uzgun`, `kizgin`, `saskin`, `korkmus`, `dusunceli`
+- **Jestler:** `el-salla`, `isaret`, `kollar-acik`, `dusun`, `yumruk`, `omuz-silk`, `dur`, `yuz-kapat`. Konuşurken jest verilmezse karakter kendiliğinden hafifçe el kol oynatır (`"otomatikJest": false` bunu kapatır).
+- **Plan** (`plan`, replik süresince kamera): `yakin`, `cokyakin`, `orta`
+- Dinleyen karakterler kendiliğinden konuşana döner (`"otomatikBakis": false` bunu kapatır).
+
+## İpuçları
+
+- Bir sahne 10 ile 25 saniye arasında iyi durur. Uzun diyalogları `plan` değişimleriyle (geniş, yakın, orta) böl.
+- Her sahne değiştiğinde önce `node render.js --onizle` çalıştır, kareleri kontrol et, sonra tam videoyu al.
+- Sesler önbelleğe alınır. Metni değiştirmediğin replikler yeniden üretilmez.
+- 40 saniyelik 1080p video bu ortamda yaklaşık 1 dakikada çıkar.
+
+## Dosyalar
+
+| dosya | görevi |
+|---|---|
+| `hikaye.json` | Hikaye: tek düzenlemen gereken dosya |
+| `ses.py` | Edge TTS ile seslendirme, sessizlik kırpma, dudak senkronu verisi |
+| `build.js` | Zamanlama ve ses karışımı |
+| `engine.js` | Çizim motoru: mekanlar, kukla, kamera, efektler, altyazı |
+| `render.js` | Önizleme kareleri ve MP4 çıktısı (Playwright + ffmpeg) |
+
+## Krediler
+
+- Ses: Microsoft Edge Neural TTS (`edge-tts` kütüphanesi)
+- Yazı tipi: Nunito, SIL Open Font License 1.1 (@fontsource/nunito)
