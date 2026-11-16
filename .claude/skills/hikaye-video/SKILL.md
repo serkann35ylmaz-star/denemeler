@@ -30,6 +30,12 @@ Görselleri Canva bağlantısıyla üret: `generate-image` (PORTRAIT_9_16). Sonu
 
 **Referans kurgu temposu (kullanıcının örnek videosu):** 1-2 saniyede bir kesme, yaklaşık saniyede 3 kelimelik hızlı anlatım, ilk 2 saniyede kanca cümlesi, sayılar için sayaç animasyonu, üstte kırmızı Anton başlık bandı, ortada 2-3 kelimelik vurgulu altyazı. Bir satır içinde birden çok görsel gerekiyorsa satırı bölüp her parçaya ayrı `gorsel` ver.
 
+## Hareket
+
+- Her bölümde görseller indikten sonra `python3 hazirla.py <hikaye>` çalıştır (derinlik + kukla katmanı). Her çekime uygun `oynat` seç.
+- Bölüm başına 2-3 kilit çekimi `canlandir.py` ile gerçek klibe çevir (arka planda, tek tek; aynı anda iki tane çalıştırma, bellek yetmez). Hareket tarifini İngilizce ve tek eylem olarak yaz.
+- Ses (global python, torch 2.6 CPU + diffusers 0.29) ile video modeli (`~/.venvs/video`, diffusers 0.43) ayrı ortamlarda. Global ortama diffusers yükseltme kurma; Chatterbox bozulur.
+
 ## Notlar
 
 - Mekan listesinde olmayan bir yer gerekirse en yakın mekanı kullan ya da `engine.js` içindeki `SETS` nesnesine yeni bir mekan ekle (mevcutları örnek al).

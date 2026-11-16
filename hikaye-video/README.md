@@ -62,6 +62,14 @@ Kuklalar yerine yapay zekâyla çizilmiş görseller kullanılır. Her çekim ta
 - Karaktere `"gorselReferans": "<Canva media id>"` eklenirse görseller o karakter kartı referans verilerek üretilir. Böylece karakter her sahnede aynı kalır.
 - `node build.js` her çekimin tam promptunu `out/gorsel-promptlari.md` dosyasına yazar. Henüz üretilmemiş görseller videoda "GÖRSEL BEKLENİYOR" kartı olarak görünür, böylece önizleme yine de yapılabilir.
 
+### Görselleri hareketlendirme (hepsi açık kaynak, ücretsiz, bu makinede)
+
+Üç katman var. Hepsi ücretsiz; her biri bir öncekinin üstüne eklenir:
+
+1. **2.5D kamera** (her çekimde, anında): `python3 hazirla.py ornekler/x.json` her görselin derinlik haritasını çıkarır (Depth Anything V2). Kamera hareket ettikçe öndeki nesneler arkadakilerden daha çok kayar.
+2. **Kukla katmanı** (her çekimde, görsel başına ~10 sn): Aynı komut özneyi arka plandan keser (rembg / IS-Net) ve arkasında kalan boşluğu doldurur (LaMa). Böylece karakter ayrı bir katman olarak oynatılabilir. Çekimde `"oynat"` ile seçilir: `nefes` (varsayılan), `surus` (kameraya doğru sürüş), `git` (uzaklaşma), `ilerle`, `yuru`, `titre`, `salin`, `yukari`, `yok`. Özne görselin %60'ından büyükse katman yapılmaz.
+3. **Gerçek yapay zekâ animasyonu** (yalnızca önemli çekimlerde, işlemcide çekim başına 10-30 dk): `~/.venvs/video/bin/python canlandir.py gorseller/x/01.jpg "ne hareket etsin (İngilizce)" 49 448` LTX-Video 2B (Lightricks, açık ağırlık) ile görselden 2 saniyelik bir klip üretir ve `01.mp4` olarak kaydeder. `node build.js` bu klibi bulur; video o çekimde görsel yerine klibi oynatır.
+
 **Görseller nereden gelir?** Claude bunları Canva bağlantısıyla (Canva'nın yapay zekâ görsel üretimi) üretip `gorseller/` klasörüne 1080×1920 olarak indirir. İstersen promptları başka bir araçta kullanıp görselleri aynı dosya adlarıyla klasöre koyabilirsin.
 
 ## hikaye.json başvuru kılavuzu

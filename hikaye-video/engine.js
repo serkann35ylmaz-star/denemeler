@@ -507,7 +507,15 @@ function drawPuppet(shot, t, D2, z, vx, vy, cx, cy) {
   ctx.drawImage(fg, place[0], place[1], place[2], place[3]);
   ctx.restore();
 }
+// Yapay zekâ klibi: kareleri sırayla oynat, klip bitince son karede yavaşça yaklaş
+function drawClip(shot, t, frames) {
+  const lt = t - shot.start, k = D.klipler[shot.src], i = Math.min(frames.length - 1, Math.floor(lt * k.fps));
+  const img = frames[i], hold = Math.max(0, lt - frames.length / k.fps), z = 1.02 + hold * .015;
+  const punch = 1 + .035 * Math.max(0, 1 - lt / .25), sc = Math.max(W / img.width, H / img.height) * z * punch;
+  ctx.drawImage(img, (W - img.width * sc) / 2, (H - img.height * sc) / 2, img.width * sc, img.height * sc);
+}
 function drawShot(shot, t) {
+  if (CLIPS[shot.src]) return drawClip(shot, t, CLIPS[shot.src]);
   const img = IMAGES[shot.src]; if (!img) return;
   const D2 = DEPTH[shot.src] || (DEPTH_IMG[shot.src] && prepDepth(shot.src));
   if (D2) return drawShotDepth(shot, t, D2);
@@ -612,11 +620,13 @@ function seek(t) {
 }
 
 // ---------- başlatma ----------
-const IMAGES = {}, DEPTH_IMG = {}, FG_IMG = {}, BG_IMG = {};
+const IMAGES = {}, DEPTH_IMG = {}, FG_IMG = {}, BG_IMG = {}, CLIPS = {};
 const imgs = [...new Set(D.sahneler.flatMap(s => [s.mekan && s.mekan.resim, s.gorsel, ...s.olaylar.map(e => e.gorsel)]).filter(Boolean))];
 const TR = 'Aa ıİşŞğĞüÜöÖçÇ';
 Promise.all([document.fonts.load(`700 40px Nunito`, TR), document.fonts.load(`900 40px Nunito`, TR), document.fonts.load(`italic 700 40px Nunito`, TR).catch(() => 0), document.fonts.load(`400 40px Anton`, TR).catch(() => 0),
   ...imgs.flatMap(src => [['.fg.png', FG_IMG], ['.bg.jpg', BG_IMG]].map(([ext, store]) => new Promise(ok => { const im = new Image(); im.onload = () => { store[src] = im; ok(); }; im.onerror = () => ok(); im.src = src.replace(/\.[a-z]+$/i, ext); }))),
+  ...Object.entries(D.klipler || {}).map(([src, k]) => Promise.all([...Array(k.n).keys()].map(i => new Promise(ok => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = `${k.dir}/${String(i + 1).padStart(3, '0')}.jpg`; })))
+    .then(fr => { fr = fr.filter(Boolean); if (fr.length) CLIPS[src] = fr; })),
   ...imgs.map(src => new Promise(ok => { const di = new Image(); di.onload = () => { DEPTH_IMG[src] = di; ok(); }; di.onerror = () => ok(); di.src = src.replace(/\.[a-z]+$/i, '.depth.png'); })),
   ...imgs.map(src => new Promise(ok => { const im = new Image(); im.onload = () => { IMAGES[src] = im; ok(); }; im.onerror = () => { console.warn('Görsel yok, yer tutucu kullanılıyor: ' + src); IMAGES[src] = placeholder(src); ok(); }; im.src = src; }))])
   .then(() => { D.sahneler.forEach(s => { if (!s.gorsel) getSet(s); }); seek(0); window.READY = true; if (!/render/.test(location.hash)) player(); });
