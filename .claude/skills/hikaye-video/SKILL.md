@@ -33,7 +33,8 @@ Görselleri Canva bağlantısıyla üret: `generate-image` (PORTRAIT_9_16). Sonu
 ## Hareket
 
 - Her bölümde görseller indikten sonra `python3 hazirla.py <hikaye>` çalıştır (derinlik + kukla katmanı). Her çekime uygun `oynat` seç.
-- Bölüm başına 2-3 kilit çekimi `canlandir.py` ile gerçek klibe çevir (arka planda, tek tek; aynı anda iki tane çalıştırma, bellek yetmez). Hareket tarifini İngilizce ve tek eylem olarak yaz.
+- Bölüm başına 2-3 kilit çekimi `canlandir.py` ile gerçek klibe çevir (arka planda, tek tek; aynı anda iki tane çalıştırma, bellek yetmez). Hareket tarifini İngilizce ve tek, küçük bir eylem olarak yaz; kamera hareketi isteme.
+- Kayma olmasın diye her zaman karakterin `gorselTarif` metnini `--tarif` ile ver. `--son-kare 0.6` varsayılan olarak açık; son kareyi de görsele bağlar. Varsayılan genişlik 384, kare sayısı 49 (15 GB belleğe sığan en büyük ayar).
 - Ses (global python, torch 2.6 CPU + diffusers 0.29) ile video modeli (`~/.venvs/video`, diffusers 0.43) ayrı ortamlarda. Global ortama diffusers yükseltme kurma; Chatterbox bozulur.
 
 ## Notlar

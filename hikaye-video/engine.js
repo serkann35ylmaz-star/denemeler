@@ -507,12 +507,20 @@ function drawPuppet(shot, t, D2, z, vx, vy, cx, cy) {
   ctx.drawImage(fg, place[0], place[1], place[2], place[3]);
   ctx.restore();
 }
-// Yapay zekâ klibi: kareleri sırayla oynat, klip bitince son karede yavaşça yaklaş
+// Yapay zekâ klibi. Kadraj, diğer çekimlerle aynı (kaplama x1.14 + aynı kamera hareketi), böylece
+// görselden klibe geçerken karakter ve mekân yerinden oynamaz. Klip çekimden kısaysa donmaz:
+// ileri-geri (ping-pong) oynar; --son-kare ile üretilen klipler başladığı kareye döndüğü için dikiş görünmez.
 function drawClip(shot, t, frames) {
-  const lt = t - shot.start, k = D.klipler[shot.src], i = Math.min(frames.length - 1, Math.floor(lt * k.fps));
-  const img = frames[i], hold = Math.max(0, lt - frames.length / k.fps), z = 1.02 + hold * .015;
+  const lt = t - shot.start, k = D.klipler[shot.src], n = frames.length, f = Math.floor(lt * k.fps);
+  const cyc = Math.max(1, 2 * n - 2), m = f % cyc, img = frames[m < n ? m : cyc - m];
+  const p = clamp(lt / Math.max(.5, shot.end - shot.start)), e = p * .8 + smooth(p) * .2;
+  const mv = shot.hareket || MOVES[hash(shot.src) % MOVES.length];
+  let z = 1.14, dx = 0, dy = 0; const A = W * .02;
+  if (mv === 'yaklas') z *= 1 + .05 * e; else if (mv === 'uzaklas') z *= 1.05 - .05 * e;
+  else if (mv === 'saga') dx = lerp(-A, A, e); else if (mv === 'sola') dx = lerp(A, -A, e);
+  else if (mv === 'yukari') dy = lerp(A, -A, e); else if (mv === 'asagi') dy = lerp(-A, A, e);
   const punch = 1 + .035 * Math.max(0, 1 - lt / .25), sc = Math.max(W / img.width, H / img.height) * z * punch;
-  ctx.drawImage(img, (W - img.width * sc) / 2, (H - img.height * sc) / 2, img.width * sc, img.height * sc);
+  ctx.drawImage(img, (W - img.width * sc) / 2 - dx, (H - img.height * sc) / 2 - dy, img.width * sc, img.height * sc);
 }
 function drawShot(shot, t) {
   if (CLIPS[shot.src]) return drawClip(shot, t, CLIPS[shot.src]);
