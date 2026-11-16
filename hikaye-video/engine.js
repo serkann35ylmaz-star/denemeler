@@ -444,8 +444,43 @@ function shotAt(sc, t) {
   return shot;
 }
 const MOVES = ['yaklas', 'saga', 'uzaklas', 'sola', 'yukari'];
+// 2.5D: derinlik haritası varsa her pikseli derinliğine göre kaydır (öndekiler daha çok hareket eder)
+const DEPTH = {}, warpOut = { img: null };
+function prepDepth(src) {
+  const img = IMAGES[src], dimg = DEPTH_IMG[src]; if (!img || !dimg) return null;
+  const k = Math.max(W / img.width, H / img.height) * 1.14, w = img.width * k, h = img.height * k, x = (W - w) / 2, y = (H - h) / 2;
+  const c = mk(W, H), g = c.getContext('2d', { willReadFrequently: true });
+  g.drawImage(img, x, y, w, h); const col = new Uint32Array(g.getImageData(0, 0, W, H).data.buffer.slice(0));
+  g.clearRect(0, 0, W, H); g.drawImage(dimg, x, y, w, h); const dd = g.getImageData(0, 0, W, H).data;
+  const dep = new Float32Array(W * H); for (let i = 0; i < dep.length; i++) dep[i] = dd[i * 4] / 255;
+  return (DEPTH[src] = { col, dep });
+}
+function drawShotDepth(shot, t, D2) {
+  const p = clamp((t - shot.start) / Math.max(.5, shot.end - shot.start)), e = p * .8 + smooth(p) * .2;
+  const mv = shot.hareket || MOVES[hash(shot.src) % MOVES.length];
+  let zg = 1, kz = 0, vx = 0, vy = 0; const A = W * .035; // en fazla ~38 px paralaks
+  if (mv === 'yaklas') { zg = 1 + .05 * e; kz = .07 * e; } else if (mv === 'uzaklas') { zg = 1.05 - .05 * e; kz = .07 * (1 - e); }
+  else if (mv === 'saga') vx = lerp(-A, A, e); else if (mv === 'sola') vx = lerp(A, -A, e);
+  else if (mv === 'yukari') vy = lerp(A, -A, e); else if (mv === 'asagi') vy = lerp(-A, A, e);
+  vx += Math.sin(t * .9) * 4; vy += Math.sin(t * .7 + 1) * 3; // nefes alan kamera
+  const punch = 1 + .035 * Math.max(0, 1 - (t - shot.start) / .25);
+  if (!warpOut.img) warpOut.img = ctx.createImageData(W, H);
+  const out = new Uint32Array(warpOut.img.data.buffer), { col, dep } = D2, cx = W / 2, cy = H * .5;
+  for (let y = 0; y < H; y++) {
+    const row = y * W, ry = y - cy;
+    for (let x = 0; x < W; x++) {
+      const d = dep[row + x], s = 1 / (zg * punch * (1 + kz * d));
+      let sx = (cx + (x - cx) * s - vx * d) | 0, sy = (cy + ry * s - vy * d) | 0;
+      sx = sx < 0 ? 0 : sx >= W ? W - 1 : sx; sy = sy < 0 ? 0 : sy >= H ? H - 1 : sy;
+      out[row + x] = col[sy * W + sx];
+    }
+  }
+  ctx.putImageData(warpOut.img, 0, 0);
+}
 function drawShot(shot, t) {
   const img = IMAGES[shot.src]; if (!img) return;
+  const D2 = DEPTH[shot.src] || (DEPTH_IMG[shot.src] && prepDepth(shot.src));
+  if (D2) return drawShotDepth(shot, t, D2);
   const p = clamp((t - shot.start) / Math.max(.5, shot.end - shot.start)), e = p * .85 + smooth(p) * .15;
   const mv = shot.hareket || MOVES[hash(shot.src) % MOVES.length];
   let z = 1.08, dx = 0, dy = 0;
@@ -545,10 +580,11 @@ function seek(t) {
 }
 
 // ---------- başlatma ----------
-const IMAGES = {};
+const IMAGES = {}, DEPTH_IMG = {};
 const imgs = [...new Set(D.sahneler.flatMap(s => [s.mekan && s.mekan.resim, s.gorsel, ...s.olaylar.map(e => e.gorsel)]).filter(Boolean))];
 const TR = 'Aa ıİşŞğĞüÜöÖçÇ';
 Promise.all([document.fonts.load(`700 40px Nunito`, TR), document.fonts.load(`900 40px Nunito`, TR), document.fonts.load(`italic 700 40px Nunito`, TR).catch(() => 0), document.fonts.load(`400 40px Anton`, TR).catch(() => 0),
+  ...imgs.map(src => new Promise(ok => { const di = new Image(); di.onload = () => { DEPTH_IMG[src] = di; ok(); }; di.onerror = () => ok(); di.src = src.replace(/\.[a-z]+$/i, '.depth.png'); })),
   ...imgs.map(src => new Promise(ok => { const im = new Image(); im.onload = () => { IMAGES[src] = im; ok(); }; im.onerror = () => { console.warn('Görsel yok, yer tutucu kullanılıyor: ' + src); IMAGES[src] = placeholder(src); ok(); }; im.src = src; }))])
   .then(() => { D.sahneler.forEach(s => { if (!s.gorsel) getSet(s); }); seek(0); window.READY = true; if (!/render/.test(location.hash)) player(); });
 window.seek = seek;
