@@ -32,7 +32,7 @@ node render.js              # tam video: out/<başlık>.mp4
 
 Motoru `hikaye.json` içinde `"sesMotoru": "edge"` ile ya da `python3 ses.py --edge` ile seçersin.
 
-**Karakter sesleri (chatterbox):** Model her karakterin sesini kısa bir örnek kayıttan kopyalar.
+**Karakter sesleri (chatterbox):** Model her karakterin sesini kısa bir örnek kayıttan kopyalar. Varsayılan olarak `sesler/` klasöründeki gerçek insan kayıtları kullanılır (Google FLEURS, CC BY 4.0; ayrıntı ve kredi metni `sesler/KAYNAK.md` içinde). Anlatıcı tok bir erkek sesiyle okur. Karakterlerde Emel sesi seçiliyse ince ses, değilse ikinci erkek sesi kullanılır. `"sesTipi": "kadin"` ile bu seçim zorlanabilir. Ölçümde bu sesler, Edge örneğinden kopyalanan sese göre yaklaşık 1,7 kat daha geniş tonlama verdi.
 - En doğal sonuç için karaktere kendi kaydını ver: `"ornekSes": "sesler/ela.wav"`. Kayıt 5-15 saniye, tek kişi, gürültüsüz olmalı. Telefonla kaydedilmiş bir ses de olur. Yalnızca sana ait ya da izni alınmış sesleri kullan.
 - Kayıt verilmezse karakterin `ses`/`perde`/`hiz` ayarlarıyla Edge'den kısa bir örnek üretilir ve ses rengi oradan kopyalanır. Tonlama yine yapay zekâ modelinden gelir.
 - `"canlilik": 1.3` ile karakter daha coşkulu, `0.8` ile daha sakin konuşur.

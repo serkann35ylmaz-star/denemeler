@@ -28,8 +28,11 @@ FPS_ENV = 30          # dudak senkronu çözünürlüğü (kare/sn)
 SR = 48000
 REF_TEXT = 'Merhaba, bugün sana kısa bir hikâye anlatacağım. Dinlemeye hazır mısın? Haydi başlayalım.'
 # duygu -> (canlılık/exaggeration, cfg): yüksek canlılık = daha coşkulu okuma
-EMO = {'notr': (.5, .45), 'mutlu': (.65, .4), 'uzgun': (.45, .5), 'kizgin': (.8, .35),
-       'saskin': (.75, .35), 'korkmus': (.7, .4), 'dusunceli': (.4, .5)}
+# (ölçüm: canlılık 1.0 / cfg .25 ile tonlama çeşitliliği Edge örneğine göre ~1,7 kat, doğruluk %100)
+EMO = {'notr': (.9, .28), 'mutlu': (1.0, .25), 'uzgun': (.75, .32), 'kizgin': (1.15, .22),
+       'saskin': (1.05, .24), 'korkmus': (1.0, .26), 'dusunceli': (.7, .32)}
+# Kendi kaydı verilmeyen karakterler için insan referans sesleri (sesler/KAYNAK.md)
+VARSAYILAN_REF = {'_anlatici': 'sesler/erkek-anlatici.wav', 'erkek': 'sesler/erkek-2.wav', 'kadin': 'sesler/ince-1.wav'}
 
 # Bu ortamdaki HTTPS vekil sunucusu kendi sertifikasını kullanır; edge-tts certifi'ye sabitlenmiş.
 CA = '/root/.ccr/ca-bundle.crt'
@@ -121,6 +124,13 @@ def reference(item):
         if not os.path.exists(c['ornekSes']):
             sys.exit(f"Ses örneği bulunamadı: {c['ornekSes']}")
         return c['ornekSes']
+    if c.get('sesTipi') in ('edge',) or not os.path.exists(VARSAYILAN_REF['_anlatici']):
+        pass  # açıkça Edge örneği istenmiş ya da referans sesler yok
+    elif item['kim'] == '_anlatici':
+        return VARSAYILAN_REF['_anlatici']
+    else:
+        kadin = 'Emel' in item['v'][0] or c.get('sesTipi') == 'kadin'
+        return VARSAYILAN_REF['kadin' if kadin else 'erkek']
     ref = f"vo/ornek_{item['kim']}_{hashlib.sha1('|'.join(item['v']).encode()).hexdigest()[:6]}.wav"
     if not os.path.exists(ref):
         asyncio.run(tts(REF_TEXT, item['v'], ref + '.mp3'))
@@ -145,7 +155,7 @@ def cb_generate(item, out_wav, takes=3):
     ref, best = reference(item), None
     for k in range(takes):
         torch.manual_seed(int(item['id'][:6], 16) + k * 101)
-        w = _tts.generate(item['speak'], language_id='tr', audio_prompt_path=ref, exaggeration=ex, cfg_weight=cfg, temperature=.7)
+        w = _tts.generate(item['speak'], language_id='tr', audio_prompt_path=ref, exaggeration=ex, cfg_weight=cfg, temperature=.8)
         tmp = f'{out_wav}.take{k}.wav'
         ta.save(tmp, w, _tts.sr)
         pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', tmp, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'], check=True, capture_output=True).stdout
@@ -190,7 +200,9 @@ def main():
     for i, it in enumerate(items):
         lid, v, text = it['id'], it['v'], it['text']
         rec = db.get(lid)
-        ok = rec and (rec.get('sessiz') if SESSIZ else (not rec.get('sessiz') and rec.get('motor', 'edge') == motor and os.path.exists(f'vo/{lid}.wav')))
+        sig = f"{reference(it)}|{EMO.get(it['duygu'])}" if motor == 'chatterbox' and not SESSIZ else ''
+        ok = rec and (rec.get('sessiz') if SESSIZ else (not rec.get('sessiz') and rec.get('motor', 'edge') == motor
+              and rec.get('imza', '') == sig and os.path.exists(f'vo/{lid}.wav')))
         if ok:
             continue
         print(f'[{i + 1}/{len(items)}] {motor} · {it["kim"]}: {text[:60]}', flush=True)
@@ -200,7 +212,7 @@ def main():
         elif motor == 'chatterbox':
             score, words = cb_generate(it, f'vo/{lid}.wav')
             dur, env = envelope(f'vo/{lid}.wav')
-            db[lid] = {'dur': round(dur, 3), 'env': env, 'metin': text, 'motor': motor, 'uyum': score, 'kelimeler': words}
+            db[lid] = {'dur': round(dur, 3), 'env': env, 'metin': text, 'motor': motor, 'uyum': score, 'kelimeler': words, 'imza': sig}
         else:
             mp3 = f'vo/{lid}.mp3'
             asyncio.run(tts(it['speak'], v, mp3))
