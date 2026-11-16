@@ -25,6 +25,11 @@ Sistem `hikaye-video/` klasöründe. Alan başvurusu: `hikaye-video/README.md` (
 Kullanıcı referanstaki gibi yapay zekâ görselli dikey video isterse `ornekler/kurye.json` yapısını kullan (`format: 9:16`, `gorselStil`, karakterlerde `gorselTarif`, her çekimde `gorsel` + `gorselPrompt`, vurgu için `*kelime*`).
 Görselleri Canva bağlantısıyla üret: `generate-image` (PORTRAIT_9_16). Sonuç yalnızca küçük önizleme döndürür; tam boy için `create-design` (format "Instagram Story (Portrait)", references=[media id], brief: yalnız görsel, tam sayfa, yazı yok) → `export-design` (jpg, 1080x1920) → URL'yi `curl` ile `gorseller/...` yoluna indir. Görselleri indirdikten sonra kontrol et (karakter tutarlılığı, istenmeyen yazı).
 
+**Karakter tutarlılığı:** Önce her ana karakter için Canva'da bir referans kartı üret (önden ve 3/4 açıdan tam boy, düz koyu arka plan). Karakterin `gorselReferans` alanına bu kartın Canva media id'sini yaz. Sonra her çekimde `generate-image` çağrısına `imageReferences: [{type: MEDIA, id}]` ekle ve prompta "the exact character from the reference image (...)" yaz.
+- Mevcut dizi ana karakteri (2026-11-16): Canva media `MAHbG9bFtyY`. Görünüşü: yuvarlak bembeyaz kafa, minik siyah nokta gözler, kalın kaşlar, lacivert bere, kiremit rengi bomber ceket, beyaz tişört, koyu kot, beyaz çizgi film elleri.
+
+**Referans kurgu temposu (kullanıcının örnek videosu):** 1-2 saniyede bir kesme, yaklaşık saniyede 3 kelimelik hızlı anlatım, ilk 2 saniyede kanca cümlesi, sayılar için sayaç animasyonu, üstte kırmızı Anton başlık bandı, ortada 2-3 kelimelik vurgulu altyazı. Bir satır içinde birden çok görsel gerekiyorsa satırı bölüp her parçaya ayrı `gorsel` ver.
+
 ## Notlar
 
 - Mekan listesinde olmayan bir yer gerekirse en yakın mekanı kullan ya da `engine.js` içindeki `SETS` nesnesine yeni bir mekan ekle (mevcutları örnek al).

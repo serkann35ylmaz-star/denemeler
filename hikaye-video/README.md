@@ -59,6 +59,7 @@ Kuklalar yerine yapay zekâyla çizilmiş görseller kullanılır. Her çekim ta
 - `"hareket"`: `yaklas`, `uzaklas`, `sola`, `saga`, `yukari`, `asagi`. Verilmezse otomatik seçilir.
 - Metinde `*kelime*` yazılan yer altyazıda turuncu vurgulanır. Yıldızlar seslendirmede okunmaz.
 - `"gorselStil"` bütün görsellerin sonuna eklenen ortak stil paragrafıdır. Karakterdeki `"gorselTarif"` ise prompt içinde `[KARAKTER-ADI]` yazılan yere konan sabit tariftir. Bu iki alan karakterlerin ve stilin bütün çekimlerde aynı kalmasını sağlar.
+- Karaktere `"gorselReferans": "<Canva media id>"` eklenirse görseller o karakter kartı referans verilerek üretilir. Böylece karakter her sahnede aynı kalır.
 - `node build.js` her çekimin tam promptunu `out/gorsel-promptlari.md` dosyasına yazar. Henüz üretilmemiş görseller videoda "GÖRSEL BEKLENİYOR" kartı olarak görünür, böylece önizleme yine de yapılabilir.
 
 **Görseller nereden gelir?** Claude bunları Canva bağlantısıyla (Canva'nın yapay zekâ görsel üretimi) üretip `gorseller/` klasörüne 1080×1920 olarak indirir. İstersen promptları başka bir araçta kullanıp görselleri aynı dosya adlarıyla klasöre koyabilirsin.
