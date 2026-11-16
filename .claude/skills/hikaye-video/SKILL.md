@@ -24,4 +24,6 @@ Sistem `hikaye-video/` klasöründe. Alan başvurusu: `hikaye-video/README.md` (
 
 - Mekan listesinde olmayan bir yer gerekirse en yakın mekanı kullan ya da `engine.js` içindeki `SETS` nesnesine yeni bir mekan ekle (mevcutları örnek al).
 - Kullanıcı arka plan görseli verirse: `"mekan": { "resim": "arkaplan/dosya.jpg" }`.
-- Edge TTS bu bulut ortamında vekil sertifikasıyla çalışır (`ses.py` bunu kendisi ayarlar). Ağ yoksa `--sessiz`.
+- Ses motoru varsayılan olarak Chatterbox (yerel, ücretsiz, doğal). Kurulu değilse: `pip install chatterbox-tts faster-whisper`. Kurulmazsa ses.py kendiliğinden Edge'e geçer.
+- Kullanıcı ses kaydı verirse karaktere `"ornekSes"` ekle. Çıktıdaki "uyum" yüzdesi düşükse (%80 altı) metni sadeleştir ya da `--edge` ile o satırı karşılaştır.
+- Bu bulut ortamında vekil sertifikası `ses.py` içinde ayarlanır. Ağ yoksa `--sessiz`.

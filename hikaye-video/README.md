@@ -16,12 +16,26 @@ hikaye.json  ──ses.py──▶  vo/ (karakter sesleri)  ──build.js──
 ```bash
 cd hikaye-video
 npm install                 # bir kez (yazı tipi)
-pip install edge-tts numpy  # bir kez (seslendirme)
-python3 ses.py              # her replik için ses üretir (Edge TTS, ücretsiz)
+pip install edge-tts numpy chatterbox-tts faster-whisper  # bir kez (seslendirme)
+python3 ses.py              # her replik için ses üretir (yerel yapay zekâ sesi, ücretsiz)
 node build.js               # zaman çizelgesi + ses karışımı
 node render.js --onizle     # her sahneden bir kare: out/onizleme/
 node render.js              # tam video: out/<başlık>.mp4
 ```
+
+## Ses motorları (ikisi de ücretsiz, kredi yok)
+
+| motor | nasıl | süre |
+|---|---|---|
+| `chatterbox` (varsayılan) | Açık kaynak yapay zekâ ses modeli (Resemble AI, MIT lisansı). Bu makinede çalışır, internete yalnızca ilk indirmede ihtiyaç duyar. Tonlaması doğaldır ve replikteki `duygu` alanına göre coşkulu ya da sakin okur. Her satırı Whisper ile dinleyip kontrol eder, yanlış okursa yeniden üretir. | 1 sn ses ≈ 7-10 sn işlem (CPU) |
+| `edge` | Microsoft Edge sesleri. Çok hızlı ama daha mekanik | anında |
+
+Motoru `hikaye.json` içinde `"sesMotoru": "edge"` ile ya da `python3 ses.py --edge` ile seçersin.
+
+**Karakter sesleri (chatterbox):** Model her karakterin sesini kısa bir örnek kayıttan kopyalar.
+- En doğal sonuç için karaktere kendi kaydını ver: `"ornekSes": "sesler/ela.wav"`. Kayıt 5-15 saniye, tek kişi, gürültüsüz olmalı. Telefonla kaydedilmiş bir ses de olur. Yalnızca sana ait ya da izni alınmış sesleri kullan.
+- Kayıt verilmezse karakterin `ses`/`perde`/`hiz` ayarlarıyla Edge'den kısa bir örnek üretilir ve ses rengi oradan kopyalanır. Tonlama yine yapay zekâ modelinden gelir.
+- `"canlilik": 1.3` ile karakter daha coşkulu, `0.8` ile daha sakin konuşur.
 
 İnternet yoksa `python3 ses.py --sessiz` süreleri tahmin eder, böylece sessiz önizleme yapılabilir.
 `index.html` dosyasını tarayıcıda açarsan video gerçek zamanlı oynar (boşluk: oynat/durdur).
@@ -110,19 +124,19 @@ Her olay bir öncekinin bittiği anda başlar. `"paralel": true` eklenen olay bi
 - Bir sahne 10 ile 25 saniye arasında iyi durur. Uzun diyalogları `plan` değişimleriyle (geniş, yakın, orta) böl.
 - Her sahne değiştiğinde önce `node render.js --onizle` çalıştır, kareleri kontrol et, sonra tam videoyu al.
 - Sesler önbelleğe alınır. Metni değiştirmediğin replikler yeniden üretilmez.
-- 40 saniyelik 1080p video bu ortamda yaklaşık 1 dakikada çıkar.
+- 40 saniyelik 1080p video bu ortamda yaklaşık 1 dakikada çizilir. Chatterbox seslendirmesi buna birkaç dakika ekler, ama bir kez üretilen satır önbellekte kalır.
 
 ## Dosyalar
 
 | dosya | görevi |
 |---|---|
 | `hikaye.json` | Hikaye: tek düzenlemen gereken dosya |
-| `ses.py` | Edge TTS ile seslendirme, sessizlik kırpma, dudak senkronu verisi |
+| `ses.py` | Seslendirme (Chatterbox veya Edge), Whisper kontrolü, kırpma, dudak senkronu verisi |
 | `build.js` | Zamanlama ve ses karışımı |
 | `engine.js` | Çizim motoru: mekanlar, kukla, kamera, efektler, altyazı |
 | `render.js` | Önizleme kareleri ve MP4 çıktısı (Playwright + ffmpeg) |
 
 ## Krediler
 
-- Ses: Microsoft Edge Neural TTS (`edge-tts` kütüphanesi)
+- Ses: Chatterbox Multilingual (Resemble AI, MIT lisansı), Microsoft Edge Neural TTS (`edge-tts`), kontrol için faster-whisper (MIT)
 - Yazı tipi: Nunito, SIL Open Font License 1.1 (@fontsource/nunito)
