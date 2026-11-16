@@ -71,6 +71,16 @@ vae = AutoencoderKLLTXVideo.from_single_file(ckpt, config=cfg, subfolder='vae', 
 pipe = LTXConditionPipeline(scheduler=FlowMatchEulerDiscreteScheduler.from_pretrained(cfg, subfolder='scheduler'),
                             vae=vae, text_encoder=None, tokenizer=tok, transformer=tr)
 
+vae.enable_tiling()  # kareleri parça parça aç: bellek yetsin
+
+def step_end(p, i, t, kw):
+    log(f'adım {i + 1}/8')
+    if i == 7:  # gürültü giderme bitti: 8 GB'lık modeli bırak, kod çözme için yer aç
+        for prm in p.transformer.parameters():
+            prm.data = torch.empty(0)
+        gc.collect()
+    return kw
+
 src = Image.open(img_path).convert('RGB')
 height = round(width * src.height / src.width / 32) * 32
 src = src.resize((width, height), Image.LANCZOS)
@@ -81,7 +91,7 @@ video = pipe(conditions=[LTXVideoCondition(image=src, frame_index=0)],
              timesteps=[1000, 993, 987, 981, 975, 909, 725, 0.03],  # distilled modelin 8 adımlık takvimi
              guidance_scale=1.0, decode_timestep=0.05, decode_noise_scale=0.025, image_cond_noise_scale=0.0,
              generator=torch.Generator().manual_seed(42), output_type='pil',
-             callback_on_step_end=lambda p, i, t, kw: (log(f'adım {i + 1}/8'), kw)[1]).frames[0]
+             callback_on_step_end=step_end).frames[0]
 out = os.path.splitext(img_path)[0] + '.mp4'
 export_to_video(video, out, fps=24)
 log(f'bitti -> {out}')
