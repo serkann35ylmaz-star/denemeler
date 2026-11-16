@@ -20,6 +20,11 @@ Sistem `hikaye-video/` klasöründe. Alan başvurusu: `hikaye-video/README.md` (
    Önizleme karelerine bak (kadraj, altyazı, karakter konumu). Düzelt, sonra `node render.js`.
 6. MP4'ü kullanıcıya gönder. Sahne listesi ve süreyi kısaca özetle.
 
+## Görselli dikey mod
+
+Kullanıcı referanstaki gibi yapay zekâ görselli dikey video isterse `ornekler/kurye.json` yapısını kullan (`format: 9:16`, `gorselStil`, karakterlerde `gorselTarif`, her çekimde `gorsel` + `gorselPrompt`, vurgu için `*kelime*`).
+Görselleri Canva bağlantısıyla üret: `generate-image` (PORTRAIT_9_16). Sonuç yalnızca küçük önizleme döndürür; tam boy için `create-design` (format "Instagram Story (Portrait)", references=[media id], brief: yalnız görsel, tam sayfa, yazı yok) → `export-design` (jpg, 1080x1920) → URL'yi `curl` ile `gorseller/...` yoluna indir. Görselleri indirdikten sonra kontrol et (karakter tutarlılığı, istenmeyen yazı).
+
 ## Notlar
 
 - Mekan listesinde olmayan bir yer gerekirse en yakın mekanı kullan ya da `engine.js` içindeki `SETS` nesnesine yeni bir mekan ekle (mevcutları örnek al).

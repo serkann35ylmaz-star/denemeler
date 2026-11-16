@@ -49,6 +49,20 @@ Motoru `hikaye.json` içinde `"sesMotoru": "edge"` ile ya da `python3 ses.py --e
 - **Ses:** Her karaktere ayrı Türkçe ses. Anlatıcı, isteğe bağlı fon müziği.
 - **Format:** 16:9 (YouTube) veya 9:16 (Reels/TikTok/Shorts).
 
+## Görselli dikey mod (Reels / TikTok / Shorts)
+
+Kuklalar yerine yapay zekâyla çizilmiş görseller kullanılır. Her çekim tam ekran gösterilir ve yavaşça yaklaşır ya da kayar. Altyazı ekranın ortasında 2-3 kelimelik parçalar halinde, sesle senkron akar. Üstte kırmızı bir başlık bandı durur. Örnek: `ornekler/kurye.json`.
+
+- `"format": "9:16"` dikey format; altyazı stili kendiliğinden `vurgulu` olur.
+- `"baslikBant": "SON TESLİMAT"` üst banttaki başlık. Sahne bazında `"bant"` ile değiştirilir, `null` ile gizlenir.
+- Sahnede `"gorsel": "gorseller/x/01.jpg"` ilk çekimdir. Herhangi bir olaya `"gorsel"` eklenirse o satır başladığında yeni çekime geçilir.
+- `"hareket"`: `yaklas`, `uzaklas`, `sola`, `saga`, `yukari`, `asagi`. Verilmezse otomatik seçilir.
+- Metinde `*kelime*` yazılan yer altyazıda turuncu vurgulanır. Yıldızlar seslendirmede okunmaz.
+- `"gorselStil"` bütün görsellerin sonuna eklenen ortak stil paragrafıdır. Karakterdeki `"gorselTarif"` ise prompt içinde `[KARAKTER-ADI]` yazılan yere konan sabit tariftir. Bu iki alan karakterlerin ve stilin bütün çekimlerde aynı kalmasını sağlar.
+- `node build.js` her çekimin tam promptunu `out/gorsel-promptlari.md` dosyasına yazar. Henüz üretilmemiş görseller videoda "GÖRSEL BEKLENİYOR" kartı olarak görünür, böylece önizleme yine de yapılabilir.
+
+**Görseller nereden gelir?** Claude bunları Canva bağlantısıyla (Canva'nın yapay zekâ görsel üretimi) üretip `gorseller/` klasörüne 1080×1920 olarak indirir. İstersen promptları başka bir araçta kullanıp görselleri aynı dosya adlarıyla klasöre koyabilirsin.
+
 ## hikaye.json başvuru kılavuzu
 
 ### Üst düzey
