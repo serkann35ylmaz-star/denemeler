@@ -40,8 +40,10 @@ def opt(name, default=None):
 SOZLUK = AY.get('sozluk', {})
 OYUN_ADI = AY.get('oyunAdi', 'GTA 6')
 # Küfür: başlıkta bu cümleler seçilmez; "sansur": true ise altyazıda ilk harf dışı yıldızlanır
-KUFUR = re.compile(r'\b(sik(ik\w*|tir\w*|im|in|eyim|ini|iş\w*|er)?|amk|amına\w*|orospu\w*|piç(ler\w*)?|yarra\w*|göt(ü|ün|ünü|veren\w*|lek\w*)?|kahpe\w*|ibne\w*|pezevenk\w*|fuck\w*|shit\w*)(?=\W|$)', re.I)
+KUFUR = re.compile(r'\b(am|sik(ik\w*|tir\w*|im|in|eyim|ini|iş\w*|er)?|amk|amına\w*|orospu\w*|piç(ler\w*)?|yarra\w*|göt(ü|ün|ünü|veren\w*|lek\w*)?|kahpe\w*|ibne\w*|pezevenk\w*|fuck\w*|shit\w*)(?=\W|$)', re.I)
 SANSUR = AY.get('sansur', True)
+# Başlıkta ayrıca kaçınılan cinsel içerik (platformlar başlıktaki bu kelimelerde erişimi kısıtlar)
+BASLIK_YASAK = re.compile(r'\b(meme\w*|yala\w*|seks\w*|çıplak\w*|porn\w*|sex\w*)', re.I)
 OYUN = re.compile(opt('--oyun', AY.get('oyun') or '.*'), re.I)  # boş = tüm oyunlar ve IRL
 ARALIK = opt('--aralik', AY.get('aralik', '7d'))
 BAS, SON = opt('--bas'), opt('--son')
@@ -290,8 +292,10 @@ def render(src, c, words, out):
 
 def meta(c, words, out_md):
     text = ' '.join(w[0] for w in words)
-    sents = [x for x in re.split(r'(?<=[.!?])\s', text.strip()) if len(x.split()) >= 4 and not KUFUR.search(x)] if text else []
-    first = (sents[0] if sents else text or c['baslik'])[:70].rstrip(' ,')
+    sents = [x for x in re.split(r'(?<=[.!?])\s', text.strip()) if len(x.split()) >= 4 and not KUFUR.search(x) and not BASLIK_YASAK.search(x)] if text else []
+    first = sents[0] if sents else (text or c['baslik'])
+    if len(first) > 70:  # kelime ortasından kesme
+        first = first[:70].rsplit(' ', 1)[0].rstrip(' ,') + '…'
     plat = 'Twitch' if c['platform'] == 'twitch' else 'Kick'
     tag = re.sub(r'\W', '', c['ad'])
     cat = c.get('oyun') or ''
