@@ -11,3 +11,4 @@ hikaye-video/vo/
 __pycache__/
 # kişisel ses kayıtları depoya girmez
 hikaye-video/sesler/benim-*.wav
+kesit-otomasyon/out/

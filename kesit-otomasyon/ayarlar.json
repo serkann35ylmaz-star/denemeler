@@ -1,0 +1,116 @@
+{
+  "oyun": "grand theft auto vi\\b|\\bgta ?(6|vi)\\b",
+  "oyunAdi": "GTA 6",
+  "aralik": "7d",
+  "kanalBasinaKesit": 15,
+  "minIzlenme": 500,
+  "minSure": 8,
+  "maxSure": 75,
+  "uretilecek": 5,
+  "duzen": "blur",
+  "yayincilar": [
+    {
+      "platform": "kick",
+      "kanal": "xqc",
+      "ad": "xQc",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "xqc",
+      "ad": "xQc",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "summit1g",
+      "ad": "summit1g",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "kaicenat",
+      "ad": "Kai Cenat",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "hasanabi",
+      "ad": "HasanAbi",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "shroud",
+      "ad": "shroud",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "adinross",
+      "ad": "Adin Ross",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "elraenn",
+      "ad": "Elraenn",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "elraenn",
+      "ad": "Elraenn",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "jahrein",
+      "ad": "Jahrein",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "jahrein",
+      "ad": "Jahrein",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "wtcn",
+      "ad": "wtcN",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "wtcn",
+      "ad": "wtcN",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "pqueen",
+      "ad": "Pqueen",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "kendinemuzisyen",
+      "ad": "Kendine Müzisyen",
+      "izin": false
+    }
+  ],
+  "sozluk": {
+    "sohbet": "chat",
+    "Sohbet": "Chat",
+    "sohbeti": "chat'i",
+    "sohbete": "chat'e",
+    "sohbetin": "chat'in",
+    "dostum": "kanka",
+    "Dostum": "Kanka",
+    "Aman Tanrım": "Oha",
+    "aman Tanrım": "oha",
+    "Tanrım": "Oha"
+  },
+  "sansur": true
+}
