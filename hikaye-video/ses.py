@@ -30,7 +30,11 @@ REF_TEXT = 'Merhaba, bugün sana kısa bir hikâye anlatacağım. Dinlemeye haz�
 # duygu -> (canlılık/exaggeration, cfg): yüksek canlılık = daha coşkulu okuma
 # (ölçüm: canlılık 1.0 / cfg .25 ile tonlama çeşitliliği Edge örneğine göre ~1,7 kat, doğruluk %100)
 EMO = {'notr': (.9, .28), 'mutlu': (1.0, .25), 'uzgun': (.75, .32), 'kizgin': (1.15, .22),
-       'saskin': (1.05, .24), 'korkmus': (1.0, .26), 'dusunceli': (.7, .32)}
+       'saskin': (1.05, .24), 'korkmus': (1.0, .26), 'dusunceli': (.7, .32), 'heyecanli': (1.2, .22)}
+# Eşanlamlılar: replikte bunlardan biri yazılırsa karşılığı kullanılır
+EMO_ES = {'huzunlu': 'uzgun', 'huzun': 'uzgun', 'heyecan': 'heyecanli', 'sevincli': 'mutlu', 'ofkeli': 'kizgin'}
+# Duyguya ait kayıt yoksa yakın duygunun kaydı denenir, o da yoksa notr kayıt
+EMO_YAKIN = {'saskin': 'heyecanli', 'heyecanli': 'mutlu', 'korkmus': 'uzgun', 'dusunceli': 'uzgun', 'kizgin': 'heyecanli'}
 # Kendi kaydı verilmeyen karakterler için insan referans sesleri (sesler/KAYNAK.md)
 VARSAYILAN_REF = {'_anlatici': 'sesler/erkek-anlatici.wav', 'erkek': 'sesler/erkek-2.wav', 'kadin': 'sesler/ince-1.wav'}
 
@@ -57,7 +61,7 @@ def lines_of(story):
             else:
                 continue
             v = (c.get('ses', 'tr-TR-AhmetNeural'), ev.get('hiz', c.get('hiz', '+0%')), ev.get('perde', c.get('perde', '+0Hz')))
-            out.append({'id': line_id(v, ev['metin']), 'v': v, 'text': ev['metin'], 'speak': ev['metin'].replace('*', ''), 'kim': key, 'c': c, 'duygu': ev.get('duygu', 'notr')})
+            out.append({'id': line_id(v, ev['metin']), 'v': v, 'text': ev['metin'], 'speak': ev['metin'].replace('*', ''), 'kim': key, 'c': c, 'duygu': EMO_ES.get(ev.get('duygu', 'notr'), ev.get('duygu', 'notr'))})
     return out
 
 
@@ -120,10 +124,16 @@ def norm(s):
 def reference(item):
     """Karakterin ses örneği: kendi kaydı ya da Edge sesiyle üretilmiş kısa örnek."""
     c = item['c']
-    if c.get('ornekSes'):
-        if not os.path.exists(c['ornekSes']):
-            sys.exit(f"Ses örneği bulunamadı: {c['ornekSes']}")
-        return c['ornekSes']
+    ref = c.get('ornekSes')
+    if isinstance(ref, dict):  # duygu başına kayıt: {"notr": "...", "uzgun": "...", "heyecanli": "..."}
+        e = item['duygu']
+        while e and e not in ref:
+            e = EMO_YAKIN.get(e)
+        ref = ref.get(e) or ref.get('notr') or next(iter(ref.values()))
+    if ref:
+        if not os.path.exists(ref):
+            sys.exit(f"Ses örneği bulunamadı: {ref}")
+        return ref
     if c.get('sesTipi') in ('edge',) or not os.path.exists(VARSAYILAN_REF['_anlatici']):
         pass  # açıkça Edge örneği istenmiş ya da referans sesler yok
     elif item['kim'] == '_anlatici':

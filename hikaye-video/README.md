@@ -45,6 +45,15 @@ python3 ses_studyo.py kaydim.m4a benim-sesim        # sesler/benim-sesim.wav + o
 
 Kayıt temizlenir (gürültü azaltma yapılmaz; boğuklaştırıyor), en uygun 10-15 saniye seçilir, gürültü ve süre kontrol edilir, ardından bu sesle bir deneme cümlesi üretilir. Kullanmak için karaktere ya da `anlatici` bölümüne `"ornekSes": "sesler/benim-sesim.wav"` ekle.
 
+**Duygulu okuma:** Model, kayıttaki duyguyu da kopyalar. En güçlü sonuç için her duyguyu ayrı kaydet, her biri 10-15 saniye:
+
+```json
+"anlatici": { "ornekSes": { "notr": "sesler/ben-notr.wav", "uzgun": "sesler/ben-huzun.wav",
+                            "heyecanli": "sesler/ben-heyecan.wav", "mutlu": "sesler/ben-mutlu.wav" } }
+```
+
+Her replik ve anlatım satırındaki `"duygu"` alanı hangi kaydın kullanılacağını ve okumanın şiddetini seçer: `notr`, `mutlu`, `uzgun` (`huzunlu`), `heyecanli`, `kizgin`, `saskin`, `korkmus`, `dusunceli`. Bir duygunun kaydı yoksa en yakın duygunun kaydı kullanılır; örneğin şaşkın için heyecanlı, korkmuş için hüzünlü. O da yoksa nötr kayıt kullanılır.
+
 İnternet yoksa `python3 ses.py --sessiz` süreleri tahmin eder, böylece sessiz önizleme yapılabilir.
 `index.html` dosyasını tarayıcıda açarsan video gerçek zamanlı oynar (boşluk: oynat/durdur).
 
