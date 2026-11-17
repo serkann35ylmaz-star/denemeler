@@ -31,6 +31,9 @@ REF_TEXT = 'Merhaba, bugün sana kısa bir hikâye anlatacağım. Dinlemeye haz�
 # (ölçüm: canlılık 1.0 / cfg .25 ile tonlama çeşitliliği Edge örneğine göre ~1,7 kat, doğruluk %100)
 EMO = {'notr': (.9, .28), 'mutlu': (1.0, .25), 'uzgun': (.75, .32), 'kizgin': (1.15, .22),
        'saskin': (1.05, .24), 'korkmus': (1.0, .26), 'dusunceli': (.7, .32), 'heyecanli': (1.2, .22)}
+# Duyguya göre son dokunuş: (tempo, perde yarım ton). Model tonlamayı verir, bu da hızı ve perdeyi duyguya yaklaştırır.
+EMO_POST = {'uzgun': (.92, -.7), 'dusunceli': (.95, -.3), 'heyecanli': (1.06, .8), 'mutlu': (1.03, .5),
+            'kizgin': (1.03, -.3), 'korkmus': (1.04, .4), 'saskin': (1.02, .6)}
 # Eşanlamlılar: replikte bunlardan biri yazılırsa karşılığı kullanılır
 EMO_ES = {'huzunlu': 'uzgun', 'huzun': 'uzgun', 'heyecan': 'heyecanli', 'sevincli': 'mutlu', 'ofkeli': 'kizgin'}
 # Duyguya ait kayıt yoksa yakın duygunun kaydı denenir, o da yoksa notr kayıt
@@ -185,12 +188,14 @@ def cb_generate(item, out_wav, takes=3):
     start = max(0, words[0].start - .08) if words else 0
     end = words[-1].end + .3 if words else None
     trim = ['-ss', f'{start:.3f}'] + (['-to', f'{end:.3f}'] if end else [])
-    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', tmp, *trim, '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11',
+    tempo, semi = EMO_POST.get(item['duygu'], (1, 0))
+    post = f'rubberband=tempo={tempo}:pitch={2 ** (semi / 12):.4f}:formant=preserved,' if (tempo, semi) != (1, 0) else ''
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', tmp, *trim, '-af', post + 'loudnorm=I=-16:TP=-1.5:LRA=11',
                     '-ar', str(SR), '-ac', '1', out_wav], check=True)
     for k in range(takes):
         if os.path.exists(f'{out_wav}.take{k}.wav'):
             os.remove(f'{out_wav}.take{k}.wav')
-    rel = [[x.word.strip(), round(max(0, x.start - start), 2), round(x.end - start, 2)] for x in words]
+    rel = [[x.word.strip(), round(max(0, x.start - start) / tempo, 2), round((x.end - start) / tempo, 2)] for x in words]  # tempo değiştiyse altyazı zamanları da
     return round(score, 3), rel
 
 
@@ -210,7 +215,7 @@ def main():
     for i, it in enumerate(items):
         lid, v, text = it['id'], it['v'], it['text']
         rec = db.get(lid)
-        sig = f"{reference(it)}|{EMO.get(it['duygu'])}" if motor == 'chatterbox' and not SESSIZ else ''
+        sig = f"{reference(it)}|{EMO.get(it['duygu'])}|{EMO_POST.get(it['duygu'])}" if motor == 'chatterbox' and not SESSIZ else ''
         ok = rec and (rec.get('sessiz') if SESSIZ else (not rec.get('sessiz') and rec.get('motor', 'edge') == motor
               and rec.get('imza', '') == sig and os.path.exists(f'vo/{lid}.wav')))
         if ok:
