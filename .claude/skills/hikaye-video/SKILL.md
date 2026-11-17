@@ -37,6 +37,10 @@ Görselleri Canva bağlantısıyla üret: `generate-image` (PORTRAIT_9_16). Sonu
 - Kayma olmasın diye her zaman karakterin `gorselTarif` metnini `--tarif` ile ver. `--son-kare 0.6` varsayılan olarak açık; son kareyi de görsele bağlar. Varsayılan genişlik 384, kare sayısı 49 (15 GB belleğe sığan en büyük ayar).
 - Ses (global python, torch 2.6 CPU + diffusers 0.29) ile video modeli (`~/.venvs/video`, diffusers 0.43) ayrı ortamlarda. Global ortama diffusers yükseltme kurma; Chatterbox bozulur.
 
+## Kendi ses kaydı
+
+Kullanıcı ses kaydı yüklerse (`/root/.claude/uploads/...`): `python3 ses_studyo.py <dosya> <ad>`. UYARI satırlarını kullanıcıya ilet. `out/ses-testi-<ad>.wav` dosyasını gönder, onaylarsa karaktere/anlatıcıya `"ornekSes"` ekle. Yalnızca kullanıcının kendi sesi ya da izni alınmış sesler.
+
 ## Notlar
 
 - Mekan listesinde olmayan bir yer gerekirse en yakın mekanı kullan ya da `engine.js` içindeki `SETS` nesnesine yeni bir mekan ekle (mevcutları örnek al).

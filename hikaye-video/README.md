@@ -37,6 +37,14 @@ Motoru `hikaye.json` içinde `"sesMotoru": "edge"` ile ya da `python3 ses.py --e
 - Kayıt verilmezse karakterin `ses`/`perde`/`hiz` ayarlarıyla Edge'den kısa bir örnek üretilir ve ses rengi oradan kopyalanır. Tonlama yine yapay zekâ modelinden gelir.
 - `"canlilik": 1.3` ile karakter daha coşkulu, `0.8` ile daha sakin konuşur.
 
+### Ses stüdyosu (kendi sesin)
+
+```bash
+python3 ses_studyo.py kaydim.m4a benim-sesim        # sesler/benim-sesim.wav + out/ses-testi-benim-sesim.wav
+```
+
+Kayıt temizlenir (gürültü azaltma yapılmaz; boğuklaştırıyor), en uygun 10-15 saniye seçilir, gürültü ve süre kontrol edilir, ardından bu sesle bir deneme cümlesi üretilir. Kullanmak için karaktere ya da `anlatici` bölümüne `"ornekSes": "sesler/benim-sesim.wav"` ekle.
+
 İnternet yoksa `python3 ses.py --sessiz` süreleri tahmin eder, böylece sessiz önizleme yapılabilir.
 `index.html` dosyasını tarayıcıda açarsan video gerçek zamanlı oynar (boşluk: oynat/durdur).
 
