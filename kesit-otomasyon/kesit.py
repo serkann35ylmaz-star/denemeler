@@ -28,7 +28,7 @@ import yt_dlp
 AY = json.load(open('ayarlar.json', encoding='utf-8'))
 OUT = 'out'
 os.makedirs(f'{OUT}/videolar', exist_ok=True); os.makedirs(f'{OUT}/indirilen', exist_ok=True)
-STATE = f'{OUT}/islenenler.json'
+STATE = 'islenenler.json'  # depoda tutulur: makine sıfırlansa da aynı kesit ikinci kez üretilmez
 
 
 def opt(name, default=None):
@@ -42,7 +42,7 @@ OYUN_ADI = AY.get('oyunAdi', 'GTA 6')
 # Küfür: başlıkta bu cümleler seçilmez; "sansur": true ise altyazıda ilk harf dışı yıldızlanır
 KUFUR = re.compile(r'\b(sik(ik\w*|tir\w*|im|in|eyim|ini|iş\w*|er)?|amk|amına\w*|orospu\w*|piç(ler\w*)?|yarra\w*|göt(ü|ün|ünü|veren\w*|lek\w*)?|kahpe\w*|ibne\w*|pezevenk\w*|fuck\w*|shit\w*)(?=\W|$)', re.I)
 SANSUR = AY.get('sansur', True)
-OYUN = re.compile(opt('--oyun', AY['oyun']), re.I)
+OYUN = re.compile(opt('--oyun', AY.get('oyun') or '.*'), re.I)  # boş = tüm oyunlar ve IRL
 ARALIK = opt('--aralik', AY.get('aralik', '7d'))
 BAS, SON = opt('--bas'), opt('--son')
 log = lambda *a: print(*a, flush=True)
@@ -67,7 +67,7 @@ def list_clips(y):
         if not e or not e.get('url'):
             continue
         cats = e.get('categories')
-        if y['platform'] == 'twitch' and not cats:  # Twitch listesinde oyun yok: kesitin kendisinden al
+        if y['platform'] == 'twitch' and not cats and OYUN.pattern != '.*':  # Twitch listesinde oyun yok: kesitin kendisinden al
             try:
                 cats = ydl().extract_info(e['url'], download=False).get('categories')
             except Exception:
@@ -80,13 +80,39 @@ def list_clips(y):
     return out, None
 
 
+def kesfet():
+    """Twitch resmi API (Helix) ile şu an en çok izlenen yayıncılar. TWITCH_CLIENT_ID ve TWITCH_CLIENT_SECRET
+    ortam değişkenleri yoksa sessizce atlanır (dev.twitch.tv/console'dan ücretsiz uygulama, hesap bilgisi gerekmez)."""
+    cid, sec = os.environ.get('TWITCH_CLIENT_ID'), os.environ.get('TWITCH_CLIENT_SECRET')
+    if not (cid and sec):
+        return []
+    import urllib.parse, urllib.request
+    try:
+        body = urllib.parse.urlencode({'client_id': cid, 'client_secret': sec, 'grant_type': 'client_credentials'}).encode()
+        tok = json.load(urllib.request.urlopen('https://id.twitch.tv/oauth2/token', body, timeout=20))['access_token']
+        found = []
+        for lang in AY.get('kesifDilleri', ['tr', 'en']):
+            req = urllib.request.Request(f'https://api.twitch.tv/helix/streams?first=100&language={lang}',
+                                         headers={'Client-Id': cid, 'Authorization': f'Bearer {tok}'})
+            data = json.load(urllib.request.urlopen(req, timeout=20)).get('data', [])
+            found += [{'platform': 'twitch', 'kanal': d['user_login'], 'ad': d['user_name'], 'izin': False, 'kesif': True}
+                      for d in data[:AY.get('kesifSayisi', 15)]]
+        log(f'keşif: Twitch\'te şu an en çok izlenen {len(found)} yayıncı eklendi')
+        return found
+    except Exception as e:
+        log(f'keşif atlandı: {str(e)[:100]}')
+        return []
+
+
 def analiz():
     allc, rows = [], []
-    for y in AY['yayincilar']:
+    known = {(y['platform'], y['kanal'].lower()) for y in AY['yayincilar']}
+    extra = [y for y in kesfet() if (y['platform'], y['kanal'].lower()) not in known]
+    for y in AY['yayincilar'] + extra:
         clips, err = list_clips(y)
         if clips is None:
             rows.append((y, 0, 0, 0, f'erişilemedi: {err}')); log(f"- {y['platform']}/{y['kanal']}: erişilemedi"); continue
-        game = [c for c in clips if OYUN.search(c['oyun']) and AY['minSure'] <= c['sure'] <= AY['maxSure']
+        game = [c for c in clips if (OYUN.pattern == '.*' or OYUN.search(c['oyun'])) and AY['minSure'] <= c['sure'] <= AY['maxSure']
                 and c['izlenme'] >= AY['minIzlenme']]
         for c in game:
             age = max(0, (time.time() - c['zaman']) / 3600)
@@ -101,9 +127,9 @@ def analiz():
           '| yayıncı | platform | taranan kesit | oyun kesiti | toplam izlenme | izin | not |', '|---|---|---|---|---|---|---|']
     for y, n, g, v, note in sorted(rows, key=lambda r: -r[3]):
         md.append(f"| {y.get('ad')} | {y['platform']} | {n} | {g} | {v:,} | {'var' if y.get('izin') else 'yok'} | {note} |")
-    md += ['', '## En viral kesitler', '', '| # | puan | izlenme | yayıncı | başlık | süre | durum |', '|---|---|---|---|---|---|---|']
-    for i, c in enumerate(allc[:30], 1):
-        md.append(f"| {i} | {c['puan']} | {c['izlenme']:,} | {c['ad']} ({c['platform']}) | [{c['baslik'][:50]}]({c['url']}) | {c['sure']:.0f} sn | {'işlendi' if c['id'] in done else 'sırada'} |")
+    md += ['', '## En viral kesitler', '', '| # | puan | izlenme | yayıncı | kategori | başlık | süre | durum |', '|---|---|---|---|---|---|---|---|']
+    for i, c in enumerate(allc[:40], 1):
+        md.append(f"| {i} | {c['puan']} | {c['izlenme']:,} | {c['ad']} ({c['platform']}) | {c['oyun'] or '-'} | [{c['baslik'][:50]}]({c['url']}) | {c['sure']:.0f} sn | {'işlendi' if c['id'] in done else 'sırada'} |")
     open(f'{OUT}/rapor.md', 'w', encoding='utf-8').write('\n'.join(md) + '\n')
     log(f'{len(allc)} aday -> {OUT}/rapor.md')
     return allc
@@ -268,13 +294,23 @@ def meta(c, words, out_md):
     first = (sents[0] if sents else text or c['baslik'])[:70].rstrip(' ,')
     plat = 'Twitch' if c['platform'] == 'twitch' else 'Kick'
     tag = re.sub(r'\W', '', c['ad'])
+    cat = c.get('oyun') or ''
+    if re.search(r'grand theft auto vi\b|gta ?(6|vi)\b', cat, re.I):
+        konu, etiket = " GTA 6'da", '#GTA6 #GTAVI #gta'
+    elif re.search(r'just chatting|irl|sohbet|talk', cat, re.I):
+        konu, etiket = '', '#IRL #yayıncı #komik'
+    elif cat:
+        g = cat.split('(')[0].strip()
+        konu, etiket = f' ({g})', '#' + re.sub(r'\W', '', g) + ' #oyun #gaming'
+    else:
+        konu, etiket = '', '#oyun #gaming #komik'
     md = f"""# {c['ad']} · {c['baslik']}
 
-**Başlık önerisi:** {c['ad']} {OYUN_ADI}'da: "{first}" 😳
+**Başlık önerisi:** {c['ad']}{konu}: "{first}" 😳
 **Açıklama:**
 {c['ad']} yayınından bir an 🎮 Türkçe altyazılı.
 Kaynak: {plat} · {c['platform']}.{'tv' if plat == 'Twitch' else 'com'}/{c['kanal']} · {c['url']}
-#GTA6 #GTAVI #{tag} #shorts #gta #oyun #yayın #keşfet
+{etiket} #{tag} #shorts #yayın #keşfet #fyp
 
 İzlenme (kaynak): {c['izlenme']:,} · Süre: {c['sure']:.0f} sn · Yayıncı izni kayıtlı: {'evet' if c['izin'] else 'HAYIR'}
 
@@ -306,7 +342,15 @@ def process(c):
 def uret(n):
     cands = json.load(open(f'{OUT}/adaylar.json')) if os.path.exists(f'{OUT}/adaylar.json') else analiz()
     done = load_state()
-    todo = [c for c in cands if c['id'] not in done][:n]
+    per = AY.get('yayinciBasinaMax', 3)
+    fresh = [c for c in cands if c['id'] not in done]
+    todo, count = [], {}
+    for c in fresh:  # puan sırasıyla, ama aynı yayıncıdan en fazla `per` kesit
+        k = c['ad']
+        if count.get(k, 0) < per:
+            todo.append(c); count[k] = count.get(k, 0) + 1
+        if len(todo) >= n:
+            break
     if not todo:
         log('İşlenecek yeni kesit yok. (Oyun henüz yayında değilse süzgeç boş döner; --oyun ile değiştirilebilir.)')
     made = []
@@ -315,7 +359,23 @@ def uret(n):
             made.append(process(c))
         except Exception as e:
             log(f'  ✗ atlandı: {str(e).splitlines()[0][:150]}')
+    ozet(time.strftime('%Y-%m-%d'))
     return made
+
+
+def ozet(day):
+    """Günün bütün videolarının başlık/açıklama/etiketlerini tek dosyada topla: out/videolar/<gün>/OZET.md"""
+    d = f'{OUT}/videolar/{day}'
+    if not os.path.isdir(d):
+        return
+    mds = sorted(f for f in os.listdir(d) if f.endswith('.md') and f != 'OZET.md')
+    parts = [f'# {day} · {len(mds)} kısa video', '']
+    for i, f in enumerate(mds, 1):
+        body = open(f'{d}/{f}', encoding='utf-8').read().split('\n', 1)[1]
+        body = body.split('\nAltyazı metni:')[0].strip()
+        parts += [f'## {i}. {f[:-3]}.mp4', body, '']
+    open(f'{d}/OZET.md', 'w', encoding='utf-8').write('\n'.join(parts))
+    log(f'özet: {d}/OZET.md')
 
 
 if __name__ == '__main__':

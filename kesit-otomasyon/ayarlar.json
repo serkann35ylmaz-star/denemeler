@@ -1,14 +1,26 @@
 {
-  "oyun": "grand theft auto vi\\b|\\bgta ?(6|vi)\\b",
-  "oyunAdi": "GTA 6",
+  "oyun": "",
+  "oyunAdi": "",
   "aralik": "7d",
   "kanalBasinaKesit": 15,
   "minIzlenme": 500,
   "minSure": 8,
   "maxSure": 75,
-  "uretilecek": 5,
+  "uretilecek": 12,
   "duzen": "blur",
   "yayincilar": [
+    {
+      "platform": "twitch",
+      "kanal": "kaicenat",
+      "ad": "Kai Cenat",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "xqc",
+      "ad": "xQc",
+      "izin": false
+    },
     {
       "platform": "kick",
       "kanal": "xqc",
@@ -17,20 +29,26 @@
     },
     {
       "platform": "twitch",
-      "kanal": "xqc",
-      "ad": "xQc",
+      "kanal": "caseoh_",
+      "ad": "CaseOh",
       "izin": false
     },
     {
       "platform": "twitch",
-      "kanal": "summit1g",
-      "ad": "summit1g",
+      "kanal": "jynxzi",
+      "ad": "Jynxzi",
       "izin": false
     },
     {
       "platform": "twitch",
-      "kanal": "kaicenat",
-      "ad": "Kai Cenat",
+      "kanal": "zackrawrr",
+      "ad": "Asmongold",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "tarik",
+      "ad": "tarik",
       "izin": false
     },
     {
@@ -41,8 +59,62 @@
     },
     {
       "platform": "twitch",
+      "kanal": "summit1g",
+      "ad": "summit1g",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
       "kanal": "shroud",
       "ad": "shroud",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "lacy",
+      "ad": "Lacy",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "stableronaldo",
+      "ad": "Stable Ronaldo",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "plaqueboymax",
+      "ad": "PlaqueBoyMax",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "ohnepixel",
+      "ad": "ohnePixel",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "fanum",
+      "ad": "Fanum",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "emiru",
+      "ad": "Emiru",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "sketch",
+      "ad": "Sketch",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "tyler1",
+      "ad": "Tyler1",
       "izin": false
     },
     {
@@ -52,39 +124,45 @@
       "izin": false
     },
     {
-      "platform": "twitch",
-      "kanal": "elraenn",
-      "ad": "Elraenn",
+      "platform": "kick",
+      "kanal": "n3on",
+      "ad": "N3on",
       "izin": false
     },
     {
       "platform": "kick",
-      "kanal": "elraenn",
-      "ad": "Elraenn",
+      "kanal": "iceposeidon",
+      "ad": "Ice Poseidon",
       "izin": false
     },
     {
-      "platform": "twitch",
+      "platform": "kick",
+      "kanal": "amouranth",
+      "ad": "Amouranth",
+      "izin": false
+    },
+    {
+      "platform": "kick",
       "kanal": "jahrein",
       "ad": "Jahrein",
       "izin": false
     },
     {
       "platform": "kick",
-      "kanal": "jahrein",
-      "ad": "Jahrein",
-      "izin": false
-    },
-    {
-      "platform": "twitch",
       "kanal": "wtcn",
       "ad": "wtcN",
       "izin": false
     },
     {
       "platform": "kick",
-      "kanal": "wtcn",
-      "ad": "wtcN",
+      "kanal": "elraenn",
+      "ad": "Elraenn",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "elraenn",
+      "ad": "Elraenn",
       "izin": false
     },
     {
@@ -97,6 +175,18 @@
       "platform": "twitch",
       "kanal": "kendinemuzisyen",
       "ad": "Kendine Müzisyen",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "hype",
+      "ad": "Hype",
+      "izin": false
+    },
+    {
+      "platform": "twitch",
+      "kanal": "unlostv",
+      "ad": "UNLOST",
       "izin": false
     }
   ],
@@ -112,5 +202,6 @@
     "aman Tanrım": "oha",
     "Tanrım": "Oha"
   },
-  "sansur": true
+  "sansur": true,
+  "yayinciBasinaMax": 3
 }
