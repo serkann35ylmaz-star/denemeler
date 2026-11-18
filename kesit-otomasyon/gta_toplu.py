@@ -15,6 +15,9 @@ GTA_RE = opt('--oyun', r'grand theft auto vi\b|\bgta ?(6|vi)\b')
 TOPLAM = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 15
 
 live = kesit.kick_canli(GTA_RE, None, NSTREAM)
+NAMES = {y['kanal'].lower(): y['ad'] for y in kesit.AY['yayincilar'] if y['platform'] == 'kick'}
+for s_ in live:  # Kick kullanıcı adı yerine bilinen gerçek ad (rraenee -> Elraenn)
+    s_['ad'] = NAMES.get(s_['kanal'].lower(), s_['ad'])
 log(f'Kick\'te GTA 6 oynayan ilk {len(live)} yayıncı: ' + ', '.join(f"{s['ad']} ({s['izleyici']:,})" for s in live))
 done = kesit.load_state()
 cands = []
