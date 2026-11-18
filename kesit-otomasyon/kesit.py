@@ -82,17 +82,59 @@ def list_clips(y):
     return out, None
 
 
+def kick_canli(oyun=None, diller=None, adet=30):
+    """Kick resmi API ile şu an canlı yayınlar, izleyiciye göre büyükten küçüğe.
+    KICK_CLIENT_ID / KICK_CLIENT_SECRET ortam değişkenleri yoksa boş döner (kick.com/settings/developer).
+    Belgeler: docs.kick.com (token: POST id.kick.com/oauth/token, liste: GET api.kick.com/public/v2/livestreams)."""
+    cid, sec = os.environ.get('KICK_CLIENT_ID'), os.environ.get('KICK_CLIENT_SECRET')
+    if not (cid and sec):
+        return []
+    import urllib.parse, urllib.request
+    body = urllib.parse.urlencode({'grant_type': 'client_credentials', 'client_id': cid, 'client_secret': sec}).encode()
+    req = urllib.request.Request('https://id.kick.com/oauth/token', body, {'Content-Type': 'application/x-www-form-urlencoded'})
+    tok = json.load(urllib.request.urlopen(req, timeout=20))['access_token']
+    q = [('limit', '1000')] + [('language_code', d) for d in (diller or [])]
+    rows, cursor = [], None
+    for _ in range(5):  # en fazla 5 sayfa (5000 yayın)
+        url = 'https://api.kick.com/public/v2/livestreams?' + urllib.parse.urlencode(q + ([('cursor', cursor)] if cursor else []))
+        data = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={'Authorization': f'Bearer {tok}'}), timeout=30))
+        rows += data.get('data') or []
+        cursor = (data.get('pagination') or {}).get('next_cursor')
+        if not cursor:
+            break
+    out = []
+    for r in rows:  # alan adları belgelere göre; farklı gelirse birkaç olasılığa bak
+        ch = r.get('channel') or r.get('broadcaster') or {}
+        slug = r.get('slug') or r.get('channel_slug') or ch.get('slug') or ch.get('username')
+        cat = r.get('category') or {}
+        cat = cat.get('name') if isinstance(cat, dict) else str(cat or '')
+        if not slug or (oyun and not re.search(oyun, cat or '', re.I)):
+            continue
+        out.append({'platform': 'kick', 'kanal': slug, 'ad': ch.get('username') or slug, 'izleyici': int(r.get('viewer_count') or 0),
+                    'kategori': cat, 'baslik': r.get('stream_title') or r.get('title') or '', 'dil': r.get('language') or '',
+                    'izin': False, 'kesif': True})
+    out.sort(key=lambda x: -x['izleyici'])
+    return out[:adet]
+
+
 def kesfet():
     """Twitch resmi API (Helix) ile şu an en çok izlenen yayıncılar. TWITCH_CLIENT_ID ve TWITCH_CLIENT_SECRET
     ortam değişkenleri yoksa sessizce atlanır (dev.twitch.tv/console'dan ücretsiz uygulama, hesap bilgisi gerekmez)."""
+    found = []
+    try:
+        k = kick_canli(None if OYUN.pattern == '.*' else OYUN.pattern, AY.get('kesifDilleri'), AY.get('kesifSayisi', 15))
+        if k:
+            log(f"keşif: Kick'te şu an en çok izlenen {len(k)} yayın eklendi ({k[0]['ad']}: {k[0]['izleyici']:,} izleyici)")
+        found += k
+    except Exception as e:
+        log(f'Kick keşfi atlandı: {str(e)[:120]}')
     cid, sec = os.environ.get('TWITCH_CLIENT_ID'), os.environ.get('TWITCH_CLIENT_SECRET')
     if not (cid and sec):
-        return []
+        return found
     import urllib.parse, urllib.request
     try:
         body = urllib.parse.urlencode({'client_id': cid, 'client_secret': sec, 'grant_type': 'client_credentials'}).encode()
         tok = json.load(urllib.request.urlopen('https://id.twitch.tv/oauth2/token', body, timeout=20))['access_token']
-        found = []
         for lang in AY.get('kesifDilleri', ['tr', 'en']):
             req = urllib.request.Request(f'https://api.twitch.tv/helix/streams?first=100&language={lang}',
                                          headers={'Client-Id': cid, 'Authorization': f'Bearer {tok}'})

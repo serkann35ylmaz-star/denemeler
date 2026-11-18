@@ -27,6 +27,13 @@ BASLIK = opt('--baslik')  # YouTube başlığı; verilmezse kapak metninden
 W, H, SEAM = 1080, 1920, 960
 CAM_H = 640  # bölünmüş düzen: üstte kamera (~1/3), altta oyun/ekran (~2/3)
 src = sys.argv[1] if len(sys.argv) > 1 else sys.exit(__doc__)
+if src.startswith('en-cok-izlenen'):  # "en-cok-izlenen" ya da "en-cok-izlenen:gta" -> Kick'te şu an en çok izlenen yayın
+    flt = src.split(':', 1)[1] if ':' in src else None
+    top = kesit.kick_canli(r'grand theft auto vi\b|\bgta ?(6|vi)\b' if flt == 'gta' else flt, None, 1)
+    if not top:
+        sys.exit("Kick canlı listesi alınamadı (KICK_CLIENT_ID / KICK_CLIENT_SECRET tanımlı mı?)")
+    src, AD = f"https://kick.com/{top[0]['kanal']}", top[0]['ad']
+    log(f"en çok izlenen: {AD} ({top[0]['izleyici']:,} izleyici, {top[0]['kategori']})")
 day = time.strftime('%Y-%m-%d')
 work = f'{OUT}/canli/{day}'
 os.makedirs(work, exist_ok=True)
