@@ -25,6 +25,7 @@ KATEGORI = opt('--kategori', '')  # kayıt dosyası verilince yayın kategorisi 
 KANCA = opt('--kanca')
 BASLIK = opt('--baslik')  # YouTube başlığı; verilmezse kapak metninden
 W, H, SEAM = 1080, 1920, 960
+CAM_H = 640  # bölünmüş düzen: üstte kamera (~1/3), altta oyun/ekran (~2/3)
 src = sys.argv[1] if len(sys.argv) > 1 else sys.exit(__doc__)
 day = time.strftime('%Y-%m-%d')
 work = f'{OUT}/canli/{day}'
@@ -165,11 +166,11 @@ if best_frame is None:
 T = np.array(track)
 fh_med = float(np.median(T[:, 4]))
 if cam_mode:  # alt panel: kamera kutusu, sabit
-    ch = min(sh, fh_med * 2.6); cw = ch * W / SEAM
+    ch = min(sh, fh_med * 2.6); cw = ch * W / CAM_H
 else:         # tek parça: tam yükseklikte 9:16 dilim, yayıncıyı yatayda takip eder
     ch = sh; cw = sh * W / H
 if cw > sw:
-    cw, ch = sw, sw * (SEAM if cam_mode else H) / W
+    cw, ch = sw, sw * (CAM_H if cam_mode else H) / W
 k = 6  # yumuşat: 3 sn'lik hareketli ortanca + ortalama
 xs = np.array([np.median(T[max(0, i - k):i + k + 1, 1]) for i in range(len(T))])
 ys = np.array([np.median(T[max(0, i - k):i + k + 1, 2]) for i in range(len(T))])
@@ -200,7 +201,7 @@ MODE = 'ekran üstte + kamera altta' if cam_mode else ('yalnız ekran (bulanık 
 log(f'düzen: {MODE}, {len(T)} örnek, kırpma {cw:.0f}x{ch:.0f}')
 
 # ---------- 4) altyazı ----------
-SUB_Y = SEAM if cam_mode else (1380 if SCREEN_ONLY else 1400)  # bölünmüşte birleşim çizgisi, tek parçada alt üçte bir (yüzün altı)
+SUB_Y = CAM_H if cam_mode else (1380 if SCREEN_ONLY else 1400)  # bölünmüşte birleşim çizgisi, tek parçada alt üçte bir (yüzün altı)
 lang, words = kesit.transcribe_tr(clip)
 words = [(kesit.KUFUR.sub(lambda m: m.group(0)[0] + '*' * (len(m.group(0)) - 1), w), a, b) for w, a, b in words]
 log(f'dil: {lang}, {len(words)} Türkçe kelime')
@@ -242,11 +243,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 out = f'{OUT}/videolar/{day}/{slug}-canli-{stamp}.mp4'
 os.makedirs(os.path.dirname(out), exist_ok=True)
 top_h = round(W * sh / sw) // 2 * 2
-if cam_mode:
-    vf = (f"[0:v]split=3[a][b][c];"
-          f"[a]scale={W}:{SEAM}:force_original_aspect_ratio=increase,crop={W}:{SEAM},boxblur=24:2,eq=brightness=-0.2[tb];"
-          f"[b]scale={W}:{top_h}[tf];[tb][tf]overlay=0:({SEAM}-h)/2[top];"
-          f"[c]crop={cw:.0f}:{ch:.0f}:{cx:.0f}:{cy:.0f},scale={W}:{H - SEAM}[bot];"
+if cam_mode:  # üstte yayıncının kamerası, altta ekranın ortası (yanlardan kırpılmış, alanı doldurur)
+    vf = (f"[0:v]split[a][b];"
+          f"[a]crop={cw:.0f}:{ch:.0f}:{cx:.0f}:{cy:.0f},scale={W}:{CAM_H}[top];"
+          f"[b]scale=-2:{H - CAM_H},crop={W}:{H - CAM_H}[bot];"
           f"[top][bot]vstack,ass={ass}:fontsdir=fonts[v]")
 elif SCREEN_ONLY:
     fw2 = round(W * 1.3) // 2 * 2  # ekranı biraz yakınlaştır, kenarları bulanık doldur
