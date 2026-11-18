@@ -106,6 +106,7 @@ sw, sh = int(cap.get(3)), int(cap.get(4))
 fps = cap.get(5) or 30
 n = int(cap.get(7))
 cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+GTA = bool(re.search(r'grand theft auto vi\b|gta ?(6|vi)\b', KATEGORI, re.I))
 IRL = bool(re.search(r'just chatting|irl|talk|sohbet|music|müzik|asmr|pools|travel|outdoor|special events|cooking', KATEGORI, re.I))
 OYUN = bool(KATEGORI) and not IRL
 
@@ -299,7 +300,6 @@ def auto_kanca(ws):
     return best.rstrip('.…'), f"{up(' '.join(w_[:-2]))}|{up(' '.join(w_[-2:]))}" if len(w_) > 3 else f"{up(best)}|"
 
 
-GTA = bool(re.search(r'grand theft auto vi\b|gta ?(6|vi)\b', KATEGORI, re.I))
 if not KANCA:
     cumle, KANCA = auto_kanca(words)
     if cumle and not BASLIK:
