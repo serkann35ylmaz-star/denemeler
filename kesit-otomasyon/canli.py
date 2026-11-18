@@ -21,7 +21,10 @@ from kesit import opt, log, OUT
 AD = opt('--ad', 'Yayıncı')
 SURE = int(opt('--sure', '180'))
 KESIT = float(opt('--kesit', '35'))
-KATEGORI = opt('--kategori', '')  # kayıt dosyası verilince yayın kategorisi (ör. "Just Chatting", "Knight Online")
+KATEGORI = opt('--kategori', '')
+TAMAMI = '--tamami' in sys.argv  # an zaten seçili (ör. sohbet.py): kaydın tamamını kullan
+if TAMAMI:
+    sys.argv.remove('--tamami')  # kayıt dosyası verilince yayın kategorisi (ör. "Just Chatting", "Knight Online")
 KANCA = opt('--kanca')
 BASLIK = opt('--baslik')  # YouTube başlığı; verilmezse kapak metninden
 W, H, SEAM = 1080, 1920, 960
@@ -82,12 +85,14 @@ for i in range(0, max(1, len(db) - win), 5):
     if score > best:
         best, bi = score, i
 start, end = bi / 10, (bi + win) / 10
+if TAMAMI:
+    start, end = 0.0, len(db) / 10
 # cümle sınırına oturt: pencerenin içinde başlayan ilk cümle, içinde biten son cümle (en fazla 45 sn)
 starts = [s.start for s in segs if s.start >= start - 3]
 ends = [s.end for s in segs if s.end <= end + 4]
-if starts:
+if starts and not TAMAMI:
     start = max(0, min(starts, key=lambda x: abs(x - start)) - .2)
-if ends:
+if ends and not TAMAMI:
     end = min(max(ends, key=lambda x: -abs(x - end)) + .4, start + 45)
 log(f'seçilen an: {start:.1f}-{end:.1f} sn (puan {best:.1f})')
 clip = f'{work}/{slug}-{stamp}-ham.mp4'
