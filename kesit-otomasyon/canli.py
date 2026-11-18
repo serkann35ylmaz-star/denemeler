@@ -138,6 +138,9 @@ cap.release()
 # Düzen kararı: kesit boyunca kenarda küçük ve yerinden oynamayan bir yüz varsa = ekranda oyun/uygulama + kamera kutusu.
 side = [(t, f) for t, fs, _ in samples for f in fs if f[3] < sh * .2 and not (sw * .3 < f[0] + f[2] / 2 < sw * .7)]
 cam_mode, cam_box = False, None
+# ortada büyük bir yüz sık görünüyorsa yayın kamera ağırlıklı (bekleme ekranı, sohbet): tek parça takipli
+big_mid = sum(1 for _, fs, _ in samples if any(f[3] > sh * .14 and sw * .25 < f[0] + f[2] / 2 < sw * .75 for f in fs))
+CAM_DOMINANT = big_mid >= .3 * len(samples)
 if side and not IRL:  # sohbet/IRL kategorisinde kenardaki yüz başka bir kişidir, kamera kutusu değil
     groups = []
     for t_, f in side:
@@ -148,11 +151,18 @@ if side and not IRL:  # sohbet/IRL kategorisinde kenardaki yüz başka bir kişi
             groups.append([f])
     g = max(groups, key=len)
     if len(g) >= .35 * len(samples) and np.std([f[0] for f in g]) < sw * .02:
-        cam_mode, cam_box = True, [float(np.median([f[k] for f in g])) for k in range(4)]
+        box = [float(np.median([f[k] for f in g])) for k in range(4)]
+        # gerçek kamera kutusundaki yüz kıpırdar; poster/figür/oyuncak yüzü kıpırdamaz
+        x, y, w, h = [int(v) for v in box]
+        crops = [cv2.cvtColor(fr[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY).astype(np.float32) for _, _, fr in samples if fr is not None]
+        motion = np.mean([np.abs(a_ - b_).mean() for a_, b_ in zip(crops, crops[1:])]) if len(crops) > 1 else 0
+        log(f'kamera kutusu adayı: hareket {motion:.1f}, ortada büyük yüz {big_mid}/{len(samples)} örnek')
+        if motion > 2.5 and not CAM_DOMINANT:
+            cam_mode, cam_box = True, box
 
 track, best_frame, best_score = [], None, 0  # (zaman, merkez x, merkez y, w, h)
 sc = lambda f: f[2] * f[3] * np.exp(-(((f[0] + f[2] / 2) - sw / 2) / (.18 * sw)) ** 2)
-SCREEN_ONLY = OYUN and not cam_mode  # oyun/uygulama var ama kamera kutusu yok: ekran tek parça
+SCREEN_ONLY = OYUN and not cam_mode and not CAM_DOMINANT  # oyun/uygulama var ama kamera kutusu yok: ekran tek parça
 for t_, fs, fr in samples:
     if cam_mode or SCREEN_ONLY:
         if best_frame is None and fr is not None:
@@ -210,7 +220,7 @@ def lerp_expr(vals):
 
 cx_expr, cy_expr = lerp_expr(X), lerp_expr(Y)
 cx, cy = float(np.median(X)), float(np.median(Y))
-MODE = 'ekran üstte + kamera altta' if cam_mode else ('yalnız ekran (bulanık dolgu)' if SCREEN_ONLY else 'tek kamera, tam dikey (takipli)')
+MODE = 'kamera üstte + ekran altta' if cam_mode else ('yalnız ekran (bulanık dolgu)' if SCREEN_ONLY else 'tek kamera, tam dikey (takipli)')
 log(f'düzen: {MODE}, {len(T)} örnek, kırpma {cw:.0f}x{ch:.0f}')
 
 # ---------- 4) altyazı ----------
