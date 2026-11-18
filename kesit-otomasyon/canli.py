@@ -22,6 +22,7 @@ AD = opt('--ad', 'Yayıncı')
 SURE = int(opt('--sure', '180'))
 KESIT = float(opt('--kesit', '35'))
 KATEGORI = opt('--kategori', '')
+DUZEN = opt('--duzen')  # elle düzen: tek | bolunmus | ekran (otomatik karar yanlışsa)
 TAMAMI = '--tamami' in sys.argv  # an zaten seçili (ör. sohbet.py): kaydın tamamını kullan
 if TAMAMI:
     sys.argv.remove('--tamami')  # kayıt dosyası verilince yayın kategorisi (ör. "Just Chatting", "Knight Online")
@@ -162,6 +163,10 @@ if side and not IRL:  # sohbet/IRL kategorisinde kenardaki yüz başka bir kişi
 
 track, best_frame, best_score = [], None, 0  # (zaman, merkez x, merkez y, w, h)
 sc = lambda f: f[2] * f[3] * np.exp(-(((f[0] + f[2] / 2) - sw / 2) / (.18 * sw)) ** 2)
+if DUZEN == 'tek':
+    cam_mode, CAM_DOMINANT = False, True
+elif DUZEN == 'ekran':
+    cam_mode, CAM_DOMINANT, OYUN = False, False, True
 SCREEN_ONLY = OYUN and not cam_mode and not CAM_DOMINANT  # oyun/uygulama var ama kamera kutusu yok: ekran tek parça
 for t_, fs, fr in samples:
     if cam_mode or SCREEN_ONLY:
