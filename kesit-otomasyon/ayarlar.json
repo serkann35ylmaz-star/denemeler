@@ -154,12 +154,6 @@
       "izin": false
     },
     {
-      "platform": "kick",
-      "kanal": "elraenn",
-      "ad": "Elraenn",
-      "izin": false
-    },
-    {
       "platform": "twitch",
       "kanal": "elraenn",
       "ad": "Elraenn",
@@ -188,6 +182,48 @@
       "kanal": "unlostv",
       "ad": "UNLOST",
       "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "rraenee",
+      "ad": "Elraenn",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "eray",
+      "ad": "Eray",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "mithrain",
+      "ad": "Mithrain",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "videoyun",
+      "ad": "Videoyun",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "kaflx",
+      "ad": "Kaflx",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "tolunayoren",
+      "ad": "Tolunay Ören",
+      "izin": false
+    },
+    {
+      "platform": "kick",
+      "kanal": "unlost",
+      "ad": "UNLOST",
+      "izin": false
     }
   ],
   "sozluk": {
@@ -203,5 +239,10 @@
     "Tanrım": "Oha"
   },
   "sansur": true,
-  "yayinciBasinaMax": 3
+  "yayinciBasinaMax": 3,
+  "kesifDilleri": [
+    "tr",
+    "en"
+  ],
+  "kesifSayisi": 15
 }

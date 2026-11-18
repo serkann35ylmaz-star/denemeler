@@ -86,18 +86,20 @@ def kick_canli(oyun=None, diller=None, adet=30):
     """Kick resmi API ile şu an canlı yayınlar, izleyiciye göre büyükten küçüğe.
     KICK_CLIENT_ID / KICK_CLIENT_SECRET ortam değişkenleri yoksa boş döner (kick.com/settings/developer).
     Belgeler: docs.kick.com (token: POST id.kick.com/oauth/token, liste: GET api.kick.com/public/v2/livestreams)."""
-    cid, sec = os.environ.get('KICK_CLIENT_ID'), os.environ.get('KICK_CLIENT_SECRET')
+    clean = lambda v: (v or '').strip().strip('<>"\'').strip()  # yanlışlıkla bırakılan <...> ya da tırnakları at
+    cid, sec = clean(os.environ.get('KICK_CLIENT_ID')), clean(os.environ.get('KICK_CLIENT_SECRET'))
     if not (cid and sec):
         return []
+    UA = {'User-Agent': 'kesit-otomasyon/1.0'}  # Kick'in güvenlik katmanı Python'un varsayılan tanıtımını engelliyor
     import urllib.parse, urllib.request
     body = urllib.parse.urlencode({'grant_type': 'client_credentials', 'client_id': cid, 'client_secret': sec}).encode()
-    req = urllib.request.Request('https://id.kick.com/oauth/token', body, {'Content-Type': 'application/x-www-form-urlencoded'})
+    req = urllib.request.Request('https://id.kick.com/oauth/token', body, {'Content-Type': 'application/x-www-form-urlencoded', **UA})
     tok = json.load(urllib.request.urlopen(req, timeout=20))['access_token']
     q = [('limit', '1000')] + [('language_code', d) for d in (diller or [])]
     rows, cursor = [], None
     for _ in range(5):  # en fazla 5 sayfa (5000 yayın)
         url = 'https://api.kick.com/public/v2/livestreams?' + urllib.parse.urlencode(q + ([('cursor', cursor)] if cursor else []))
-        data = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={'Authorization': f'Bearer {tok}'}), timeout=30))
+        data = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={'Authorization': f'Bearer {tok}', **UA}), timeout=30))
         rows += data.get('data') or []
         cursor = (data.get('pagination') or {}).get('next_cursor')
         if not cursor:
