@@ -43,7 +43,7 @@ os.makedirs(work, exist_ok=True)
 platform = 'twitch' if 'twitch.tv' in src else 'kick'
 kanal = (re.search(r'(?:twitch\.tv|kick\.com)/([^/?]+)', src) or [None, AD.lower()])[1]
 slug = re.sub(r'[^a-z0-9]+', '-', AD.lower()).strip('-')
-stamp = time.strftime('%H%M')
+stamp = opt('--isim') or time.strftime('%H%M')  # aynı dakikada birden çok kesit için benzersiz ad
 
 
 def run(*a, **k):
@@ -284,8 +284,26 @@ mask = Image.linear_gradient('L').resize((W, face.height))  # yüz görselinin �
 bg.paste(face, (0, H - face.height), mask)
 d = ImageDraw.Draw(bg)
 anton = lambda s: ImageFont.truetype('fonts/Anton-Regular.ttf', s)
-label = f'{platform.upper()} • {AD.upper()}'
+label = f'GTA 6 • {AD.upper()}' if GTA else f'{platform.upper()} • {AD.upper()}'
 d.text((W / 2, 150), label, font=anton(64), fill='white', anchor='mm', stroke_width=3, stroke_fill='black')
+def auto_kanca(ws):
+    """Kapak/başlık metni: altyazıdan kısa, vurucu bir cümle (ünlem/soru öncelikli, küfürsüz). Son 2 kelime sarı."""
+    txt = ' '.join(w[0] for w in ws)
+    sents = [x.strip(' ,') for x in re.split(r'(?<=[.!?…])\s+', txt) if 3 <= len(x.split()) <= 7
+             and not kesit.KUFUR.search(x) and not kesit.BASLIK_YASAK.search(x) and '*' not in x]
+    if not sents:
+        return None, None
+    best = max(sents, key=lambda x: (x.endswith(('!', '?')), -abs(len(x.split()) - 5)))
+    w_ = best.rstrip('.…').split()
+    up = lambda x: x.replace('i', 'İ').replace('ı', 'I').upper()
+    return best.rstrip('.…'), f"{up(' '.join(w_[:-2]))}|{up(' '.join(w_[-2:]))}" if len(w_) > 3 else f"{up(best)}|"
+
+
+GTA = bool(re.search(r'grand theft auto vi\b|gta ?(6|vi)\b', KATEGORI, re.I))
+if not KANCA:
+    cumle, KANCA = auto_kanca(words)
+    if cumle and not BASLIK:
+        BASLIK = f'{AD} {"GTA 6" if GTA else ""}: "{cumle}" {"🔥" if cumle.endswith("!") else "😳"} #shorts'.replace('  ', ' ')
 top, key = (KANCA.split('|', 1) + [''])[:2] if KANCA else (AD.upper(), '')
 lines = [(x, 'white') for x in top.split('\\n') if x] + [(x, '#FFD43B') for x in key.split('\\n') if x]
 y = 330
@@ -307,7 +325,7 @@ open(out[:-4] + '.md', 'w', encoding='utf-8').write(f"""# {AD} · canlı yayın 
 **Açıklama:**
 {AD} canlı yayınından bir an. Türkçe altyazılı.
 Kaynak: {platform.capitalize()} · {plat_txt}
-#shorts #{re.sub(r'[^A-Za-z0-9]', '', AD)} #{platform} #yayın #keşfet
+#shorts {'#GTA6 #GTAVI #gta6türkiye ' if GTA else ''}#{re.sub(r'[^A-Za-z0-9]', '', AD)} #{platform} #yayın #keşfet
 
 Kategori: {KATEGORI or '-'} · Düzen: {MODE} · Kaynak dil: {lang} · Kesit: {start:.0f}-{end:.0f}. saniyeler · Kayıt: {os.path.basename(rec)}
 
