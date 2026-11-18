@@ -46,7 +46,7 @@ for i, c in enumerate(cands, 1):
     try:
         src = kesit.download(c)
         r = subprocess.run([sys.executable, 'canli.py', src, '--ad', c['ad'], '--kategori', c['oyun'] or 'Grand Theft Auto VI',
-                            '--tamami', '--isim', c['id'][-8:].lower()], capture_output=True, text=True)
+                            '--tamami', '--isim', c['id'][-8:].lower(), '--kanal', c['kanal']], capture_output=True, text=True)
         out = [l for l in r.stdout.splitlines() if l.startswith(('düzen:', 'video:', 'kapak:'))]
         log('  ' + ' | '.join(out) if r.returncode == 0 else '  ✗ ' + (r.stderr.strip().splitlines() or ['hata'])[-1][:200])
         if r.returncode == 0:

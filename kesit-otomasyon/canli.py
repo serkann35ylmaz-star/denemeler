@@ -42,7 +42,7 @@ day = time.strftime('%Y-%m-%d')
 work = f'{OUT}/canli/{day}'
 os.makedirs(work, exist_ok=True)
 platform = 'twitch' if 'twitch.tv' in src else 'kick'
-kanal = (re.search(r'(?:twitch\.tv|kick\.com)/([^/?]+)', src) or [None, AD.lower()])[1]
+kanal = opt('--kanal') or (re.search(r'(?:twitch\.tv|kick\.com)/([^/?]+)', src) or [None, re.sub(r'\W', '', AD.lower())])[1]
 slug = re.sub(r'[^a-z0-9]+', '-', AD.lower()).strip('-')
 stamp = opt('--isim') or time.strftime('%H%M')  # aynı dakikada birden çok kesit için benzersiz ad
 
