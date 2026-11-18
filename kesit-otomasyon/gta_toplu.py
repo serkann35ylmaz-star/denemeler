@@ -12,9 +12,13 @@ from kesit import opt, log, OUT
 PER = int(opt('--yayinci-basina', '2'))
 NSTREAM = int(opt('--yayinci', '12'))
 GTA_RE = opt('--oyun', r'grand theft auto vi\b|\bgta ?(6|vi)\b')
+BASLIK_ARA = opt('--baslik-ara')   # yalnız yayın başlığı buna uyanlar, ör. Yeni Zelanda: "\\bnz\\b|new ?zealand"
+MIN_IZ = int(opt('--min-izleyici', '0'))
 TOPLAM = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 15
 
-live = kesit.kick_canli(GTA_RE, None, NSTREAM)
+live = kesit.kick_canli(GTA_RE, None, 5000 if BASLIK_ARA else NSTREAM)
+if BASLIK_ARA:
+    live = [s_ for s_ in live if re.search(BASLIK_ARA, s_['baslik'], re.I) and s_['izleyici'] >= MIN_IZ][:NSTREAM]
 NAMES = {y['kanal'].lower(): y['ad'] for y in kesit.AY['yayincilar'] if y['platform'] == 'kick'}
 for s_ in live:  # Kick kullanıcı adı yerine bilinen gerçek ad (rraenee -> Elraenn)
     s_['ad'] = NAMES.get(s_['kanal'].lower(), s_['ad'])
