@@ -69,7 +69,7 @@ const data = {
   baslik: story.baslik || 'Hikaye', W: fmt[0], H: fmt[1], fps: story.fps || 30, total,
   sinemaBantlari: story.sinemaBantlari ?? (story.format !== '9:16'),
   altyazi: story.altyazi ?? true, altyaziStil: story.altyaziStil || (story.format === '9:16' ? 'vurgulu' : 'klasik'),
-  baslikBant: story.baslikBant || null, karakterler: chars, sahneler: scenes,
+  baslikBant: story.baslikBant || null, dizi: story.dizi || null, karakterler: chars, sahneler: scenes,
 };
 fs.mkdirSync('out', { recursive: true });
 // Görselin yanında aynı adlı .mp4 varsa (canlandir.py çıktısı) kareleri çıkar; motor görsel yerine klibi oynatır
