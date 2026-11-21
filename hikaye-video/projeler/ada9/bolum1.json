@@ -4,21 +4,36 @@
   "fps": 30,
   "sesMotoru": "chatterbox",
   "repliklerArasi": 0.25,
-  "anlatici": { "ses": "tr-TR-AhmetNeural", "hiz": "-6%", "perde": "-8Hz" },
-  "gorselStil": "Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a round pure-white cartoon head with tiny black dot eyes and white cartoon hands, no realistic human faces. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.",
+  "anlatici": {
+    "ses": "tr-TR-AhmetNeural",
+    "hiz": "-6%",
+    "perde": "-8Hz"
+  },
+  "gorselStil": "Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.",
   "karakterler": {
     "kemal": {
       "ad": "Kemal",
-      "gorselTarif": "Kemal, a 41-year-old ex-special-forces man (round pure-white cartoon head, tiny black dot eyes, broad shoulders, black tactical wristwatch on left wrist, soaked dark olive t-shirt, dog tags, torn cargo pants, white cartoon hands) [REFERANS GELİNCE GÜNCELLENECEK]"
+      "gorselTarif": "Kemal, a 41-year-old ex-special-forces man (large round glossy pure-white cartoon head with a short black buzz-cut drawn in fine ink strokes on top, thick black furrowed eyebrows, two small oval black eyes, a small downturned mouth, a vertical stitched scar running through his left eyebrow down past his left eye, muscular build, a full black-ink sleeve tattoo covering his entire right arm from shoulder to wrist, black tactical wristwatch on his left wrist, worn olive-green t-shirt, white cartoon hands)",
+      "referans": "projeler/ada9/kemal-referans.jpg"
     },
     "kiz": {
       "ad": "Kızı",
-      "gorselTarif": "Kemal's 8-year-old daughter (round pure-white cartoon head, tiny black dot eyes, two small pigtails, yellow raincoat, white cartoon hands)"
+      "gorselTarif": "Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands)"
     }
   },
   "ambiyans": [
-    { "ad": "okyanus", "bas": 0, "bit": "gemi", "seviye": 0.22 },
-    { "ad": "okyanus", "bas": "harita", "seviye": 0.2, "tohum": 2 }
+    {
+      "ad": "okyanus",
+      "bas": 0,
+      "bit": "gemi",
+      "seviye": 0.22
+    },
+    {
+      "ad": "okyanus",
+      "bas": "harita",
+      "seviye": 0.2,
+      "tohum": 2
+    }
   ],
   "sahneler": [
     {
@@ -27,14 +42,38 @@
       "hareket": "yaklas",
       "gorselPrompt": "Wide shot from water level: a torn black backpack snagged on a jagged black rock forty meters off a tiny island, a huge great white dorsal fin circling the rock, cold blue dusk, red sunset streak on the horizon.",
       "olaylar": [
-        { "tip": "anlatici", "duygu": "dusunceli", "metin": "Bu çantayı alamazsa adada *ölecek.*", "ses": "darbe",
-          "yer": "ADA 9 · ŞİMDİ" },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Aradaki tek engel *altı metrelik* bir büyük beyaz.",
-          "gorsel": "gorseller/ada9/01b.jpg", "hareket": "yukari",
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Bu çantayı alamazsa adada *ölecek.*",
+          "ses": "darbe",
+          "yer": "ADA 9 · ŞİMDİ"
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Aradaki tek engel *altı metrelik* bir büyük beyaz.",
+          "gorsel": "gorseller/ada9/01b.jpg",
+          "hareket": "yukari",
           "gorselPrompt": "Underwater low-angle shot looking up: a six-meter great white shark gliding beneath the rock and the hanging backpack, sun rays piercing dark teal water, tiny silhouette of the island shore far behind.",
-          "ses": { "ad": "sualti", "sure": 4, "seviye": 0.5 } },
-        { "tip": "bekle", "sure": 2.4, "ses": "darbe",
-          "kart": { "tur": "bolum", "dizi": "ADA 9", "ad": "DÖRT DAKİKA", "bolum": "1. BÖLÜM", "sure": 2.4 } }
+          "ses": {
+            "ad": "sualti",
+            "sure": 4,
+            "seviye": 0.5
+          }
+        },
+        {
+          "tip": "bekle",
+          "sure": 2.4,
+          "ses": "darbe",
+          "kart": {
+            "tur": "bolum",
+            "dizi": "ADA 9",
+            "ad": "DÖRT DAKİKA",
+            "bolum": "1. BÖLÜM",
+            "sure": 2.4
+          }
+        }
       ]
     },
     {
@@ -43,11 +82,31 @@
       "hareket": "yaklas",
       "gorselPrompt": "Medium shot on the deck of a rusty cargo ship at night: [KEMAL] in a security vest standing by the railing, containers stacked behind, single amber deck lamp, calm dark sea.",
       "olaylar": [
-        { "tip": "anlatici", "yer": "ÖNCE · YÜK GEMİSİ", "metin": "Adı Kemal. On iki yıl *özel kuvvetlerde* görev yaptı.",
-          "kart": { "tur": "kimlik", "ust": "DOSYA · ADA 9", "ad": "KEMAL", "yas": 41, "unvan": "EMEKLİ ÖZEL KUVVETLER", "satirlar": ["12 yıl görev", "Yük gemisinde güvenlikçi"], "sure": 4.2 } },
-        { "tip": "anlatici", "duygu": "uzgun", "metin": "Emekli olunca *kızının tedavi parası* için bir yük gemisinde güvenlikçi oldu.",
-          "gorsel": "gorseller/ada9/02b.jpg", "hareket": "yaklas",
-          "gorselPrompt": "Close-up of [KEMAL]'s white cartoon hand holding a small creased photograph of [KIZ] smiling in a hospital bed, amber lamp light, ship railing blurred behind." }
+        {
+          "tip": "anlatici",
+          "yer": "ÖNCE · YÜK GEMİSİ",
+          "metin": "Adı Kemal. On iki yıl *özel kuvvetlerde* görev yaptı.",
+          "kart": {
+            "tur": "kimlik",
+            "ust": "DOSYA · ADA 9",
+            "ad": "KEMAL",
+            "yas": 41,
+            "unvan": "EMEKLİ ÖZEL KUVVETLER",
+            "satirlar": [
+              "12 yıl görev",
+              "Yük gemisinde güvenlikçi"
+            ],
+            "sure": 4.2
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "uzgun",
+          "metin": "Emekli olunca *kızının tedavi parası* için bir yük gemisinde güvenlikçi oldu.",
+          "gorsel": "gorseller/ada9/02b.jpg",
+          "hareket": "yaklas",
+          "gorselPrompt": "Close-up of [KEMAL]'s white cartoon hand holding a small creased photograph of [KIZ] smiling in a hospital bed, amber lamp light, ship railing blurred behind."
+        }
       ]
     },
     {
@@ -58,9 +117,25 @@
       "efekt": "yagmur",
       "gorselPrompt": "Epic wide shot: the cargo ship tilting and sinking in a violent night storm, giant waves, containers falling into the sea, a red lightning bolt splitting the black sky, tiny figures on the slanted deck.",
       "olaylar": [
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Üç gece önce gemi fırtınada *battı.*", "id": "gemi",
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Üç gece önce gemi fırtınada *battı.*",
+          "id": "gemi",
           "yer": "3 GECE ÖNCE · AÇIK DENİZ",
-          "ses": [ { "ad": "gok", "sure": 5, "seviye": 0.8 }, { "ad": "ruzgar", "sure": 5, "seviye": 0.35 } ] }
+          "ses": [
+            {
+              "ad": "gok",
+              "sure": 5,
+              "seviye": 0.8
+            },
+            {
+              "ad": "ruzgar",
+              "sure": 5,
+              "seviye": 0.35
+            }
+          ]
+        }
       ]
     },
     {
@@ -69,11 +144,20 @@
       "hareket": "asagi",
       "gorselPrompt": "Top-down shot at dawn: [KEMAL] exhausted, clinging to a floating piece of wreckage on a calm grey sea, a tiny rocky island on the horizon.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Kemal bir enkaza tutunup haritada adı bile olmayan bir adaya ulaştı." },
-        { "tip": "anlatici", "duygu": "dusunceli", "metin": "Haritadaki adı sadece bir numara: *dokuz.*", "id": "harita",
-          "gorsel": "gorseller/ada9/04b.jpg", "hareket": "yaklas",
+        {
+          "tip": "anlatici",
+          "metin": "Kemal bir enkaza tutunup haritada adı bile olmayan bir adaya ulaştı."
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Haritadaki adı sadece bir numara: *dokuz.*",
+          "id": "harita",
+          "gorsel": "gorseller/ada9/04b.jpg",
+          "hareket": "yaklas",
           "gorselPrompt": "Extreme close-up of an old nautical chart: a vast empty ocean with one tiny ink dot of an island circled in red, compass rose in the corner, stained paper texture (no readable text).",
-          "yer": "📍 ADA 9" }
+          "yer": "📍 ADA 9"
+        }
       ]
     },
     {
@@ -83,12 +167,32 @@
       "hareket": "saga",
       "gorselPrompt": "Dynamic action shot: a huge wave crashing over [KEMAL] in the shallow surf, the black backpack being ripped off his back by the water, spray and foam, cold blue light.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Ama kıyıya çıkarken bir dalga *çantayı sırtından kopardı.*", "ses": { "ad": "sicrama", "seviye": 0.6 },
-          "durum": "ÇANTA KAYIP" },
-        { "tip": "anlatici", "metin": "Çanta *kırk metre* açıkta bir kayaya takıldı.",
-          "gorsel": "gorseller/ada9/05b.jpg", "hareket": "yaklas",
+        {
+          "tip": "anlatici",
+          "metin": "Ama kıyıya çıkarken bir dalga *çantayı sırtından kopardı.*",
+          "ses": {
+            "ad": "sicrama",
+            "seviye": 0.6
+          },
+          "durum": "ÇANTA KAYIP"
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Çanta *kırk metre* açıkta bir kayaya takıldı.",
+          "gorsel": "gorseller/ada9/05b.jpg",
+          "hareket": "yaklas",
           "gorselPrompt": "Long telephoto shot from the beach: the black backpack hanging from a jagged rock far out at sea, its strap snagged, gentle swell around it, [KEMAL] small in the foreground, back to camera.",
-          "kutu": { "MESAFE": { "deger": "40 M", "renk": "#ff9a2e" }, "ÇANTA": { "deger": "KAYADA", "renk": "#e8344e" } } }
+          "kutu": {
+            "MESAFE": {
+              "deger": "40 M",
+              "renk": "#ff9a2e"
+            },
+            "ÇANTA": {
+              "deger": "KAYADA",
+              "renk": "#e8344e"
+            }
+          }
+        }
       ]
     },
     {
@@ -97,12 +201,38 @@
       "hareket": "yaklas",
       "gorselPrompt": "Flat-lay still life on a dark wet background: a handheld waterproof radio, a strip of water purification tablets, a red signal flare and a creased photograph of [KIZ], dramatic top light.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "İçinde telsiz, su arıtma tableti, işaret fişeği ve *kızının fotoğrafı* var.",
-          "kart": { "tur": "liste", "baslik": "ÇANTANIN İÇİ", "ogeler": ["Telsiz", "Su arıtma tableti", "İşaret fişeği", { "ad": "Kızının fotoğrafı", "vurgu": true }], "aralik": 0.7, "sure": 5.2 } },
-        { "tip": "anlatici", "metin": "Adada tatlı su yok.", "durum": "SUSUZ · 3. GÜN",
-          "gorsel": "gorseller/ada9/06b.jpg", "hareket": "uzaklas",
-          "gorselPrompt": "Wide shot of the barren island: [KEMAL] kneeling by a dry cracked rock pool, scorching pale sky, no vegetation, empty plastic bottle beside him." },
-        { "tip": "anlatici", "duygu": "dusunceli", "metin": "Telsiz olmadan onu *kimse bulamaz.*" }
+        {
+          "tip": "anlatici",
+          "metin": "İçinde telsiz, su arıtma tableti, işaret fişeği ve *kızının fotoğrafı* var.",
+          "kart": {
+            "tur": "liste",
+            "baslik": "ÇANTANIN İÇİ",
+            "ogeler": [
+              "Telsiz",
+              "Su arıtma tableti",
+              "İşaret fişeği",
+              {
+                "ad": "Kızının fotoğrafı",
+                "vurgu": true
+              }
+            ],
+            "aralik": 0.7,
+            "sure": 5.2
+          }
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Adada tatlı su yok.",
+          "durum": "SUSUZ · 3. GÜN",
+          "gorsel": "gorseller/ada9/06b.jpg",
+          "hareket": "uzaklas",
+          "gorselPrompt": "Wide shot of the barren island: [KEMAL] kneeling by a dry cracked rock pool, scorching pale sky, no vegetation, empty plastic bottle beside him."
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Telsiz olmadan onu *kimse bulamaz.*"
+        }
       ]
     },
     {
@@ -112,8 +242,20 @@
       "hareket": "yaklas",
       "gorselPrompt": "Over-the-shoulder shot from behind [KEMAL] on the shore: a tall great white dorsal fin slowly circling the distant rock with the backpack, tense stillness, cold teal water.",
       "olaylar": [
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Ve kayanın etrafında *bir yüzgeç* dönüyor.",
-          "kutu": { "NABIZ": "142" }, "ses": { "ad": "kalp", "bpm": 142, "sure": 4, "seviye": 0.45 } }
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Ve kayanın etrafında *bir yüzgeç* dönüyor.",
+          "kutu": {
+            "NABIZ": "142"
+          },
+          "ses": {
+            "ad": "kalp",
+            "bpm": 142,
+            "sure": 4,
+            "seviye": 0.45
+          }
+        }
       ]
     },
     {
@@ -122,8 +264,14 @@
       "hareket": "saga",
       "gorselPrompt": "Wide horizon shot: a giant dead whale carcass floating on the far horizon with seabirds circling above it, the dorsal fin cutting a wake away from the rock towards it, red sunset glow.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Sonra ufukta ölmüş *dev bir balina* beliriyor." },
-        { "tip": "anlatici", "metin": "Köpekbalığı ona gidiyor." }
+        {
+          "tip": "anlatici",
+          "metin": "Sonra ufukta ölmüş *dev bir balina* beliriyor."
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Köpekbalığı ona gidiyor."
+        }
       ]
     },
     {
@@ -132,13 +280,35 @@
       "hareket": "yaklas",
       "gorselPrompt": "Medium shot: [KEMAL] crouched behind a boulder on the shore, eyes fixed on the sea, his white cartoon finger pressing the button of his black tactical wristwatch.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Kemal suya girmiyor. *Saatine basıyor.*",
-          "sayac": { "mod": "ileri", "bas": "00:00", "bitis": "03:58", "hedefOlay": "olcum-bitti", "etiket": "ÖLÇÜYOR", "bicim": "dk" },
-          "kutu": { "NABIZ": "96" } },
-        { "tip": "anlatici", "metin": "Köpekbalığı dört dakika sonra geri dönüyor, bir tur atıyor ve yeniden balinaya gidiyor.",
-          "gorsel": "gorseller/ada9/09b.jpg", "hareket": "sola",
-          "gorselPrompt": "High aerial shot: the great white making one slow loop around the rock with the backpack, then swimming off towards the distant whale carcass, its path visible as a curved wake." },
-        { "tip": "anlatici", "duygu": "dusunceli", "metin": "Artık biliyor: *dört dakikası var.*", "id": "olcum-bitti", "sayac": "dur" }
+        {
+          "tip": "anlatici",
+          "metin": "Kemal suya girmiyor. *Saatine basıyor.*",
+          "sayac": {
+            "mod": "ileri",
+            "bas": "00:00",
+            "bitis": "03:58",
+            "hedefOlay": "olcum-bitti",
+            "etiket": "ÖLÇÜYOR",
+            "bicim": "dk"
+          },
+          "kutu": {
+            "NABIZ": "96"
+          }
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Köpekbalığı dört dakika sonra geri dönüyor, bir tur atıyor ve yeniden balinaya gidiyor.",
+          "gorsel": "gorseller/ada9/09b.jpg",
+          "hareket": "sola",
+          "gorselPrompt": "High aerial shot: the great white making one slow loop around the rock with the backpack, then swimming off towards the distant whale carcass, its path visible as a curved wake."
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Artık biliyor: *dört dakikası var.*",
+          "id": "olcum-bitti",
+          "sayac": "dur"
+        }
       ]
     },
     {
@@ -148,10 +318,29 @@
       "hareket": "asagi",
       "gorselPrompt": "Low-angle shot at water level: [KEMAL] slipping silently into the dark water from the rocks, barely a ripple, wristwatch glowing faintly, the far rock with the backpack ahead.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Kronometreye basıyor ve suya giriyor.",
-          "sayac": { "mod": "geri", "bas": "04:00", "bitis": "02:00", "hedefOlay": "iki-dakika", "etiket": "KALAN", "bicim": "dk" },
-          "durum": "", "ses": { "ad": "kabarcik", "sure": 2, "seviye": 0.35 } },
-        { "tip": "anlatici", "duygu": "dusunceli", "metin": "*Sıçratmadan.*" }
+        {
+          "tip": "anlatici",
+          "metin": "Kronometreye basıyor ve suya giriyor.",
+          "sayac": {
+            "mod": "geri",
+            "bas": "04:00",
+            "bitis": "02:00",
+            "hedefOlay": "iki-dakika",
+            "etiket": "KALAN",
+            "bicim": "dk"
+          },
+          "durum": "",
+          "ses": {
+            "ad": "kabarcik",
+            "sure": 2,
+            "seviye": 0.35
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "*Sıçratmadan.*"
+        }
       ]
     },
     {
@@ -160,15 +349,56 @@
       "hareket": "yaklas",
       "gorselPrompt": "Side tracking shot: [KEMAL] swimming a silent breaststroke across open dark water, the rock with the backpack getting closer, vast depth below him.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Kırk metre.", "kutu": { "MESAFE": "40 M" } },
-        { "tip": "anlatici", "metin": "Yirmi beş.", "kutu": { "MESAFE": "25 M" } },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Bacağına *kramp* giriyor.", "durum": "KRAMP",
-          "gorsel": "gorseller/ada9/11b.jpg", "hareket": "yukari",
+        {
+          "tip": "anlatici",
+          "metin": "Kırk metre.",
+          "kutu": {
+            "MESAFE": "40 M"
+          }
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Yirmi beş.",
+          "kutu": {
+            "MESAFE": "25 M"
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Bacağına *kramp* giriyor.",
+          "durum": "KRAMP",
+          "gorsel": "gorseller/ada9/11b.jpg",
+          "hareket": "yukari",
           "gorselPrompt": "Underwater close-up: [KEMAL]'s leg cramping, foot twisted, white cartoon hand gripping his calf, bubbles escaping, dark teal depths below.",
-          "ses": { "ad": "sualti", "sure": 3, "seviye": 0.45 } },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "İki dakika kaldı.", "id": "iki-dakika",
-          "sayac": { "mod": "geri", "bas": "02:00", "bitis": "00:30", "hedefOlay": "golge", "devam": true },
-          "kutu": { "NABIZ": "168" }, "ses": { "ad": "kalp", "bpm": 168, "sure": 3, "seviye": 0.4 } }
+          "ses": {
+            "ad": "sualti",
+            "sure": 3,
+            "seviye": 0.45
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "İki dakika kaldı.",
+          "id": "iki-dakika",
+          "sayac": {
+            "mod": "geri",
+            "bas": "02:00",
+            "bitis": "00:30",
+            "hedefOlay": "golge",
+            "devam": true
+          },
+          "kutu": {
+            "NABIZ": "168"
+          },
+          "ses": {
+            "ad": "kalp",
+            "bpm": 168,
+            "sure": 3,
+            "seviye": 0.4
+          }
+        }
       ]
     },
     {
@@ -178,8 +408,16 @@
       "hareket": "uzaklas",
       "gorselPrompt": "Aerial drone shot: the dead whale carcass surrounded by dozens of great white sharks, dorsal fins everywhere, blood clouds in turquoise water, overwhelming scale.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Bir balina leşi tek bir köpekbalığını değil, kilometrelerce öteden *hepsini çağırır.*",
-          "kart": { "tur": "gercek", "baslik": "GERÇEK", "metin": "Ölü balinaların etrafında aynı anda onlarca büyük beyaz köpekbalığı gözlemlenmiştir.", "sure": 4.6 } }
+        {
+          "tip": "anlatici",
+          "metin": "Bir balina leşi tek bir köpekbalığını değil, kilometrelerce öteden *hepsini çağırır.*",
+          "kart": {
+            "tur": "gercek",
+            "baslik": "GERÇEK",
+            "metin": "Ölü balinaların etrafında aynı anda onlarca büyük beyaz köpekbalığı gözlemlenmiştir.",
+            "sure": 4.6
+          }
+        }
       ]
     },
     {
@@ -188,14 +426,47 @@
       "hareket": "yaklas",
       "gorselPrompt": "Close-up at the rock: [KEMAL] clinging to the jagged rock, both white cartoon hands pulling hard on the backpack strap jammed in a crack, water up to his chest.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Kayaya ulaşıyor ama askı sıkışmış.", "kutu": { "MESAFE": { "deger": "0 M", "renk": "#5fd38d" }, "ÇANTA": { "deger": "ELDE", "renk": "#5fd38d" } } },
-        { "tip": "anlatici", "metin": "Çekiyor, çanta yırtılıyor ve içinden bir şey düşüp batıyor:",
-          "ses": { "ad": "sicrama", "seviye": 0.45 } },
-        { "tip": "anlatici", "duygu": "uzgun", "metin": "*Kızının fotoğrafı.*",
-          "gorsel": "gorseller/ada9/13b.jpg", "hareket": "asagi",
+        {
+          "tip": "anlatici",
+          "metin": "Kayaya ulaşıyor ama askı sıkışmış.",
+          "kutu": {
+            "MESAFE": {
+              "deger": "0 M",
+              "renk": "#5fd38d"
+            },
+            "ÇANTA": {
+              "deger": "ELDE",
+              "renk": "#5fd38d"
+            }
+          }
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Çekiyor, çanta yırtılıyor ve içinden bir şey düşüp batıyor:",
+          "ses": {
+            "ad": "sicrama",
+            "seviye": 0.45
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "uzgun",
+          "metin": "*Kızının fotoğrafı.*",
+          "gorsel": "gorseller/ada9/13b.jpg",
+          "hareket": "asagi",
           "gorselPrompt": "Underwater shot: the creased photograph of [KIZ] slowly sinking and spinning into the dark blue abyss, a few bubbles, faint sun rays from above.",
-          "kutu": { "ÇANTA": { "deger": "3 EŞYA", "renk": "#e8344e" } },
-          "ses": { "ad": "sualti", "sure": 5, "seviye": 0.55 } }
+          "kutu": {
+            "ÇANTA": {
+              "deger": "3 EŞYA",
+              "renk": "#e8344e"
+            }
+          },
+          "ses": {
+            "ad": "sualti",
+            "sure": 5,
+            "seviye": 0.55
+          }
+        }
       ]
     },
     {
@@ -205,14 +476,48 @@
       "hareket": "asagi",
       "gorselPrompt": "Underwater view straight down past [KEMAL]'s dangling legs: deep in the abyss a massive dark silhouette rising slowly towards him, far bigger than the first shark.",
       "olaylar": [
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "*Otuz saniye kaldı.*", "id": "golge",
-          "ses": [ { "ad": "sualti", "sure": 9, "seviye": 0.6 }, { "ad": "kalp", "bpm": 180, "sure": 9, "seviye": 0.55 } ],
-          "kutu": { "NABIZ": "180" } },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Dipte bir gölge yükseliyor.", "durum": "DİPTE GÖLGE" },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Bu o değil.",
-          "gorsel": "gorseller/ada9/14b.jpg", "hareket": "yaklas",
-          "gorselPrompt": "Extreme low-angle underwater shot: a colossal great white's open jaws and dark eye emerging from the blackness, rows of teeth, tiny silhouette of [KEMAL] at the surface above." },
-        { "tip": "anlatici", "duygu": "korkmus", "metin": "Bu *ondan daha büyük.*", "ses": "darbe" }
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "*Otuz saniye kaldı.*",
+          "id": "golge",
+          "ses": [
+            {
+              "ad": "sualti",
+              "sure": 9,
+              "seviye": 0.6
+            },
+            {
+              "ad": "kalp",
+              "bpm": 180,
+              "sure": 9,
+              "seviye": 0.55
+            }
+          ],
+          "kutu": {
+            "NABIZ": "180"
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Dipte bir gölge yükseliyor.",
+          "durum": "DİPTE GÖLGE"
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Bu o değil.",
+          "gorsel": "gorseller/ada9/14b.jpg",
+          "hareket": "yaklas",
+          "gorselPrompt": "Extreme low-angle underwater shot: a colossal great white's open jaws and dark eye emerging from the blackness, rows of teeth, tiny silhouette of [KEMAL] at the surface above."
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "korkmus",
+          "metin": "Bu *ondan daha büyük.*",
+          "ses": "darbe"
+        }
       ]
     },
     {
@@ -223,8 +528,14 @@
       "sonBekleme": 4.8,
       "gorselPrompt": "Medium shot: the torn black backpack hanging open from the jagged rock, [KEMAL]'s white cartoon hand gripping its strap, dark water swirling below, cold blue light with a red sunset rim.",
       "olaylar": [
-        { "tip": "anlatici", "metin": "Fotoğraf için *dalsın mı,* yoksa çantayla *dönsün mü?*" },
-        { "tip": "anlatici", "metin": "Yorumlara tek kelime yaz: *dal* ya da *dön.*" }
+        {
+          "tip": "anlatici",
+          "metin": "Fotoğraf için *dalsın mı,* yoksa çantayla *dönsün mü?*"
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Yorumlara tek kelime yaz: *dal* ya da *dön.*"
+        }
       ]
     }
   ],
@@ -233,12 +544,34 @@
     "toplamBolum": 9,
     "finalEtiket": "F",
     "kutular": [
-      { "etiket": "ÇANTA", "deger": "KAYADA", "renk": "#e8344e" },
-      { "etiket": "MESAFE", "deger": "40 M", "renk": "#ff9a2e" },
-      { "etiket": "NABIZ", "deger": "96", "atis": true, "esik": 120 }
+      {
+        "etiket": "ÇANTA",
+        "deger": "KAYADA",
+        "renk": "#e8344e"
+      },
+      {
+        "etiket": "MESAFE",
+        "deger": "40 M",
+        "renk": "#ff9a2e"
+      },
+      {
+        "etiket": "NABIZ",
+        "deger": "96",
+        "atis": true,
+        "esik": 120
+      }
     ],
-    "kural": { "metin": "Sıçratma.", "sure": 4.6 },
-    "anket": { "a": "DAL", "b": "DÖN", "alt": "Yorumlara tek kelime", "not": "ADA 9 · 1. Bölüm", "sure": 5 },
+    "kural": {
+      "metin": "Sıçratma.",
+      "sure": 4.6
+    },
+    "anket": {
+      "a": "DAL",
+      "b": "DÖN",
+      "alt": "Yorumlara tek kelime",
+      "not": "ADA 9 · 1. Bölüm",
+      "sure": 5
+    },
     "sabitYorum": "Sen olsan 4 dakikada kaç metre yüzerdin? 🦈"
   }
 }
