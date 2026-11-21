@@ -1,1 +1,10 @@
-[]
+[
+ {
+  "dosya": "gorseller/ada9/14b.jpg",
+  "kemal": false,
+  "kopekbaligiRef": true,
+  "kopekbaligiReferansDosya": "hikaye-video/gorseller/ada9/01b.jpg",
+  "neden": "09c ile aynı kompozisyon; 14b'de ağzı açık, dipten yükselen dev siluet olmalı",
+  "prompt": "The shark stays fully underwater. Extreme low-angle underwater shot from far below looking UP: the colossal great white from the shark reference image rising from the black abyss toward the surface with its jaws wide open, dozens of teeth, the rusted J-shaped fishing hook in the LEFT corner of its lower jaw with a short frayed green line, its body so huge it fills the lower two thirds of the frame, much larger than the tiny silhouette of Kemal clinging to the rock at the surface far above. The shark's snout is smooth and intact: NO X-shaped scar, NO cut, NO split, NO crack and NO line on the nose or upper face. Dark cinematic hand-drawn graphic-novel illustration, bold black ink outlines, fine cross-hatching, deep cold blue-teal shadows with harsh red lightning light at the surface. Vertical 9:16, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark. No ship, no ladder."
+ }
+]
