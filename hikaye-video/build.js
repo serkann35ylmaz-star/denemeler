@@ -75,7 +75,7 @@ fs.mkdirSync('out', { recursive: true });
 // Görselin yanında aynı adlı .mp4 varsa (canlandir.py çıktısı) kareleri çıkar; motor görsel yerine klibi oynatır
 data.klipler = {};
 for (const src of new Set(scenes.flatMap(s => [s.gorsel, ...s.olaylar.map(e => e.gorsel)]).filter(Boolean))) {
-  const clip = src.replace(/\.[a-z]+$/i, '.mp4');
+  const hd = src.replace(/\.[a-z]+$/i, '.hd.mp4'), clip = fs.existsSync(hd) ? hd : src.replace(/\.[a-z]+$/i, '.mp4');  // HD sürüm öncelikli
   if (!fs.existsSync(clip)) continue;
   const dir = 'out/klip/' + crypto.createHash('sha1').update(clip + fs.statSync(clip).mtimeMs).digest('hex').slice(0, 10);
   if (!fs.existsSync(dir)) { fs.mkdirSync(dir, { recursive: true }); execFileSync('ffmpeg', ['-v', 'error', '-i', clip, '-vf', 'fps=24', '-q:v', '3', dir + '/%03d.jpg']); }
