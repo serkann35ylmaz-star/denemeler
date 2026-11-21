@@ -601,7 +601,8 @@ function rr(x, y, w, h, r, fill, stroke, lw) { ctx.beginPath(); ctx.roundRect(x,
 function tx(s, x, y, size, col, weight = '800', align = 'center', font = PF) { ctx.font = `${weight} ${size}px ${font}`; ctx.fillStyle = col; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(s, x, y); }
 function wrapF(s, maxW, font) { ctx.font = font; return wrap(s, maxW); }
 function diziState(t) {
-  const st = { kutular: (DZ.kutular || []).map(k => ({ ...k })), durum: DZ.durum || null, yer: null, yerT: -9, kart: null };
+  const st = { kutular: (DZ.kutular || []).map(k => ({ ...k })), durum: DZ.durum || null, yer: null, yerT: -9, kart: null,
+    sayac: DZ.sayac ? { mod: 'geri', hiz: 60, ...DZ.sayac, t0: 0 } : null };
   for (const sc of D.sahneler) for (const ev of sc.olaylar) {
     if (ev.start > t) continue;
     if (ev.kutu) for (const [lab, val] of Object.entries(ev.kutu)) {
@@ -609,6 +610,11 @@ function diziState(t) {
       if (k) Object.assign(k, typeof val === 'string' ? { deger: val } : val, { degisti: ev.start });
     }
     if (ev.durum !== undefined) st.durum = ev.durum;
+    if (ev.sayac !== undefined) {  // 'dur': o anki değerde dondur, 'gizle'/false: kaldır, nesne: yeni bölüm
+      if (ev.sayac === 'dur' && st.sayac) { const v = clockF(Math.round(sayacDeger(st.sayac, ev.start))); st.sayac = { ...st.sayac, bas: String(st.sayac.bas).split(':').length < 3 ? v.slice(3) : v, hiz: 0, t0: ev.start, durdu: ev.start, yeni: undefined }; }
+      else if (ev.sayac === 'gizle' || ev.sayac === false) st.sayac = null;
+      else if (typeof ev.sayac === 'object') st.sayac = { mod: 'geri', hiz: 1, etiket: st.sayac && st.sayac.etiket, ...ev.sayac, t0: ev.start, yeni: ev.sayac.devam ? undefined : ev.start };
+    }
     if (ev.yer) { st.yer = ev.yer; st.yerT = ev.start; }
     if (ev.kart) { const t1 = ev.start + (ev.kart.sure || Math.max(2.5, ev.end - ev.start)); if (t < t1) st.kart = { ...ev.kart, t0: ev.start, t1 }; }
   }
@@ -628,19 +634,34 @@ function diziHUD(t, st) {
     const bx = x0 + i * (bw + gap), fl = k.degisti !== undefined ? Math.max(0, 1 - (t - k.degisti) / .7) : 0, col = k.renk || '#fff';
     rr(bx, by, bw, bh, 10, PANEL, fl > 0 ? col : 'rgba(255,255,255,.18)', 2 + fl * 4);
     tx(upTR(k.etiket), bx + 14, by + 17, 17, '#9a9aa2', '800', 'left');
-    const sc2 = 1 + .25 * fl; ctx.save(); ctx.translate(bx + bw - 16, by + bh * .64); ctx.scale(sc2, sc2); tx(upTR(k.deger), 0, 0, 30, col, '900', 'right'); ctx.restore();
+    let beat = 0, vcol = col;
+    if (k.atis) {  // nabız kutusu: değer (bpm) hızında atar; eşiği geçince kırmızı
+      const bpm = parseInt(k.deger) || 80, ph = (t * bpm / 60) % 1; beat = Math.exp(-ph * 9) + .6 * Math.exp(-Math.max(0, ph - .28) * 12) * (ph > .28);
+      if (bpm >= (k.esik || 120)) vcol = RD;
+      tx('♥', bx + 14 + ctx.measureText(upTR(k.etiket)).width + 18, by + 17, 18 * (1 + .35 * beat), vcol, '900', 'left');
+      if (bpm >= (k.esik || 120)) rr(bx, by, bw, bh, 10, null, `rgba(232,52,78,${.6 * beat})`, 3);
+    }
+    const sc2 = 1 + .25 * fl + (k.atis ? .08 * beat : 0); ctx.save(); ctx.translate(bx + bw - 16, by + bh * .64); ctx.scale(sc2, sc2); tx(upTR(k.deger), 0, 0, 30, vcol, '900', 'right'); ctx.restore();
   });
 }
 const clockS = c => String(c).split(':').map(Number).reduce((a, b) => a * 60 + b, 0);
-const clockF = s => { s = Math.max(0, s); return [s / 3600, s % 3600 / 60, s % 60].map(v => String(Math.floor(v)).padStart(2, '0')).join(':'); };
+const clockF = s => { s = Math.max(0, s + 1e-6); return [s / 3600, s % 3600 / 60, s % 60].map(v => String(Math.floor(v)).padStart(2, '0')).join(':'); };
+const sayacDeger = (sy, t) => clockS(sy.bas) + (sy.mod === 'ileri' ? 1 : -1) * (t - sy.t0) * (sy.hiz ?? 1);
 function diziSayac(t, st) {
-  const sy = DZ.sayac, y = H * .815;
+  const sy = st.sayac, y = H * .815;
   if (st.yer) { ctx.globalAlpha = Math.min(1, (t - st.yerT) / .3); tx(upTR(st.yer), W / 2, y - 84, 23, OR, '800'); ctx.globalAlpha = 1; }
   if (sy) {
-    ctx.font = `900 58px ${PF}`; const tw = ctx.measureText('00:00:00').width + 70;
-    rr(W / 2 - tw / 2, y - 52, tw, 112, 14, PANEL, 'rgba(255,154,46,.8)', 3);
-    tx(upTR(sy.etiket || 'KALAN'), W / 2, y - 28, 18, '#b4b4bc', '800');
-    tx(clockF(clockS(sy.bas) - t * (sy.hiz || 60)), W / 2, y + 18, 58, '#fff', '900');
+    const v = Math.max(0, sayacDeger(sy, t)), kritik = sy.mod !== 'ileri' && v <= (sy.kritik ?? 30);
+    const kisa = sy.bicim === 'dk' || (sy.bicim !== 'saat' && clockS(sy.bas) < 3600 && String(sy.bas).split(':').length < 3);
+    const s = kisa ? clockF(v).slice(3) : clockF(v), nw = sy.yeni !== undefined ? Math.max(0, 1 - (t - sy.yeni) / .6) : 0;
+    const blink = sy.durdu !== undefined && Math.floor((t - sy.durdu) * 2.5) % 2 === 0;
+    ctx.font = `900 58px ${PF}`; const tw = ctx.measureText(kisa ? '00:00' : '00:00:00').width + 90;
+    const kc = kritik ? `rgba(232,52,78,${.75 + .25 * Math.sin(t * 12)})` : 'rgba(255,154,46,.8)';
+    rr(W / 2 - tw / 2, y - 52, tw, 112, 14, kritik ? 'rgba(40,6,12,.88)' : PANEL, nw > 0 ? '#fff' : kc, 3 + nw * 4);
+    tx(upTR(sy.etiket || 'KALAN'), W / 2, y - 28, 18, kritik ? '#ff9aa8' : '#b4b4bc', '800');
+    const sc3 = 1 + .18 * nw + (kritik ? .04 * Math.max(0, Math.sin(t * 2 * Math.PI)) : 0);
+    ctx.save(); ctx.translate(W / 2, y + 18); ctx.scale(sc3, sc3); ctx.globalAlpha *= blink ? .35 : 1;
+    tx(s, 0, 0, 58, kritik ? '#ff4d63' : '#fff', '900'); ctx.restore();
   }
   if (st.durum) { ctx.font = `900 32px ${PF}`; const d = upTR(st.durum), dw = ctx.measureText(d).width + 48; rr(W / 2 - dw / 2, y + 76, dw, 52, 8, 'rgba(42,6,12,.9)', RD, 3); tx(d, W / 2, y + 103, 32, RD, '900'); }
 }
@@ -689,6 +710,34 @@ function diziKart(t, k) {
     ctx.save(); ctx.beginPath(); ctx.roundRect(px, y, pw, 80, [34, 34, 0, 0]); ctx.fillStyle = RD; ctx.fill(); ctx.restore();
     tx(upTR(k.baslik || 'SON DAKİKA'), px + 30, y + 42, 32, '#fff', '900', 'left'); tx(k.kaynak || 'yerel haber', px + pw - 30, y + 42, 20, '#ffd6dc', '700', 'right');
     lines.forEach((l, i) => tx(l, W / 2, y + 128 + i * 54, 44, '#111', '900'));
+  } else if (k.tur === 'kimlik') {  // karakter dosyası: AD · yaş · unvan + satırlar
+    const satir = k.satirlar || [], h = 210 + satir.length * 44, p = smooth(clamp((t - k.t0) / .5));
+    rr(x, y, w, h, 10, 'rgba(10,10,14,.9)', null); ctx.fillStyle = OR; ctx.fillRect(x, y, 10, h * p);
+    tx(upTR(k.ust || 'DOSYA'), x + 40, y + 36, 20, '#8d8d96', '800', 'left');
+    tx(upTR(k.ad), x + 40, y + 104, 92, '#fff', '400', 'left', 'AntonL, Impact');
+    ctx.font = `400 92px AntonL, Impact`; const aw = ctx.measureText(upTR(k.ad)).width;
+    if (k.yas) tx(String(k.yas), x + 60 + aw, y + 118, 44, OR, '900', 'left');
+    tx(upTR(k.unvan || ''), x + 40, y + 172, 28, OR, '900', 'left');
+    satir.forEach((l, i) => { const a2 = clamp((t - k.t0 - .4 - i * .25) / .25); ctx.globalAlpha *= a2 || 0.0001; tx('— ' + l, x + 40, y + 222 + i * 44, 28, '#e4e4ea', '700', 'left'); ctx.globalAlpha = a; });
+  } else if (k.tur === 'liste') {  // envanter: öğeler tek tek düşer
+    const og = k.ogeler || [], h = 100 + og.length * 64, aralik = k.aralik || .35;
+    rr(x, y, w, h, 14, PANEL, OR, 3); tx(upTR(k.baslik || 'ÇANTANIN İÇİ'), x + 32, y + 46, 30, OR, '900', 'left');
+    og.forEach((o, i) => {
+      const a2 = clamp((t - k.t0 - .3 - i * aralik) / .2); if (a2 <= 0) return;
+      const yy = y + 108 + i * 64, ox = (1 - a2) * 40; ctx.globalAlpha = a * a2;
+      const item = typeof o === 'string' ? { ad: o } : o;
+      rr(x + 32 + ox, yy - 22, 44, 44, 8, item.vurgu ? OR : 'rgba(255,255,255,.12)'); tx(String(i + 1), x + 54 + ox, yy + 1, 24, item.vurgu ? '#111' : '#fff', '900');
+      tx(upTR(item.ad), x + 96 + ox, yy + 1, 34, item.vurgu ? OR : '#fff', '900', 'left');
+      if (item.not) tx(upTR(item.not), x + w - 30, yy + 1, 22, '#9a9aa2', '800', 'right');
+    });
+    ctx.globalAlpha = a;
+  } else if (k.tur === 'bolum') {  // bölüm başlığı: DİZİ ADI / N. BÖLÜM / BÖLÜM ADI
+    const yy = H * .4, p = smooth(clamp((t - k.t0) / .6));
+    ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0, yy - 170, W, 360);
+    ctx.fillStyle = OR; const lw2 = 520 * p; ctx.fillRect(W / 2 - lw2 / 2, yy - 62, lw2, 6); ctx.fillRect(W / 2 - lw2 / 2, yy + 104, lw2, 6);
+    tx(upTR(k.dizi || ''), W / 2, yy - 110, 44, '#fff', '900');
+    tx(upTR(k.ad || ''), W / 2, yy + 22, 120, OR, '400', 'center', 'AntonL, Impact');
+    tx(upTR(k.bolum || ''), W / 2, yy + 150, 32, '#d8d8de', '800');
   } else if (k.tur === 'para') {
     const p = smooth(clamp((t - k.t0) / (k.sayma || 1.4))), v = Math.round(k.deger * p);
     const s = v.toLocaleString('tr-TR') + ' ' + (k.birim || 'TL'); ctx.font = `900 64px ${PF}`; const bw = Math.max(520, ctx.measureText(s).width + 80);

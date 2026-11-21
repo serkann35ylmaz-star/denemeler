@@ -64,6 +64,18 @@ story.sahneler.forEach((sc, si) => {
 });
 
 const total = r3(cursor + 0.3);
+
+// --- olay tabanlı sayaç: "sayac": {mod:'ileri'|'geri', bas:'00:00', hiz, bitis, hedefOlay} | 'dur' | 'gizle'
+// hedefOlay verilirse hız, sayaç tam o olayın başladığı anda "bitis" değerini gösterecek şekilde hesaplanır.
+const clk = c => String(c).split(':').map(Number).reduce((a, b) => a * 60 + b, 0);
+const allEv = scenes.flatMap(s => s.olaylar), byId = Object.fromEntries(allEv.filter(e => e.id).map(e => [e.id, e]));
+for (const ev of allEv) {
+  const sy = ev.sayac; if (!sy || typeof sy !== 'object' || !sy.hedefOlay) continue;
+  const hd = byId[sy.hedefOlay]; if (!hd) throw new Error(`sayac.hedefOlay bulunamadı: ${sy.hedefOlay}`);
+  const dt = hd.start - ev.start; if (dt <= 0) throw new Error(`hedefOlay (${sy.hedefOlay}) sayaçtan önce`);
+  sy.hiz = r3(Math.abs(clk(sy.bitis) - clk(sy.bas)) / dt);
+  console.log(`sayaç: ${sy.bas} -> ${sy.bitis} @ ${sy.hedefOlay} (${dt.toFixed(1)} sn, hız x${sy.hiz})`);
+}
 const fmt = story.format === '9:16' ? [1080, 1920] : [1920, 1080];
 const data = {
   baslik: story.baslik || 'Hikaye', W: fmt[0], H: fmt[1], fps: story.fps || 30, total,
@@ -114,8 +126,31 @@ voiced.forEach((l, i) => {
   const ms = Math.round(l.start * 1000);
   filters.push(`[${i}:a]adelay=${ms}|${ms}[a${i}]`); labels.push(`[a${i}]`);
 });
+// --- ses efektleri (sfx.py, yerel sentez): olayda "ses": "gok" | {ad, sure, bpm, seviye, gecikme}
+//     hikâyede "ambiyans": [{ad, bas, bit, seviye, bpm}] (bas/bit sn ya da olay id'si)
+const sfxList = [];
+for (const ev of allEv) for (const s of [].concat(ev.ses || [])) {
+  const o = typeof s === 'string' ? { ad: s } : s;
+  sfxList.push({ ...o, t: ev.start + (o.gecikme || 0), seviye: o.seviye ?? 0.7 });
+}
+const at = v => typeof v === 'string' ? (byId[v] ? byId[v].start : (() => { throw new Error(`ambiyans: olay yok: ${v}`); })()) : v;
+for (const a of story.ambiyans || []) {
+  const b = at(a.bas ?? 0), e = at(a.bit ?? total);
+  sfxList.push({ ...a, t: b, sure: r3(e - b), seviye: a.seviye ?? 0.25, fade: a.fade ?? 1.2 });
+}
+if (sfxList.length) fs.mkdirSync('out/sfx', { recursive: true });
+for (const x of sfxList) {
+  const args = [`sure=${x.sure ?? ''}`, `bpm=${x.bpm ?? ''}`, `tohum=${x.tohum ?? 1}`].filter(a => !a.endsWith('='));
+  const f = `out/sfx/${x.ad}-` + crypto.createHash('sha1').update(args.join(' ')).digest('hex').slice(0, 8) + '.wav';
+  if (!fs.existsSync(f)) execFileSync('python3', [path.join(__dirname, 'sfx.py'), x.ad, f, ...args], { stdio: 'inherit' });
+  const i = inputs.filter(a => a === '-i').length, ms = Math.round(x.t * 1000), fd = x.fade || 0;
+  inputs.push('-i', f);
+  const fades = fd ? `,afade=t=in:d=${fd},areverse,afade=t=in:d=${fd},areverse` : '';
+  filters.push(`[${i}:a]volume=${x.seviye}${fades},adelay=${ms}|${ms}[s${i}]`); labels.push(`[s${i}]`);
+}
+if (sfxList.length) console.log(`${sfxList.length} ses efekti/ambiyans karıştırıldı`);
 if (story.muzik && fs.existsSync(story.muzik)) {
-  const k = voiced.length;
+  const k = inputs.filter(a => a === '-i').length;
   inputs.push('-stream_loop', '-1', '-i', story.muzik);
   const vol = story.muzikSeviyesi ?? 0.18;
   filters.push(`[${k}:a]volume=${vol},afade=t=in:d=1.5,afade=t=out:st=${Math.max(0, total - 2.5)}:d=2.5,atrim=0:${total}[m]`);
@@ -128,4 +163,4 @@ if (labels.length) {
 
 console.log(`${scenes.length} sahne, ${lines.length} satır, toplam ${total.toFixed(1)} sn` +
   (missing ? `  (UYARI: ${missing} satırın sesi yok, önce: python3 ses.py)` : '') +
-  (voiced.length ? '  -> out/ses.wav' : '  (sessiz)'));
+  (labels.length ? '  -> out/ses.wav' : '  (sessiz)'));
