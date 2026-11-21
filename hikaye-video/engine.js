@@ -621,10 +621,11 @@ function diziState(t) {
   return st;
 }
 function diziHUD(t, st) {
-  const n = DZ.toplamBolum || 9, cur = DZ.bolum || 1, x0 = 36, y0 = 40, w = W - 72, h = 60;
+  const labs = DZ.etiketler || Array.from({ length: DZ.toplamBolum || 9 }, (_, k) => k + 1 === (DZ.toplamBolum || 9) && DZ.finalEtiket ? DZ.finalEtiket : String(k + 1));  // etiketler: ["Z","1",...,"Ç"]
+  const n = labs.length, cur = DZ.etiketler ? labs.indexOf(String(DZ.bolum || 1)) + 1 : (DZ.bolum || 1), x0 = 36, y0 = 40, w = W - 72, h = 60;
   rr(x0, y0, w, h, 16, PANEL, 'rgba(255,154,46,.75)', 3);
   for (let i = 1; i <= n; i++) {
-    const cx = x0 + 42 + (w - 84) * (i - 1) / (n - 1), cy = y0 + h / 2, lab = i === n && DZ.finalEtiket ? DZ.finalEtiket : String(i);
+    const cx = x0 + 42 + (w - 84) * (i - 1) / (n - 1), cy = y0 + h / 2, lab = labs[i - 1];
     if (i === cur) { rr(cx - 23, cy - 23, 46, 46, 23, OR); tx(lab, cx, cy + 2, 26, '#111', '900'); }
     else { ctx.beginPath(); ctx.arc(cx, cy, 18, 0, 7); ctx.fillStyle = i < cur ? 'rgba(255,154,46,.28)' : 'rgba(255,255,255,.07)'; ctx.fill(); tx(lab, cx, cy + 2, 20, i < cur ? '#ffd2a1' : '#6c6c74', '800'); }
   }

@@ -613,6 +613,17 @@
       "not": "ADA 9 · 1. Bölüm",
       "sure": 5
     },
-    "sabitYorum": "Sen olsan 4 dakikada kaç metre yüzerdin? 🦈"
+    "sabitYorum": "Sen olsan 4 dakikada kaç metre yüzerdin? 🦈",
+    "etiketler": [
+      "Z",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "Ç"
+    ]
   }
 }
