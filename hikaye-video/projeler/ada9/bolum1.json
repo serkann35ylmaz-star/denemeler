@@ -19,6 +19,10 @@
     "kiz": {
       "ad": "Kızı",
       "gorselTarif": "Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands)"
+    },
+    "buyukbeyaz": {
+      "ad": "Büyük Beyaz",
+      "gorselTarif": "the single colossal six-meter great white shark (massive scarred grey body, a torn notch in its dorsal fin, an old rusted fishing hook stuck in the corner of its jaw trailing a short frayed piece of line)"
     }
   },
   "ambiyans": [
@@ -40,7 +44,7 @@
       "id": "s01-kanca",
       "gorsel": "gorseller/ada9/01a.jpg",
       "hareket": "yaklas",
-      "gorselPrompt": "Wide shot from water level: a torn black backpack snagged on a jagged black rock forty meters off a tiny island, a huge great white dorsal fin circling the rock, cold blue dusk, red sunset streak on the horizon.",
+      "gorselPrompt": "Wide shot from water level: a torn black backpack snagged on a jagged black rock forty meters off a tiny island, the dorsal fin of [BUYUKBEYAZ] circling the rock, cold blue dusk, red sunset streak on the horizon.",
       "olaylar": [
         {
           "tip": "anlatici",
@@ -55,7 +59,7 @@
           "metin": "Aradaki tek engel *altı metrelik* bir büyük beyaz.",
           "gorsel": "gorseller/ada9/01b.jpg",
           "hareket": "yukari",
-          "gorselPrompt": "Underwater low-angle shot looking up: a six-meter great white shark gliding beneath the rock and the hanging backpack, sun rays piercing dark teal water, tiny silhouette of the island shore far behind.",
+          "gorselPrompt": "Underwater low-angle shot looking up: [BUYUKBEYAZ] gliding beneath the rock and the hanging backpack, sun rays piercing dark teal water, tiny silhouette of the island shore far behind.",
           "ses": {
             "ad": "sualti",
             "sure": 4,
@@ -240,7 +244,7 @@
       "gecis": "kesme",
       "gorsel": "gorseller/ada9/07.jpg",
       "hareket": "yaklas",
-      "gorselPrompt": "Over-the-shoulder shot from behind [KEMAL] on the shore: a tall great white dorsal fin slowly circling the distant rock with the backpack, tense stillness, cold teal water.",
+      "gorselPrompt": "Over-the-shoulder shot from behind [KEMAL] on the shore: the notched dorsal fin of [BUYUKBEYAZ] slowly circling the distant rock with the backpack, tense stillness, cold teal water.",
       "olaylar": [
         {
           "tip": "anlatici",
@@ -262,7 +266,7 @@
       "id": "s08-balina",
       "gorsel": "gorseller/ada9/08.jpg",
       "hareket": "saga",
-      "gorselPrompt": "Wide horizon shot: a giant dead whale carcass floating on the far horizon with seabirds circling above it, the dorsal fin cutting a wake away from the rock towards it, red sunset glow.",
+      "gorselPrompt": "Wide horizon shot: a giant dead whale carcass floating on the far horizon, dozens of seagulls standing on it and circling above, the notched dorsal fin of [BUYUKBEYAZ] cutting a wake away from the rock towards it, red sunset glow.",
       "olaylar": [
         {
           "tip": "anlatici",
@@ -300,7 +304,32 @@
           "metin": "Köpekbalığı dört dakika sonra geri dönüyor, bir tur atıyor ve yeniden balinaya gidiyor.",
           "gorsel": "gorseller/ada9/09b.jpg",
           "hareket": "sola",
-          "gorselPrompt": "High aerial shot: the great white making one slow loop around the rock with the backpack, then swimming off towards the distant whale carcass, its path visible as a curved wake."
+          "gorselPrompt": "High aerial shot: [BUYUKBEYAZ] making one slow loop close past the rock with the backpack, then swimming off towards the distant whale carcass covered in seagulls, its path visible as a curved wake."
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Tur atarken ağzının kenarında bir şey parlıyor: *paslı bir balıkçı kancası.*",
+          "gorsel": "gorseller/ada9/09c.jpg",
+          "hareket": "yaklas",
+          "gorselPrompt": "Extreme close-up from just above the water: the open jaw corner of [BUYUKBEYAZ] breaking the surface as it passes the rock, an old rusted fishing hook embedded in its jaw with a frayed line trailing, water streaming off rows of teeth, its dark eye visible.",
+          "kart": {
+            "tur": "kimlik",
+            "ust": "HEDEF",
+            "ad": "BÜYÜK BEYAZ",
+            "yas": "~6 M",
+            "unvan": "İŞARET: AĞZINDA PASLI KANCA",
+            "satirlar": [
+              "Sırt yüzgecinde yırtık",
+              "Her 4 dakikada bir kayaya dönüyor"
+            ],
+            "sure": 4.4
+          }
+        },
+        {
+          "tip": "anlatici",
+          "duygu": "dusunceli",
+          "metin": "Biri onu yıllar önce yakalamaya çalışmış. *Başaramamış.*"
         },
         {
           "tip": "anlatici",
@@ -406,15 +435,15 @@
       "gecis": "kesme",
       "gorsel": "gorseller/ada9/12.jpg",
       "hareket": "uzaklas",
-      "gorselPrompt": "Aerial drone shot: the dead whale carcass surrounded by dozens of great white sharks, dorsal fins everywhere, blood clouds in turquoise water, overwhelming scale.",
+      "gorselPrompt": "Aerial drone shot: the giant dead whale carcass covered in screaming seagulls, [BUYUKBEYAZ] alone tearing a chunk from its flank, blood clouding the turquoise water, no other sharks, overwhelming scale.",
       "olaylar": [
         {
           "tip": "anlatici",
-          "metin": "Bir balina leşi tek bir köpekbalığını değil, kilometrelerce öteden *hepsini çağırır.*",
+          "metin": "Balina leşi onu oyalıyor. Ama *her dört dakikada bir* bölgesini kontrol etmeye geri dönüyor.",
           "kart": {
             "tur": "gercek",
             "baslik": "GERÇEK",
-            "metin": "Ölü balinaların etrafında aynı anda onlarca büyük beyaz köpekbalığı gözlemlenmiştir.",
+            "metin": "Büyük beyaz köpekbalıkları tek bir balina leşinden saatlerce, hatta günlerce beslenebilir.",
             "sure": 4.6
           }
         }
@@ -474,7 +503,7 @@
       "gecis": "kesme",
       "gorsel": "gorseller/ada9/14a.jpg",
       "hareket": "asagi",
-      "gorselPrompt": "Underwater view straight down past [KEMAL]'s dangling legs: deep in the abyss a massive dark silhouette rising slowly towards him, far bigger than the first shark.",
+      "gorselPrompt": "Underwater view straight down past [KEMAL]'s dangling legs: deep in the abyss the massive dark silhouette of [BUYUKBEYAZ] rising slowly towards him.",
       "olaylar": [
         {
           "tip": "anlatici",
@@ -507,16 +536,17 @@
         {
           "tip": "anlatici",
           "duygu": "korkmus",
-          "metin": "Bu o değil.",
+          "metin": "Dört dakika dolmadı.",
           "gorsel": "gorseller/ada9/14b.jpg",
           "hareket": "yaklas",
-          "gorselPrompt": "Extreme low-angle underwater shot: a colossal great white's open jaws and dark eye emerging from the blackness, rows of teeth, tiny silhouette of [KEMAL] at the surface above."
+          "gorselPrompt": "Extreme low-angle underwater shot: the open jaws of [BUYUKBEYAZ] emerging from the blackness straight towards camera, the rusted fishing hook glinting in the corner of its jaw, rows of teeth, tiny silhouette of [KEMAL] at the surface above."
         },
         {
           "tip": "anlatici",
           "duygu": "korkmus",
-          "metin": "Bu *ondan daha büyük.*",
-          "ses": "darbe"
+          "metin": "Ama ağzındaki kanca parlıyor. *O geri döndü.*",
+          "ses": "darbe",
+          "durum": "ERKEN DÖNDÜ"
         }
       ]
     },

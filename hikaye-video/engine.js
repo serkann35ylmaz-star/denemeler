@@ -711,14 +711,14 @@ function diziKart(t, k) {
     tx(upTR(k.baslik || 'SON DAKİKA'), px + 30, y + 42, 32, '#fff', '900', 'left'); tx(k.kaynak || 'yerel haber', px + pw - 30, y + 42, 20, '#ffd6dc', '700', 'right');
     lines.forEach((l, i) => tx(l, W / 2, y + 128 + i * 54, 44, '#111', '900'));
   } else if (k.tur === 'kimlik') {  // karakter dosyası: AD · yaş · unvan + satırlar
-    const satir = k.satirlar || [], h = 210 + satir.length * 44, p = smooth(clamp((t - k.t0) / .5));
+    const satir = k.satirlar || [], h = 222 + satir.length * 44, p = smooth(clamp((t - k.t0) / .5));
     rr(x, y, w, h, 10, 'rgba(10,10,14,.9)', null); ctx.fillStyle = OR; ctx.fillRect(x, y, 10, h * p);
-    tx(upTR(k.ust || 'DOSYA'), x + 40, y + 36, 20, '#8d8d96', '800', 'left');
-    tx(upTR(k.ad), x + 40, y + 104, 92, '#fff', '400', 'left', 'AntonL, Impact');
+    tx(upTR(k.ust || 'DOSYA'), x + 40, y + 30, 20, '#8d8d96', '800', 'left');
+    tx(upTR(k.ad), x + 40, y + 114, 92, '#fff', '400', 'left', 'AntonL, Impact');
     ctx.font = `400 92px AntonL, Impact`; const aw = ctx.measureText(upTR(k.ad)).width;
-    if (k.yas) tx(String(k.yas), x + 60 + aw, y + 118, 44, OR, '900', 'left');
-    tx(upTR(k.unvan || ''), x + 40, y + 172, 28, OR, '900', 'left');
-    satir.forEach((l, i) => { const a2 = clamp((t - k.t0 - .4 - i * .25) / .25); ctx.globalAlpha *= a2 || 0.0001; tx('— ' + l, x + 40, y + 222 + i * 44, 28, '#e4e4ea', '700', 'left'); ctx.globalAlpha = a; });
+    if (k.yas) tx(String(k.yas), x + 60 + aw, y + 128, 44, OR, '900', 'left');
+    tx(upTR(k.unvan || ''), x + 40, y + 180, 28, OR, '900', 'left');
+    satir.forEach((l, i) => { const a2 = clamp((t - k.t0 - .4 - i * .25) / .25); ctx.globalAlpha *= a2 || 0.0001; tx('— ' + l, x + 40, y + 234 + i * 44, 28, '#e4e4ea', '700', 'left'); ctx.globalAlpha = a; });
   } else if (k.tur === 'liste') {  // envanter: öğeler tek tek düşer
     const og = k.ogeler || [], h = 100 + og.length * 64, aralik = k.aralik || .35;
     rr(x, y, w, h, 14, PANEL, OR, 3); tx(upTR(k.baslik || 'ÇANTANIN İÇİ'), x + 32, y + 46, 30, OR, '900', 'left');
