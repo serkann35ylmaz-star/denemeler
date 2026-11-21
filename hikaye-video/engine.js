@@ -720,14 +720,14 @@ function diziKart(t, k) {
     tx(upTR(k.unvan || ''), x + 40, y + 180, 28, OR, '900', 'left');
     satir.forEach((l, i) => { const a2 = clamp((t - k.t0 - .4 - i * .25) / .25); ctx.globalAlpha *= a2 || 0.0001; tx('— ' + l, x + 40, y + 234 + i * 44, 28, '#e4e4ea', '700', 'left'); ctx.globalAlpha = a; });
   } else if (k.tur === 'liste') {  // envanter: öğeler tek tek düşer
-    const og = k.ogeler || [], h = 100 + og.length * 64, aralik = k.aralik || .35;
+    const og = k.ogeler || [], st2 = og.length > 6 ? 52 : 64, fs2 = og.length > 6 ? 30 : 34, h = 100 + og.length * st2, aralik = k.aralik || .35;
     rr(x, y, w, h, 14, PANEL, OR, 3); tx(upTR(k.baslik || 'ÇANTANIN İÇİ'), x + 32, y + 46, 30, OR, '900', 'left');
     og.forEach((o, i) => {
       const a2 = clamp((t - k.t0 - .3 - i * aralik) / .2); if (a2 <= 0) return;
-      const yy = y + 108 + i * 64, ox = (1 - a2) * 40; ctx.globalAlpha = a * a2;
+      const yy = y + 108 + i * st2, ox = (1 - a2) * 40; ctx.globalAlpha = a * a2;
       const item = typeof o === 'string' ? { ad: o } : o;
       rr(x + 32 + ox, yy - 22, 44, 44, 8, item.vurgu ? OR : 'rgba(255,255,255,.12)'); tx(String(i + 1), x + 54 + ox, yy + 1, 24, item.vurgu ? '#111' : '#fff', '900');
-      tx(upTR(item.ad), x + 96 + ox, yy + 1, 34, item.vurgu ? OR : '#fff', '900', 'left');
+      tx(upTR(item.ad), x + 96 + ox, yy + 1, fs2, item.vurgu ? OR : '#fff', '900', 'left');
       if (item.not) tx(upTR(item.not), x + w - 30, yy + 1, 22, '#9a9aa2', '800', 'right');
     });
     ctx.globalAlpha = a;

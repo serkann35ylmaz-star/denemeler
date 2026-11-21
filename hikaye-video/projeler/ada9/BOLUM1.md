@@ -3,7 +3,7 @@
 Kaynak: senin v3 metnin. Seslendirme cümleleri aynen korundu, yalnız görsellere bölündü.
 
 ## v3 → v4 düzeltmeleri
-- Çanta 4 eşya içeriyor (telsiz, tablet, fişek, fotoğraf). Bu yüzden "ÇANTA 7 → 6" yerine "4 → 3 EŞYA" yazıldı.
+- Çantada 9 eşya var: telsiz, su arıtma tableti, işaret fişeği, tabanca (1 şarjör), fener, kasatura, ilk yardım seti, balık misinası ve kızının fotoğrafı. Fotoğraf batınca kutu 8 EŞYA oluyor.
 - "SU · 0 GÜN" rozeti "SUSUZ · 3. GÜN" oldu, çünkü gemi 3 gece önce batmıştı.
 - GERÇEK kartı belgelenmiş bilgiyle yazıldı: "Ölü balinaların etrafında aynı anda onlarca büyük beyaz köpekbalığı gözlemlenmiştir."
 - Kronometre ve geri sayım:
@@ -40,7 +40,7 @@ Sabitlenecek yorum: Sen olsan 4 dakikada kaç metre yüzerdin? 🦈
 | s04-ada | 04b.jpg | Haritadaki adı sadece bir numara: dokuz. | 📍 ADA 9 |
 | s05-dalga | 05a.jpg | Ama kıyıya çıkarken bir dalga çantayı sırtından kopardı. | ÇANTA KAYIP · ses: sicrama |
 | s05-dalga | 05b.jpg | Çanta kırk metre açıkta bir kayaya takıldı. | MESAFE 40 M, ÇANTA KAYADA |
-| s06-icinde | 06a.jpg | İçinde telsiz, su arıtma tableti, işaret fişeği ve kızının fotoğrafı var. | kart: liste |
+| s06-icinde | 06a.jpg | İçinde hayatta kalması için her şey var: telsiz, su arıtma tableti, işaret fişeği, tek şarjörüyle tabancası, fener, kasatura, ilk yardım seti ve gemide canı sıkıldığında yanına aldığı bir makara misina. Ve kızının fotoğrafı. | kart: liste |
 | s06-icinde | 06b.jpg | Adada tatlı su yok. | SUSUZ · 3. GÜN |
 | s06-icinde | 06b.jpg | Telsiz olmadan onu kimse bulamaz. |  |
 | s07-yuzgec | 07.jpg | Ve kayanın etrafında bir yüzgeç dönüyor. | NABIZ 142 · ses: kalp |
@@ -60,7 +60,7 @@ Sabitlenecek yorum: Sen olsan 4 dakikada kaç metre yüzerdin? 🦈
 | s12-gercek | 12.jpg | Balina leşi onu oyalıyor. Ama her dört dakikada bir bölgesini kontrol etmeye geri dönüyor. | kart: gercek |
 | s13-foto | 13a.jpg | Kayaya ulaşıyor ama askı sıkışmış. | MESAFE 0 M, ÇANTA ELDE |
 | s13-foto | 13a.jpg | Çekiyor, çanta yırtılıyor ve içinden bir şey düşüp batıyor: | ses: sicrama |
-| s13-foto | 13b.jpg | Kızının fotoğrafı. | ÇANTA 3 EŞYA · ses: sualti |
+| s13-foto | 13b.jpg | Kızının fotoğrafı. | ÇANTA 8 EŞYA · ses: sualti |
 | s14-golge | 14a.jpg | Otuz saniye kaldı. | NABIZ 180 · ses: sualti+kalp |
 | s14-golge | 14a.jpg | Dipte bir gölge yükseliyor. | DİPTE GÖLGE |
 | s14-golge | 14b.jpg | Dört dakika dolmadı. |  |
@@ -87,7 +87,7 @@ Wide shot from water level: a torn black backpack snagged on a jagged black rock
 Underwater low-angle shot looking up: the single colossal six-meter great white shark (massive scarred grey body, a torn notch in its dorsal fin, an old rusted fishing hook stuck in the corner of its jaw trailing a short frayed piece of line) gliding beneath the rock and the hanging backpack, sun rays piercing dark teal water, tiny silhouette of the island shore far behind. Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.
 ```
 
-## gorseller/ada9/02a.jpg (eksik)
+## gorseller/ada9/02a.jpg ✓
 
 
 ```
@@ -140,7 +140,7 @@ Long telephoto shot from the beach: the black backpack hanging from a jagged roc
 
 
 ```
-Flat-lay still life on a dark wet background: a handheld waterproof radio, a strip of water purification tablets, a red signal flare and a creased photograph of Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands), dramatic top light. Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.
+Flat-lay still life on a dark wet tarp, items neatly arranged: a handheld waterproof radio, a strip of water purification tablets, a red signal flare, a black pistol with one spare loaded magazine, a rugged flashlight, a military combat knife in its sheath, a compact first-aid kit, a spool of fishing line, and a creased photograph of Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands) in the center, dramatic top light. Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.
 ```
 
 ## gorseller/ada9/06b.jpg (eksik)

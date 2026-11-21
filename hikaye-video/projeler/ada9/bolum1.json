@@ -203,11 +203,11 @@
       "id": "s06-icinde",
       "gorsel": "gorseller/ada9/06a.jpg",
       "hareket": "yaklas",
-      "gorselPrompt": "Flat-lay still life on a dark wet background: a handheld waterproof radio, a strip of water purification tablets, a red signal flare and a creased photograph of [KIZ], dramatic top light.",
+      "gorselPrompt": "Flat-lay still life on a dark wet tarp, items neatly arranged: a handheld waterproof radio, a strip of water purification tablets, a red signal flare, a black pistol with one spare loaded magazine, a rugged flashlight, a military combat knife in its sheath, a compact first-aid kit, a spool of fishing line, and a creased photograph of [KIZ] in the center, dramatic top light.",
       "olaylar": [
         {
           "tip": "anlatici",
-          "metin": "İçinde telsiz, su arıtma tableti, işaret fişeği ve *kızının fotoğrafı* var.",
+          "metin": "İçinde hayatta kalması için her şey var: telsiz, su arıtma tableti, işaret fişeği, tek şarjörüyle tabancası, fener, kasatura, ilk yardım seti ve gemide canı sıkıldığında yanına aldığı bir makara misina. Ve *kızının fotoğrafı.*",
           "kart": {
             "tur": "liste",
             "baslik": "ÇANTANIN İÇİ",
@@ -216,12 +216,23 @@
               "Su arıtma tableti",
               "İşaret fişeği",
               {
+                "ad": "Tabanca",
+                "not": "1 şarjör"
+              },
+              "Fener",
+              "Kasatura",
+              "İlk yardım seti",
+              {
+                "ad": "Balık misinası",
+                "not": "1 makara"
+              },
+              {
                 "ad": "Kızının fotoğrafı",
                 "vurgu": true
               }
             ],
-            "aralik": 0.7,
-            "sure": 5.2
+            "aralik": 0.95,
+            "sure": 10.5
           }
         },
         {
@@ -486,7 +497,7 @@
           "gorselPrompt": "Underwater shot: the creased photograph of [KIZ] slowly sinking and spinning into the dark blue abyss, a few bubbles, faint sun rays from above.",
           "kutu": {
             "ÇANTA": {
-              "deger": "3 EŞYA",
+              "deger": "8 EŞYA",
               "renk": "#e8344e"
             }
           },
