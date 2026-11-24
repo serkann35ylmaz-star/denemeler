@@ -10,7 +10,7 @@
   },
   {
    "sahne": "01a",
-   "durum": "bekliyor",
+   "durum": "tamam",
    "tip": "stil",
    "prompt": "Wide shot from water level at dusk: a torn black backpack snagged on a jagged dark rock forty meters off a tiny island, a single tall dark shark dorsal fin with a small notch circling the rock, ring of ripples, tiny island behind. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
@@ -67,8 +67,10 @@
   "03",
   "13a",
   "05a",
-  "09b"
+  "09b",
+  "01a"
  ],
  "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma",
- "kural": "tip=kemal: imageReferences=[Kemal 02a]; tip=stil: imageReferences=[05a stil referansı]. Her görsel: generate-image -> (bekle) create-design Instagram Story (Portrait) -> export jpg 1080x1920 -> gorseller/ada9/canva/<sahne>.jpg ve gorseller/ada9/<sahne>.jpg; eskisini gorseller/ada9-flow-yedek'e al."
+ "kural": "tip=kemal: imageReferences=[Kemal 02a]; tip=stil: imageReferences=[05a stil referansı]. Her görsel: generate-image -> (bekle) create-design Instagram Story (Portrait) -> export jpg 1080x1920 -> gorseller/ada9/canva/<sahne>.jpg ve gorseller/ada9/<sahne>.jpg; eskisini gorseller/ada9-flow-yedek'e al.",
+ "ipucu": "Köpekbalıklı sahnelerde referans görsel SERVER_GENERIC hatası veriyor: köpekbalıklı sahneleri referanssız, stili metinle tarif ederek üret (01a böyle çalıştı). Kemal sahnelerinde tek referans 02a."
 }
