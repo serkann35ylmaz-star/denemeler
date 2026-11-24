@@ -1,10 +1,36 @@
 {
- "referanslar": {"kemal": "MAHbkqs8TbA", "kemal_02a": "MAHbk_P-pKU", "kopekbaligi_01b": "MAHbk3Gc7BA", "not": "Bu id'ler yalnızca bağlı Canva hesabında geçerli; hesap değişirse kemal-referans.jpg, gorseller/ada9/02a.jpg ve 01b.jpg yeniden yüklenmeli"},
+ "referanslar": {
+  "kemal": "MAHb2sWrgXU",
+  "kemal_02a": "MAHb2rX0pjw",
+  "kopekbaligi_01b": "MAHb2vtaYPM",
+  "not": "Bu id'ler yalnızca bağlı Canva hesabında geçerli; hesap değişirse kemal-referans.jpg, gorseller/ada9/02a.jpg ve 01b.jpg yeniden yüklenmeli",
+  "hesap": "2026-11-24 baglantisi"
+ },
  "kural": "Her promptta: üst %15 boş (gökyüzü), burun düzgün (X izi yok), köpekbalığı su altında/yalnız yüzgeç, kanca alt çenenin sol köşesinde yeşil misina. Kemal görsellerinde 2 Kemal referansı, köpekbalığı görsellerinde 01b referansı.",
  "isler": [
-  {"sahne":"03","durum":"uretiliyor","kemal":false,"ozet":"batan gemi, fırtına, kırmızı şimşek, düşen konteynerler, güvertede yuvarlak beyaz kafalı küçük mürettebat (kafatası değil)"},
-  {"sahne":"04b","durum":"bekliyor","kemal":false,"ozet":"yukarıdan eski deniz haritası, tek ada kalın kırmızı daire içinde, kesikli kırmızı rota, pusula, pergel; yazı/sayı yok"},
-  {"sahne":"13a","durum":"bekliyor","kemal":true,"ozet":"Kemal kayaya sıkışmış çanta askısını iki elle çekiyor, çanta net görünür, köpekbalığı yok, kafa üst üçte birde"},
-  {"sahne":"07","durum":"bekliyor","kemal":true,"ozet":"Kemal arkadan kıyıda, uzakta kayada çanta, etrafında yalnız yırtık sırt yüzgeci dönüyor (01b referansı), çantası yok"}
+  {
+   "sahne": "03",
+   "durum": "uretiliyor",
+   "kemal": false,
+   "ozet": "batan gemi, fırtına, kırmızı şimşek, düşen konteynerler, güvertede yuvarlak beyaz kafalı küçük mürettebat (kafatası değil)"
+  },
+  {
+   "sahne": "04b",
+   "durum": "bekliyor",
+   "kemal": false,
+   "ozet": "yukarıdan eski deniz haritası, tek ada kalın kırmızı daire içinde, kesikli kırmızı rota, pusula, pergel; yazı/sayı yok"
+  },
+  {
+   "sahne": "13a",
+   "durum": "bekliyor",
+   "kemal": true,
+   "ozet": "Kemal kayaya sıkışmış çanta askısını iki elle çekiyor, çanta net görünür, köpekbalığı yok, kafa üst üçte birde"
+  },
+  {
+   "sahne": "07",
+   "durum": "bekliyor",
+   "kemal": true,
+   "ozet": "Kemal arkadan kıyıda, uzakta kayada çanta, etrafında yalnız yırtık sırt yüzgeci dönüyor (01b referansı), çantası yok"
+  }
  ]
 }
