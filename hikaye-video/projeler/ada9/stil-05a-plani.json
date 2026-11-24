@@ -10,39 +10,57 @@
   },
   {
    "sahne": "01a",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Wide shot from water level at dusk: a torn black backpack snagged on a jagged dark rock forty meters off a tiny island, a single tall dark shark dorsal fin with a small notch circling the rock, ring of ripples, tiny island behind. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "01b",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Underwater low-angle view looking up: the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, gliding beneath a jagged rock with a torn black backpack hanging from it, sun rays through teal water, island shore far behind. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "07",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "kemal",
+   "prompt": "The same character as in the reference image (Kemal: round glossy white cartoon head, short black buzz-cut, thick furrowed eyebrows, small oval black eyes, stitched scar over left eyebrow, tattooed right arm, black watch, olive t-shirt, no vest). Kemal sits on a rocky shore at dusk, looking back over his shoulder toward the camera with a tense frown, scar visible. Far out a single dark triangular fin circles a jagged rock with a black backpack, leaving ripple rings. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "14b",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Extreme low-angle underwater shot from far below looking up: the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, rising toward the surface with jaws wide open, rows of teeth, filling the lower two thirds of the frame; tiny silhouette of a man on a rock at the surface far above. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "15",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "kemal",
+   "prompt": "The same character as in the reference image (Kemal: round glossy white cartoon head, short black buzz-cut, thick furrowed eyebrows, small oval black eyes, stitched scar over left eyebrow, tattooed right arm, black watch, olive t-shirt, no vest). Kemal clings to a jagged rock at the surface at dusk pulling a torn black backpack out of a crack; below the waterline, the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, circling right under him. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "04b",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Top-down close-up of an old stained nautical sea chart on a wooden table: empty blue ocean with ONE tiny island circled by a thick red hand-drawn circle, dotted red route line to it, compass rose, brass divider. No text or numbers. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "09c",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Underwater close-up: the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, passing a jagged rock, the hook and green line clearly visible, teeth, dark eye, sun rays. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "12",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "stil",
+   "prompt": "Half-underwater split view: a giant dead whale carcass floating at the surface covered in screaming seagulls, the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, tearing at its tail with a cloud of blood in the teal water. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
   {
    "sahne": "14a",
-   "durum": "bekliyor"
+   "durum": "bekliyor",
+   "tip": "kemal",
+   "prompt": "The same character as in the reference image (Kemal: round glossy white cartoon head, short black buzz-cut, thick furrowed eyebrows, small oval black eyes, stitched scar over left eyebrow, tattooed right arm, black watch, olive t-shirt, no vest). Kemal clings with both hands to a jagged rock at the surface in a storm, legs dangling in the water, head in the upper third; far below, a huge dark shark silhouette rises toward him from the deep. No ship. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   }
  ],
  "tamam_05a_stili": [
@@ -51,5 +69,6 @@
   "05a",
   "09b"
  ],
- "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma"
+ "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma",
+ "kural": "tip=kemal: imageReferences=[Kemal 02a]; tip=stil: imageReferences=[05a stil referansı]. Her görsel: generate-image -> (bekle) create-design Instagram Story (Portrait) -> export jpg 1080x1920 -> gorseller/ada9/canva/<sahne>.jpg ve gorseller/ada9/<sahne>.jpg; eskisini gorseller/ada9-flow-yedek'e al."
 }
