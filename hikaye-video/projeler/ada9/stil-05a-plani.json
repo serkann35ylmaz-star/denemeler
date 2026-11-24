@@ -1,0 +1,13 @@
+{
+ "hedef": "Tüm görseller 05a stilinde olsun: parlak boyalı çizgi roman, kalın siyah mürekkep çizgi, canlı teal-yeşil deniz beyaz köpük, yumuşak fırtınalı gökyüzü, mavi-beyaz şimşek (kırmızı yok), ufukta turuncu ışık, ifadeli yuvarlak beyaz kafalı Kemal.",
+ "stil_referans_canva_media": "MAHb3XnB4xE (05a, güncel Canva hesabı)",
+ "kemal_referans_canva_media": "MAHb25ZCQ1c (02a; çoklu referans/uzun prompt hata veriyor, tek referans + kısa prompt kullan)",
+ "siralama": [
+  {"sahne":"09b","durum":"bekliyor","not":"köpekbalığı su üstünde duruyordu; yalnız yüzgeç + su altı gölge"},
+  {"sahne":"01a","durum":"bekliyor"}, {"sahne":"01b","durum":"bekliyor"}, {"sahne":"07","durum":"bekliyor"},
+  {"sahne":"14b","durum":"bekliyor"}, {"sahne":"15","durum":"bekliyor"}, {"sahne":"04b","durum":"bekliyor"},
+  {"sahne":"09c","durum":"bekliyor"}, {"sahne":"12","durum":"bekliyor"}, {"sahne":"14a","durum":"bekliyor"}
+ ],
+ "tamam_05a_stili": ["03","13a","05a"],
+ "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma"
+}
