@@ -24,17 +24,20 @@
   },
   {
    "sahne": "13a",
-   "durum": "bekliyor",
+   "durum": "tamam (canva/13a.jpg, onay bekliyor)",
    "kemal": true,
    "ozet": "Kemal kayaya sıkışmış çanta askısını iki elle çekiyor, çanta net görünür, köpekbalığı yok, kafa üst üçte birde",
-   "not_": "ilk deneme sunucu hatası verdi, tekrar üret"
+   "not_": "ilk deneme sunucu hatası verdi, tekrar üret",
+   "media": "MAHb2h27tsE"
   },
   {
    "sahne": "07",
    "durum": "bekliyor",
    "kemal": true,
-   "ozet": "Kemal arkadan kıyıda, uzakta kayada çanta, etrafında yalnız yırtık sırt yüzgeci dönüyor (01b referansı), çantası yok"
+   "ozet": "Kemal arkadan kıyıda, uzakta kayada çanta, etrafında yalnız yırtık sırt yüzgeci dönüyor (01b referansı), çantası yok",
+   "not_": "kısa prompt + tek referans (02a) kullan; çoklu referans/uzun prompt SERVER_GENERIC hatası veriyor"
   }
  ],
- "hesap_durumu": "2026-11-24: bu hesapta kredi kotası aşıldı (quota_exceeded). Yeni hesap ya da kota yenilenmesi gerek."
+ "hesap_durumu": "2026-11-24: üçüncü Canva hesabı bağlı; kota yine doldu. Referans id: kemal MAHb2iqCh3Q, 02a MAHb2tdQ4zw, köpekbalığı MAHb2stpJfY",
+ "ipucu": "Sunucu hatası: uzun prompt + 2-3 referans başarısız oluyor. Kısa prompt + tek referans (02a) çalıştı. Kota: hesap başına ~2 işlem, sonra quota_exceeded."
 }
