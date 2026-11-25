@@ -616,7 +616,7 @@ function diziState(t) {
       else if (typeof ev.sayac === 'object') st.sayac = { mod: 'geri', hiz: 1, etiket: st.sayac && st.sayac.etiket, ...ev.sayac, t0: ev.start, yeni: ev.sayac.devam ? undefined : ev.start };
     }
     if (ev.yer) { st.yer = ev.yer; st.yerT = ev.start; }
-    if (ev.kart) { const t1 = ev.start + (ev.kart.sure || Math.max(2.5, ev.end - ev.start)); if (t < t1) st.kart = { ...ev.kart, t0: ev.start, t1 }; }
+    if (ev.kart) { const t1 = ev.start + (ev.kart.sure || Math.max(2.5, ev.end - ev.start)); if (t < t1) st.kart = { ...ev.kart, t0: ev.start, t1, zamanlar: ev.kart.sozcuk && ev.kelimeler ? ev.kart.sozcuk.map(i => ev.start + (ev.kelimeler[i] || ev.kelimeler[ev.kelimeler.length - 1])[1] - .05) : undefined }; }  // liste: "sozcuk" = her öğenin söylendiği kelime sırası
   }
   return st;
 }
@@ -624,9 +624,13 @@ function diziHUD(t, st) {
   const labs = DZ.etiketler || Array.from({ length: DZ.toplamBolum || 9 }, (_, k) => k + 1 === (DZ.toplamBolum || 9) && DZ.finalEtiket ? DZ.finalEtiket : String(k + 1));  // etiketler: ["Z","1",...,"Ç"]
   const n = labs.length, cur = DZ.etiketler ? labs.indexOf(String(DZ.bolum || 1)) + 1 : (DZ.bolum || 1), x0 = 36, y0 = 40, w = W - 72, h = 60;
   rr(x0, y0, w, h, 16, PANEL, 'rgba(255,154,46,.75)', 3);
+  const cxOf = i => x0 + 42 + (w - 84) * (i - 1) / (n - 1), pulse = .5 + .5 * Math.sin(t * 3.2);
+  // turuncu işaret Z'den bölüme kayar, sonra nabız gibi atar; çerçeveyi ışık süpürür
+  const mk = cur <= 1 ? cur : 1 + (cur - 1) * smooth(clamp((t - .3) / 1.1)), mx = cxOf(1) + (cxOf(cur) - cxOf(1)) * (cur <= 1 ? 0 : smooth(clamp((t - .3) / 1.1)));
+  { const sw = ((t * .22) % 1) * (w + 160) - 80; ctx.save(); ctx.beginPath(); ctx.roundRect(x0, y0, w, h, 16); ctx.clip(); const g = ctx.createLinearGradient(x0 + sw - 70, 0, x0 + sw + 70, 0); g.addColorStop(0, 'rgba(255,154,46,0)'); g.addColorStop(.5, 'rgba(255,190,110,.32)'); g.addColorStop(1, 'rgba(255,154,46,0)'); ctx.fillStyle = g; ctx.fillRect(x0, y0, w, h); ctx.restore(); }
   for (let i = 1; i <= n; i++) {
-    const cx = x0 + 42 + (w - 84) * (i - 1) / (n - 1), cy = y0 + h / 2, lab = labs[i - 1];
-    if (i === cur) { rr(cx - 23, cy - 23, 46, 46, 23, OR); tx(lab, cx, cy + 2, 26, '#111', '900'); }
+    const cx = cxOf(i), cy = y0 + h / 2, lab = labs[i - 1];
+    if (i === cur) { ctx.beginPath(); ctx.arc(mx, cy, 25 + 7 * pulse, 0, 7); ctx.fillStyle = `rgba(255,154,46,${.30 - .22 * pulse})`; ctx.fill(); rr(mx - 23, cy - 23, 46, 46, 23, OR); tx(lab, mx, cy + 2, 26, '#111', '900'); }
     else { ctx.beginPath(); ctx.arc(cx, cy, 18, 0, 7); ctx.fillStyle = i < cur ? 'rgba(255,154,46,.28)' : 'rgba(255,255,255,.07)'; ctx.fill(); tx(lab, cx, cy + 2, 20, i < cur ? '#ffd2a1' : '#6c6c74', '800'); }
   }
   const ks = st.kutular; if (!ks.length) return;
@@ -724,7 +728,7 @@ function diziKart(t, k) {
     const og = k.ogeler || [], st2 = og.length > 6 ? 52 : 64, fs2 = og.length > 6 ? 30 : 34, h = 100 + og.length * st2, aralik = k.aralik || .35;
     rr(x, y, w, h, 14, PANEL, OR, 3); tx(upTR(k.baslik || 'ÇANTANIN İÇİ'), x + 32, y + 46, 30, OR, '900', 'left');
     og.forEach((o, i) => {
-      const a2 = clamp((t - k.t0 - .3 - i * aralik) / .2); if (a2 <= 0) return;
+      const a2 = clamp((t - (k.zamanlar ? k.zamanlar[i] : k.t0 + .3 + i * aralik)) / .2); if (a2 <= 0) return;
       const yy = y + 108 + i * st2, ox = (1 - a2) * 40; ctx.globalAlpha = a * a2;
       const item = typeof o === 'string' ? { ad: o } : o;
       rr(x + 32 + ox, yy - 22, 44, 44, 8, item.vurgu ? OR : 'rgba(255,255,255,.12)'); tx(String(i + 1), x + 54 + ox, yy + 1, 24, item.vurgu ? '#111' : '#fff', '900');

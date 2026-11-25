@@ -2,7 +2,7 @@
 """Kullanıcının tek parça kaydını (ElevenLabs) 36 anlatıcı satırına böler: vo/<id>.wav + vo/sesler.json.
 Kullanım (hikaye-video/ içinden): python3 projeler/ada9/ses-kes.py <kayit.wav> <bolum1.json>
 Satır sınırları Whisper zamanlarından, kesim noktaları sessizlik kenarlarından alınır."""
-import hashlib, json, re, subprocess, sys, wave
+import difflib, hashlib, json, os, re, subprocess, sys, unicodedata, wave
 import numpy as np
 
 SR = 48000
@@ -27,6 +27,42 @@ def snap(v, arr, tol=0.35):
     return c if abs(c - v) <= tol else v
 
 
+def norm(x):
+    x = x.lower().replace('ı', 'i')
+    return re.sub(r'[^a-z0-9]', '', unicodedata.normalize('NFD', x).encode('ascii', 'ignore').decode())
+
+
+WH = [w for sg in json.load(open(os.path.join(os.path.dirname(__file__), 'ses-whisper.json'), encoding='utf-8')) for w in sg['w']]
+
+
+def align(toks, s0, e0):
+    """Metin kelimelerini Whisper kelime zamanlarına sırayla eşler; eşleşmeyenleri aralarına dağıtır -> [(bas, bit)]"""
+    ww = [(norm(w), a, b) for w, a, b in WH if s0 - 0.15 <= a <= e0 + 0.05]
+    res = [None] * len(toks); j = 0
+    for i, k in enumerate(toks):
+        nk = norm(k)
+        if not nk: continue
+        best = None
+        for q in range(j, min(len(ww), j + 4)):
+            r = difflib.SequenceMatcher(None, nk, ww[q][0]).ratio()
+            if r >= 0.72 and (best is None or r > best[0]): best = (r, q)
+        if best: res[i] = (ww[best[1]][1], ww[best[1]][2]); j = best[1] + 1
+    out = [None] * len(toks); i = 0
+    while i < len(toks):
+        if res[i]: out[i] = res[i]; i += 1; continue
+        k = i
+        while k < len(toks) and not res[k]: k += 1
+        a = out[i - 1][1] if i else s0
+        b = res[k][0] if k < len(toks) else e0
+        b = max(b, a + 0.05 * (k - i))
+        wt = [len(re.sub(r'\W', '', toks[m])) + 1 for m in range(i, k)]
+        c = a
+        for m, q in zip(range(i, k), wt):
+            d = (b - a) * q / sum(wt); out[m] = (c, c + d); c += d
+        i = k
+    return out
+
+
 def main():
     wav, story_path = sys.argv[1], sys.argv[2]
     story = json.load(open(story_path, encoding='utf-8'))
@@ -47,17 +83,13 @@ def main():
         lid = hashlib.sha1(('|'.join(v) + '|' + e['metin']).encode()).hexdigest()[:12]
         with wave.open(f'vo/{lid}.wav', 'wb') as o:
             o.setnchannels(1); o.setsampwidth(2); o.setframerate(SR); o.writeframes(seg.tobytes())
-        # zarf: 30 kare/sn
-        hop = SR // 30; m = len(seg) // hop
+        hop = SR // 30; m = len(seg) // hop  # zarf: 30 kare/sn
         x = seg[:m * hop].astype(np.float32).reshape(m, hop) / 32768
         rms = np.sqrt((x ** 2).mean(axis=1)); ref = np.percentile(rms, 95) or 1
         env = [round(float(q), 2) for q in np.clip(rms / ref, 0, 1)]
-        # kelime zamanları: harf ağırlığı, noktalama +pay, konuşma aralığı [s,t]
         toks = e['metin'].replace('*', '').split()
-        wt = [len(re.sub(r'\W', '', k)) + (2.5 if re.search(r'[.,:?!]$', k) else 0) + 1 for k in toks]
-        tot = sum(wt); sp0, sp1 = s - a0, t - a0; c = sp0; words = []
-        for k, q in zip(toks, wt):
-            d = (sp1 - sp0) * q / tot; words.append([k, round(c, 3), round(c + d, 3)]); c += d
+        al = align(toks, s0, e0)
+        words = [[k, round(max(0, x1 - a0), 3), round(max(0, y1 - a0), 3)] for k, (x1, y1) in zip(toks, al)]
         db[lid] = {'dur': round(len(seg) / SR, 3), 'env': env, 'metin': e['metin'], 'motor': 'kullanici', 'kelimeler': words}
         print(i + 1, lid, round(len(seg) / SR, 2), e['metin'][:40])
     json.dump(db, open('vo/sesler.json', 'w', encoding='utf-8'), ensure_ascii=False)
