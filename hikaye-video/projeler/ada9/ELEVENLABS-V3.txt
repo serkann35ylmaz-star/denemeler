@@ -1,0 +1,71 @@
+[thoughtful] Bu çantayı alamazsa adada ölecek.
+
+[tense] Aradaki tek engel altı metrelik bir büyük beyaz.
+
+[calm] Adı Kemal. On iki yıl özel kuvvetlerde görev yaptı.
+
+[sad] Emekli olunca kızının tedavi parası için bir yük gemisinde güvenlikçi oldu.
+
+[tense] Üç gece önce gemi fırtınada battı.
+
+[calm] Kemal bir enkaza tutunup haritada adı bile olmayan bir adaya ulaştı.
+
+[thoughtful] Haritadaki adı sadece bir numara: dokuz.
+
+[calm] Ama kıyıya çıkarken bir dalga çantayı sırtından kopardı.
+
+[calm] Çanta kırk metre açıkta bir kayaya takıldı.
+
+[calm] İçinde hayatta kalması için her şey var: telsiz, su arıtma tableti, işaret fişeği, tek şarjörüyle tabancası, fener, kasatura, ilk yardım seti ve gemide canı sıkıldığında yanına aldığı bir makara misina. Ve kızının fotoğrafı.
+
+[calm] Adada tatlı su yok.
+
+[thoughtful] Telsiz olmadan onu kimse bulamaz.
+
+[tense] Ve kayanın etrafında bir yüzgeç dönüyor.
+
+[calm] Sonra ufukta ölmüş dev bir balina beliriyor.
+
+[calm] Köpekbalığı ona gidiyor.
+
+[calm] Kemal suya girmiyor. Saatine basıyor.
+
+[calm] Köpekbalığı dört dakika sonra geri dönüyor, bir tur atıyor ve yeniden balinaya gidiyor.
+
+[thoughtful] Tur atarken ağzının kenarında bir şey parlıyor: paslı bir balıkçı kancası.
+
+[thoughtful] Biri onu yıllar önce yakalamaya çalışmış. Başaramamış.
+
+[thoughtful] Artık biliyor: dört dakikası var.
+
+[calm] Kronometreye basıyor ve suya giriyor.
+
+[thoughtful] Sıçratmadan.
+
+[calm] Kırk metre.
+
+[calm] Yirmi beş.
+
+[tense] Bacağına kramp giriyor.
+
+[tense] İki dakika kaldı.
+
+[calm] Balina leşi onu oyalıyor. Ama her dört dakikada bir bölgesini kontrol etmeye geri dönüyor.
+
+[calm] Kayaya ulaşıyor ama askı sıkışmış.
+
+[calm] Çekiyor, çanta yırtılıyor ve içinden bir şey düşüp batıyor:
+
+[sad] Kızının fotoğrafı.
+
+[tense] Otuz saniye kaldı.
+
+[tense] Dipte bir gölge yükseliyor.
+
+[tense] Dört dakika dolmadı.
+
+[tense] Ama ağzındaki kanca parlıyor. O geri döndü.
+
+[calm] Fotoğraf için dalsın mı, yoksa çantayla dönsün mü?
+
+[calm] Yorumlara tek kelime yaz: dal ya da dön.
