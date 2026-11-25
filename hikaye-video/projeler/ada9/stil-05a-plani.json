@@ -58,7 +58,7 @@
   },
   {
    "sahne": "14a",
-   "durum": "bekliyor",
+   "durum": "tamam",
    "tip": "kemal",
    "prompt": "The same character as in the reference image (Kemal: round glossy white cartoon head, short black buzz-cut, thick furrowed eyebrows, small oval black eyes, stitched scar over left eyebrow, tattooed right arm, black watch, olive t-shirt, no vest). Kemal clings with both hands to a jagged rock at the surface in a storm, legs dangling in the water, head in the upper third; far below, a huge dark shark silhouette rises toward him from the deep. No ship. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   }
@@ -75,7 +75,8 @@
   "15",
   "04b",
   "09c",
-  "12"
+  "12",
+  "14a"
  ],
  "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma",
  "kural": "tip=kemal: imageReferences=[Kemal 02a]; tip=stil: imageReferences=[05a stil referansı]. Her görsel: generate-image -> (bekle) create-design Instagram Story (Portrait) -> export jpg 1080x1920 -> gorseller/ada9/canva/<sahne>.jpg ve gorseller/ada9/<sahne>.jpg; eskisini gorseller/ada9-flow-yedek'e al.",
