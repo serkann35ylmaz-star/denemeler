@@ -761,9 +761,9 @@ function diziAnket(t) {
   ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(0, y - 110, W, 330);
   tx(upTR(an.alt || 'YORUMLARA TEK KELİME'), W / 2, y - 62, 26, '#fff', '800');
   const pulse = 1 + .04 * Math.sin((t - t0) * 6);
-  [[an.a, W / 2 - bw - 20, OR, '#111'], [an.b, W / 2 + 20, 'rgba(20,20,24,.9)', '#fff']].forEach(([lab, bx, bg, fg], i) => {
-    ctx.save(); ctx.translate(bx + bw / 2, y + bh / 2); if (i === 0) ctx.scale(pulse, pulse);
-    rr(-bw / 2, -bh / 2, bw, bh, 18, bg, i ? '#fff' : null, 4); tx(upTR(lab), 0, 3, 58, fg, '400', 'center', 'AntonL, Impact'); ctx.restore();
+  [[an.a, W / 2 - bw - 20, OR, '#111'], [an.b, W / 2 + 20, OR, '#111']].forEach(([lab, bx, bg, fg], i) => {   // iki seçenek de aynı sarı kutu, aynı nabız
+    ctx.save(); ctx.translate(bx + bw / 2, y + bh / 2); ctx.scale(pulse, pulse);
+    rr(-bw / 2, -bh / 2, bw, bh, 18, bg, null, 4); tx(upTR(lab), 0, 3, 58, fg, '400', 'center', 'AntonL, Impact'); ctx.restore();
   });
   if (an.not) tx(upTR(an.not), W / 2, y + bh + 44, 20, '#bbb', '800');
   ctx.restore(); ctx.globalAlpha = 1;
