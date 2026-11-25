@@ -35,9 +35,9 @@ def norm(x):
 WH = [w for sg in json.load(open(os.path.join(os.path.dirname(__file__), 'ses-whisper.json'), encoding='utf-8')) for w in sg['w']]
 
 
-def align(toks, s0, e0):
+def align(toks, s0, e0, ww=None):
     """Metin kelimelerini Whisper kelime zamanlarına sırayla eşler; eşleşmeyenleri aralarına dağıtır -> [(bas, bit)]"""
-    ww = [(norm(w), a, b) for w, a, b in WH if s0 - 0.15 <= a <= e0 + 0.05]
+    if ww is None: ww = [(norm(w), a, b) for w, a, b in WH if s0 - 0.15 <= a <= e0 + 0.05]
     res = [None] * len(toks); j = 0
     for i, k in enumerate(toks):
         nk = norm(k)
@@ -61,6 +61,20 @@ def align(toks, s0, e0):
             d = (b - a) * q / sum(wt); out[m] = (c, c + d); c += d
         i = k
     return out
+
+
+_WM = None
+
+
+def klip_kelimeleri(seg):
+    """Kesilmiş tek cümlenin kendi sesinden Whisper kelime zamanları (tüm kayıttan alınanlardan daha doğru)."""
+    global _WM
+    import scipy.signal as sg
+    from faster_whisper import WhisperModel
+    if _WM is None: _WM = WhisperModel('small', device='cpu', compute_type='int8')
+    b = sg.resample_poly(seg.astype(np.float32) / 32768, 1, 3)
+    out, _ = _WM.transcribe(b, language='tr', word_timestamps=True, condition_on_previous_text=False, no_speech_threshold=0.95, temperature=0)
+    return [(norm(w.word), w.start, w.end) for sgm in out for w in sgm.words]
 
 
 def main():
@@ -99,8 +113,8 @@ def main():
         rms = np.sqrt((x ** 2).mean(axis=1)); ref = np.percentile(rms, 95) or 1
         env = [round(float(q), 2) for q in np.clip(rms / ref, 0, 1)]
         toks = e['metin'].replace('*', '').split()
-        al = align(toks, s0, e0)
-        words = [[k, round(max(0, x1 - a0), 3), round(max(0, y1 - a0), 3)] for k, (x1, y1) in zip(toks, al)]
+        al = align(toks, 0.0, len(seg) / SR, klip_kelimeleri(seg))
+        words = [[k, round(max(0, x1), 3), round(max(0, y1), 3)] for k, (x1, y1) in zip(toks, al)]
         db[lid] = {'dur': round(len(seg) / SR, 3), 'env': env, 'metin': e['metin'], 'motor': 'kullanici', 'kelimeler': words}
         print(i + 1, lid, round(len(seg) / SR, 2), e['metin'][:40])
     json.dump(db, open('vo/sesler.json', 'w', encoding='utf-8'), ensure_ascii=False)
