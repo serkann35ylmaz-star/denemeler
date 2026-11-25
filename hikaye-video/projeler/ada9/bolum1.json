@@ -205,7 +205,8 @@
               "renk": "#e8344e",
               "gizli": false
             }
-          }
+          },
+          "durum": ""
         }
       ]
     },
@@ -259,7 +260,7 @@
         {
           "tip": "anlatici",
           "metin": "Adada tatlı su yok.",
-          "durum": "SUSUZ · 3. GÜN",
+          "durum": "TATLI SU YOK",
           "gorsel": "gorseller/ada9/06b.jpg",
           "hareket": "uzaklas",
           "gorselPrompt": "Wide shot of the barren island: [KEMAL] kneeling by a dry cracked rock pool, scorching pale sky, no vegetation, empty plastic bottle beside him."
@@ -267,7 +268,8 @@
         {
           "tip": "anlatici",
           "duygu": "dusunceli",
-          "metin": "Telsiz olmadan onu *kimse bulamaz.*"
+          "metin": "Telsiz olmadan onu *kimse bulamaz.*",
+          "durum": "TELSİZ YOK"
         }
       ]
     },
@@ -290,7 +292,8 @@
             "bpm": 142,
             "sure": 4,
             "seviye": 0.45
-          }
+          },
+          "durum": "ETRAFTA KÖPEKBALIĞI"
         }
       ]
     },
@@ -302,7 +305,8 @@
       "olaylar": [
         {
           "tip": "anlatici",
-          "metin": "Sonra ufukta ölmüş *dev bir balina* beliriyor."
+          "metin": "Sonra ufukta ölmüş *dev bir balina* beliriyor.",
+          "durum": ""
         },
         {
           "tip": "anlatici",
