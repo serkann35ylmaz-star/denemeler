@@ -101,6 +101,14 @@
               "Yük gemisinde güvenlikçi"
             ],
             "sure": 4.2
+          },
+          "kutu": {
+            "ÇANTA": {
+              "gizli": true
+            },
+            "MESAFE": {
+              "gizli": true
+            }
           }
         },
         {
@@ -189,11 +197,13 @@
           "kutu": {
             "MESAFE": {
               "deger": "40 M",
-              "renk": "#ff9a2e"
+              "renk": "#ff9a2e",
+              "gizli": false
             },
             "ÇANTA": {
               "deger": "KAYADA",
-              "renk": "#e8344e"
+              "renk": "#e8344e",
+              "gizli": false
             }
           }
         }

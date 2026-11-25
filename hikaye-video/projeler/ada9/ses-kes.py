@@ -72,11 +72,22 @@ def main():
     w = wave.open(wav); a = np.frombuffer(w.readframes(w.getnframes()), dtype='<i2'); n = len(a) / SR
     st, en = silences(wav)
     db = json.load(open('vo/sesler.json', encoding='utf-8'))
+    # kesim noktaları: önce her satırın gerçek bitişi (Whisper bitişinden sonraki ilk sessizlik başı), sonra bir sonraki satırın
+    # başlangıcı = o bitişten sonraki ilk sessizlik sonu. Böylece önceki kelimenin ucu bir sonraki satıra sızmaz.
+    ends, starts = [], []
+    for i, (s0, e0) in enumerate(SPANS):
+        c = [x for x in st if e0 - 0.08 <= x <= e0 + 0.5]
+        ends.append(min(c) if c else e0 + 0.1)
+    for i, (s0, e0) in enumerate(SPANS):
+        if i == 0:
+            c = [x for x in en if s0 - 0.5 <= x <= s0 + 0.3]; starts.append(min(c, key=lambda x: abs(x - s0)) if c else s0)
+        else:
+            c = [x for x in en if ends[i - 1] + 0.02 <= x <= e0 - 0.05]
+            starts.append(min(c) if c else s0)
     for i, (e, (s0, e0)) in enumerate(zip(ev, SPANS)):
-        s = snap(s0, en) if i else s0
-        t = snap(e0, st)
-        if t <= s: t = e0
-        a0, a1 = max(0, s - 0.05), min(n, t + 0.15)
+        s, t = starts[i], ends[i]
+        if t <= s: s, t = s0, e0
+        a0, a1 = max(0, s - 0.14), min(n, t + 0.12)
         seg = a[int(a0 * SR):int(a1 * SR)].copy()
         f = int(0.01 * SR); seg[:f] = (seg[:f] * np.linspace(0, 1, f)).astype('<i2'); seg[-f:] = (seg[-f:] * np.linspace(1, 0, f)).astype('<i2')
         v = (narr.get('ses', 'tr-TR-AhmetNeural'), e.get('hiz', narr.get('hiz', '+0%')), e.get('perde', narr.get('perde', '+0Hz')))

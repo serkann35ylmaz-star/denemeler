@@ -639,6 +639,7 @@ function diziHUD(t, st) {
   const ks = st.kutular; if (!ks.length) return;
   const gap = 16, bw = (w - gap * (ks.length - 1)) / ks.length, by = y0 + (serit ? h + 12 : 0), bh = 66;
   ks.forEach((k, i) => {
+    if (k.gizli) return;   // kutu: {ETİKET: {gizli: true}} -> yeri boş kalır, geri açılana kadar çizilmez
     const bx = x0 + i * (bw + gap), fl = k.degisti !== undefined ? Math.max(0, 1 - (t - k.degisti) / .7) : 0, col = k.renk || '#fff';
     rr(bx, by, bw, bh, 10, PANEL, fl > 0 ? col : 'rgba(255,255,255,.18)', 2 + fl * 4);
     tx(upTR(k.etiket), bx + 14, by + 17, 17, '#9a9aa2', '800', 'left');
