@@ -120,11 +120,11 @@ if (shots.length) {
 
 // --- ses karışımı: her satır kendi başlangıç anına, isteğe bağlı müzik altta ---
 const voiced = lines.filter(l => l.dosya && fs.existsSync(l.dosya));
-const inputs = [], filters = [], labels = [];
+const inputs = [], filters = [], labels = [], vlab = [];
 voiced.forEach((l, i) => {
   inputs.push('-i', l.dosya);
   const ms = Math.round(l.start * 1000);
-  filters.push(`[${i}:a]adelay=${ms}|${ms}[a${i}]`); labels.push(`[a${i}]`);
+  filters.push(`[${i}:a]adelay=${ms}|${ms}[a${i}]`); vlab.push(`[a${i}]`);
 });
 // --- ses efektleri (sfx.py, yerel sentez): olayda "ses": "gok" | {ad, sure, bpm, seviye, gecikme}
 //     hikâyede "ambiyans": [{ad, bas, bit, seviye, bpm}] (bas/bit sn ya da olay id'si)
@@ -156,11 +156,19 @@ if (story.muzik && fs.existsSync(story.muzik)) {
   filters.push(`[${k}:a]volume=${vol},afade=t=in:d=1.5,afade=t=out:st=${Math.max(0, total - 2.5)}:d=2.5,atrim=0:${total}[m]`);
   labels.push('[m]');
 }
-if (labels.length) {
-  filters.push(`${labels.join('')}amix=inputs=${labels.length}:normalize=0:duration=longest,apad,atrim=0:${total}[out]`);
+if (labels.length || vlab.length) {
+  // ses (anlatıcı) ayrı yol: efektler/ambiyans konuşma sırasında otomatik kısılır (sidechain), genel seviye düşük
+  const fxGain = story.efektGenel ?? 0.4;
+  if (vlab.length) filters.push(`${vlab.join('')}amix=inputs=${vlab.length}:normalize=0:duration=longest,apad,atrim=0:${total},volume=1.6,asplit=2[vo][vk]`);
+  if (labels.length) {
+    filters.push(`${labels.join('')}amix=inputs=${labels.length}:normalize=0:duration=longest,apad,atrim=0:${total},volume=${fxGain}[fx0]`);
+    filters.push(vlab.length ? `[fx0][vk]sidechaincompress=threshold=0.015:ratio=14:attack=8:release=450:makeup=1[fx]` : `[fx0]anull[fx]`);
+  }
+  const fin = [vlab.length ? '[vo]' : '', labels.length ? '[fx]' : ''].filter(Boolean);
+  filters.push(`${fin.join('')}amix=inputs=${fin.length}:normalize=0:duration=longest,loudnorm=I=-16:TP=-1.5:LRA=9[out]`);
   execFileSync('ffmpeg', ['-y', '-v', 'error', ...inputs, '-filter_complex', filters.join(';'), '-map', '[out]', '-ar', '48000', '-ac', '2', 'out/ses.wav'], { stdio: 'inherit' });
 } else if (fs.existsSync('out/ses.wav')) fs.unlinkSync('out/ses.wav');
 
 console.log(`${scenes.length} sahne, ${lines.length} satır, toplam ${total.toFixed(1)} sn` +
   (missing ? `  (UYARI: ${missing} satırın sesi yok, önce: python3 ses.py)` : '') +
-  (labels.length ? '  -> out/ses.wav' : '  (sessiz)'));
+  ((labels.length || vlab.length) ? '  -> out/ses.wav' : '  (sessiz)'));
