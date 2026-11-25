@@ -5,11 +5,11 @@ import sys, os, cv2, numpy as np
 G = os.path.join(os.path.dirname(__file__), '..', '..', 'gorseller', 'ada9')
 POLY = [(852, 944), (848, 1000), (840, 1040), (822, 1058), (842, 1072), (858, 1140), (864, 1186), (902, 1204), (840, 1228),
         (700, 1232), (640, 1236), (642, 1210), (668, 1170), (705, 1100), (752, 1030), (800, 982)]
-CFG = {  # boy: yüzgeç yüksekliği (px), taban: köpüğün durduğu nokta, sil: eski küçük yüzgecin kutusu (koyu piksel silinir)
-    '07': dict(boy=150, taban=(868, 447), sil=(838, 402, 905, 458)),
-    '09a': dict(boy=200, taban=(1243, 798), sil=(1205, 730, 1290, 808)),
-    '09b': dict(boy=235, taban=(795, 1272), sil=(690, 1045, 960, 1300)),
-    '15': dict(boy=390, taban=(620, 1800), sil=None)}
+CFG = {  # boy: yüzgeç yüksekliği (px), taban: yüzgecin suya girdiği nokta, sil: eski küçük yüzgecin kutusu (koyu piksel silinir)
+    '07': dict(boy=330, taban=(770, 650), sil=(838, 402, 905, 458)),
+    '09a': dict(boy=400, taban=(1243, 960), sil=(1205, 730, 1290, 808)),
+    '09b': dict(boy=480, taban=(795, 1290), sil=(690, 1045, 960, 1300)),
+    '15': dict(boy=470, taban=(640, 1870), sil=None)}
 
 
 def sprite():
