@@ -45,4 +45,4 @@ Sesi tek bir kayıt olarak ya da satır satır gönderebilirsin; tek kayıtta sa
 
 **Ekrandan çıkan notlar (okunmaz):** TEK KURAL: SIÇRATMA. · Kemal kimlik kartı · ÇANTANIN İÇİ listesi · GERÇEK kartı · kronometre · DAL / DÖN.
 
-**Sabitlenecek yorum:** Sen olsan 4 dakikada kaç metre yüzerdin? 🦈
+**Sabitlenecek yorum:** Kızının fotoğrafı mı, hayatta kalmak mı? 📸🦈 Kemal'in yerinde olsan DAL mı yazardın, DÖN mü? Tek kelime yaz 👇

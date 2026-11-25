@@ -22,7 +22,7 @@ Kaynak: senin v3 metnin. Seslendirme cümleleri aynen korundu, yalnız görselle
 - Balina leşinin üstünde martılar var.
 - 15 sahne 25 görsele bölündü.
 
-Sabitlenecek yorum: Sen olsan 4 dakikada kaç metre yüzerdin? 🦈
+Sabitlenecek yorum: Kızının fotoğrafı mı, hayatta kalmak mı? 📸🦈 Kemal'in yerinde olsan DAL mı yazardın, DÖN mü? Tek kelime yaz 👇
 
 ![yazı önizlemesi](onizleme-yazilar.jpg)
 
