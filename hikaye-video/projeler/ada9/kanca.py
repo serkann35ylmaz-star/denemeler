@@ -18,12 +18,13 @@ SAHNE = {
                 sil=[([(332, 1480), (320, 1540), (335, 1590), (365, 1630), (405, 1662)], 28),
                      ([(410, 1665), (385, 1685), (365, 1710)], 30), ([(412, 1672), (430, 1710), (440, 1756)], 30),
                      ([(415, 1672), (470, 1698), (512, 1722), (528, 1760), (525, 1795)], 30), ([(420, 1688), (470, 1684), (510, 1690)], 28), ([(395, 1655), (450, 1680), (520, 1705)], 55), ([(430, 1425), (440, 1440)], 30)],
-                orijinal=(528, 1324, 0, 0.62)),
-    '14b': dict(cor=[(200, 1440, 360, 1860)], sil=[([(342, 1352), (338, 1388)], 40), ([(346, 1396), (356, 1416)], 84), ([(338, 1430), (332, 1480), (318, 1540), (312, 1600), (296, 1690), (270, 1770), (245, 1830)], 30),
-                     ([(310, 1535), (255, 1565)], 44), ([(285, 1785), (215, 1850)], 56)], sakla=True),
-    '15': dict(cor=[(893, 1490, 1020, 1585)], sil=[([(886, 1492), (892, 1516)], 24), ([(880, 1524), (884, 1530)], 44),
+                orijinal=(458, 1214, 0, 1.05)),
+    '14b': dict(cor=[(200, 1440, 360, 1860)], sil=[([(322, 1282), (330, 1250), (352, 1226), (400, 1214), (432, 1232), (444, 1262), (432, 1292), (396, 1306), (360, 1322), (342, 1352), (338, 1385)], 42),
+                     ([(346, 1396), (356, 1416)], 84), ([(338, 1430), (332, 1480), (318, 1540), (312, 1600), (296, 1690), (270, 1770), (245, 1830)], 30),
+                     ([(310, 1535), (255, 1565)], 44), ([(285, 1785), (215, 1850)], 56)], orijinal=(345, 1232, 8, 1.3)),
+    '15': dict(cor=[(893, 1490, 1020, 1585)], sil=[([(886, 1494), (892, 1516)], 22), ([(880, 1524), (884, 1530)], 40),
                     ([(900, 1535), (925, 1568), (962, 1582), (992, 1560), (1002, 1528), (990, 1500), (950, 1487)], 46), ([(955, 1490), (970, 1535)], 32)],
-               kanca=(880, 1470, 84, 0.55)),
+               orijinal=(868, 1470, 0, 0.55)),
     '01b': dict(cor=[(670, 1090, 920, 1470)], sil=[([(738, 1078), (736, 1122)], 30), ([(745, 1182), (748, 1202)], 56), ([(708, 1160), (716, 1170)], 36), ([(826, 1392), (838, 1400)], 34), ([(880, 1436), (896, 1446)], 36), ([(826, 1330), (840, 1345)], 30)], orijinal=(774, 1092, 0, 0.5)),
 }
 
@@ -73,6 +74,32 @@ def sprite(scale):
 
 
 HOOK_YOL = [(322, 1282), (330, 1250), (352, 1226), (400, 1214), (432, 1232), (444, 1262), (432, 1292), (396, 1306), (360, 1322), (346, 1346)]  # 14b'deki orijinal kancanın yolu
+
+
+def sprite_01b(kaynak):
+    """01b'deki (kullanıcının beğendiği) kanca + misina: renk maskesi + kontur. RGBA, çapa = sapın ağızdaki ucu."""
+    im = cv2.imread(os.path.join(kaynak, '01b.jpg'))
+    X0, Y0, X1, Y1 = 672, 1050, 920, 1470
+    roi = im[Y0:Y1, X0:X1]
+    hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+    h, sa, v = hsv[..., 0].astype(int), hsv[..., 1].astype(int), hsv[..., 2].astype(int)
+    rust = (((h <= 24) | (h >= 168)) & (sa >= 70) & (v >= 40) & (v <= 240))
+    tan = ((h >= 18) & (h <= 64) & (sa >= 55) & (v >= 70))
+    m = (rust | tan).astype(np.uint8) * 255
+    m[:25, :] = 0  # üstteki dişleri/dudağı alma
+    koridor = np.zeros(m.shape, np.uint8)  # yalnızca kanca + misina yolu
+    for yol, th in (([(742, 1070), (740, 1110), (730, 1150), (708, 1168), (694, 1140)], 56), ([(745, 1185), (762, 1250), (790, 1322), (832, 1384), (884, 1442)], 36), ([(832, 1384), (897, 1452)], 40)):
+        cv2.polylines(koridor, [np.array([(x - X0, y - Y0) for x, y in yol], np.int32)], False, 255, th, cv2.LINE_AA)
+    m &= koridor
+    n, lab, st, _ = cv2.connectedComponentsWithStats(m)
+    keep = np.zeros_like(m)
+    for i in range(1, n):
+        if st[i][4] >= 25: keep[lab == i] = 255
+    keep = cv2.dilate(keep, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+    a = cv2.GaussianBlur(keep, (0, 0), 1.2).astype(np.float32)
+    yy = np.arange(a.shape[0], dtype=np.float32)[:, None]
+    a *= np.clip((1335 - Y0 - yy) / 45, 0, 1)  # misinanın alt ucu (püsküllü kısım) yumuşakça kaybolur
+    return np.dstack([roi.astype(np.float32), a.astype(np.float32)]), (742 - X0, 1078 - Y0)
 
 
 def orijinal_sprite(kaynak):
@@ -146,7 +173,7 @@ def main():
         orig = cv2.imread(os.path.join(kaynak, '14b.jpg')) if 'orijinal' in cfg else None
         im = temizle(im, cfg)
         if 'orijinal' in cfg:
-            sp, anc = orijinal_sprite(kaynak); yerlestir_orijinal(im, sp, anc, *cfg['orijinal'])
+            sp, anc = sprite_01b(kaynak); yerlestir_orijinal(im, sp, anc, *cfg['orijinal'])
         elif 'kanca' in cfg: yerlestir(im, *cfg['kanca'])
         cv2.imwrite(os.path.join(cikti or G, n + '.jpg'), im, [cv2.IMWRITE_JPEG_QUALITY, 95]); print('tamam', n)
 
