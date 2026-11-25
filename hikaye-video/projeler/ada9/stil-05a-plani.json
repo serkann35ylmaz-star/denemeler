@@ -46,7 +46,7 @@
   },
   {
    "sahne": "09c",
-   "durum": "bekliyor",
+   "durum": "tamam",
    "tip": "stil",
    "prompt": "Underwater close-up: the colossal great white shark: smooth clean snout, small torn notch in dorsal fin, rusted J-shaped fishing hook in the LEFT corner of the lower jaw with a short frayed green line; fully underwater, never above the surface, passing a jagged rock, the hook and green line clearly visible, teeth, dark eye, sun rays. No people. Use the style reference (05a): bright painterly comic-book illustration, bold black ink outlines, lively teal-green sea with white foam, soft stormy sky, pale white-blue lightning (NO red lightning), warm orange glow at the horizon. Top 15% of the frame empty sky. No text."
   },
@@ -73,7 +73,8 @@
   "07",
   "14b",
   "15",
-  "04b"
+  "04b",
+  "09c"
  ],
  "kota": "hesap başına ~5-6 dk'da 1 işlem; her görsel = üretim + HD dışa aktarma",
  "kural": "tip=kemal: imageReferences=[Kemal 02a]; tip=stil: imageReferences=[05a stil referansı]. Her görsel: generate-image -> (bekle) create-design Instagram Story (Portrait) -> export jpg 1080x1920 -> gorseller/ada9/canva/<sahne>.jpg ve gorseller/ada9/<sahne>.jpg; eskisini gorseller/ada9-flow-yedek'e al.",
