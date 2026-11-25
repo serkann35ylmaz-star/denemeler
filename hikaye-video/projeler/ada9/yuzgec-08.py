@@ -6,10 +6,10 @@ G = os.path.join(os.path.dirname(__file__), '..', '..', 'gorseller', 'ada9')
 POLY = [(852, 944), (848, 1000), (840, 1040), (822, 1058), (842, 1072), (858, 1140), (864, 1186), (902, 1204), (840, 1228),
         (700, 1232), (640, 1236), (642, 1210), (668, 1170), (705, 1100), (752, 1030), (800, 982)]
 CFG = {  # boy: yüzgeç yüksekliği, taban: suya girdiği nokta, sil: eski küçük yüzgecin kutusu, rim: kırmızı kenar şiddeti, ton: sahne rengi
-    '07': dict(boy=300, taban=(790, 640), sil=(838, 402, 905, 458), rim=0.55, ton=(60, 75, 85), kopuk=0.55),
-    '09a': dict(boy=390, taban=(1243, 960), sil=(1205, 730, 1290, 808), rim=0.5, ton=(75, 80, 85), kopuk=0.7),
-    '09b': dict(boy=470, taban=(795, 1290), sil=(690, 1045, 960, 1300), rim=0.0, ton=(70, 90, 20), kopuk=0.95),
-    '15': dict(boy=700, taban=(640, 1870), sil=None, rim=0.7, ton=(70, 80, 40), kopuk=0.5)}
+    '07': dict(boy=340, taban=(790, 640), sil=(838, 402, 905, 458), rim=0.55, ton=(60, 75, 85), kopuk=0.55),
+    '09a': dict(boy=450, taban=(1243, 960), sil=(1205, 730, 1290, 808), rim=0.5, ton=(75, 80, 85), kopuk=0.7),
+    '09b': dict(boy=540, taban=(795, 1290), sil=(690, 1045, 960, 1300), rim=0.0, ton=(70, 90, 20), kopuk=0.95),
+    '15': dict(boy=700, taban=(640, 1850), sil=None, rim=0.7, ton=(70, 80, 40), kopuk=0.0)}
 
 
 def sprite():
