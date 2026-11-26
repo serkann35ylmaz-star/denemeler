@@ -1,0 +1,63 @@
+[calm, low, steady narration] Oylar belli oldu. Dön.
+
+[thoughtful, quiet, slow] Kemal çantayı sıkıca tutuyor.
+
+[sad, soft, heavy] Elinde sekiz eşya var. Kızının fotoğrafı yok.
+
+[tense, hushed, fearful] Fotoğraf dipte kaldı. Ve köpekbalığı geliyor.
+
+[tense, hushed, fearful] Kıyıya yirmi beş metre.
+
+[tense, hushed, fearful] Otuz saniye.
+
+[calm, low, steady narration] Kemal tek kural biliyor: sıçratma.
+
+[tense, hushed, fearful] Çanta ağır. Kolları yanıyor.
+
+[tense, hushed, fearful] Kalp atışı yüz seksen.
+
+[thoughtful, quiet, slow] Dipte kocaman bir gölge dönüyor.
+
+[tense, hushed, fearful] Kanca bir kez daha parlıyor.
+
+[calm, low, steady narration] Yirmi metre.
+
+[tense, hushed, fearful] Köpekbalığı hızlanıyor. Suda tek kıpırtı bile yok.
+
+[thoughtful, quiet, slow] Çantada bir şey var: işaret fişeği.
+
+[tense, hushed, fearful] Ama yakarsa ışık da çıkar, ses de.
+
+[tense, hushed, fearful] On beş metre.
+
+[tense, hushed, fearful] Yüzgeç yüzeye çıkıyor. Tam arkasında.
+
+[tense, hushed, fearful] Kemal fişeği çıkarıyor.
+
+[tense, hushed, fearful] Yakıyor ve uzağa fırlatıyor.
+
+[calm, low, steady narration] Köpekbalığı ışığa dönüyor.
+
+[tense, hushed, fearful] On metre.
+
+[tense, hushed, fearful] Beş.
+
+[calm, low, steady narration] Ayağı kayaya değiyor.
+
+[tense, hushed, fearful] Kendini yukarı çekiyor. Köpekbalığı bir saniye geç kalıyor.
+
+[thoughtful, quiet, slow] Kayaya yığılıyor. Nefes alamıyor.
+
+[calm, low, steady narration] Çantayı açıyor. Sekiz eşya, hepsi yerinde.
+
+[calm, low, steady narration] Telsiz ıslak. Ama ışığı yanıyor.
+
+[thoughtful, quiet, slow] Düğmeye basıyor.
+
+[tense, hushed, fearful] Cızırtı. Sonra bir ses.
+
+[tense, hushed, fearful] Telsizden Kemal'in adı geliyor.
+
+[calm, low, steady narration] Cevap versin mi, yoksa susup dinlesin mi?
+
+[calm, low, steady narration] Yorumlara tek kelime yaz: cevap ya da sus.
