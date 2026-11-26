@@ -1,6 +1,6 @@
 # ADA 9 · 2. Bölüm: DÖN (taslak)
 
-Oylama sonucu: **DÖN**. Bölüm başında "ÖNCEKİ BÖLÜMÜN OYU" kutusu (dizi.oy: secim "DÖN", yuzde = gerçek yüzde, sure 4.5).
+Oylama sonucu: **DÖN**. Bölüm başında referanstaki gibi oy kutusu: başlık **"1. BÖLÜMÜN OYU"**, altında turuncu **"DÖN %..."** (yüzde 0'dan sayarak dolar). Ayar: dizi.oy {baslik: "1. BÖLÜMÜN OYU", secim: "DÖN", yuzde: GERÇEK YÜZDE, sure: 4.5}. Yüzde henüz belli değil.
 
 **Zaman:** 1. bölümde sayaç 00:30'da bitti. Bu bölümde 00:30'dan başlar, "Ayağı kayaya değiyor" cümlesinde 00:07'ye gelir ve orada durur.
 **Kutular:** ÇANTA 8 EŞYA · MESAFE 25 M → 20 → 15 → 10 → 5 → 0 (cümlelerle birlikte) · NABIZ 180 → sonda 150.
