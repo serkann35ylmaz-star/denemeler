@@ -107,7 +107,8 @@
      "tip": "anlatici",
      "metin": "Kemal tek kural biliyor: *sıçratma.*"
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s04-kol",
@@ -127,7 +128,8 @@
       "NABIZ": "180"
      }
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s05-golge",
@@ -139,7 +141,8 @@
      "metin": "Dipte kocaman bir gölge dönüyor.",
      "duygu": "dusunceli"
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s06-kanca",
@@ -167,7 +170,8 @@
       "MESAFE": "20 M"
      }
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s08-hiz",
@@ -179,7 +183,8 @@
      "metin": "Köpekbalığı hızlanıyor. Suda tek kıpırtı bile yok.",
      "duygu": "korkmus"
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s09-fisek",
@@ -196,7 +201,8 @@
      "metin": "Ama yakarsa ışık da çıkar, ses de.",
      "duygu": "korkmus"
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s10-onbes",
@@ -211,7 +217,8 @@
       "MESAFE": "15 M"
      }
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s11-yuzgec",
@@ -235,7 +242,8 @@
      "tip": "anlatici",
      "metin": "Kemal fişeği çıkarıyor,"
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s13-firlat",
@@ -275,7 +283,8 @@
       "MESAFE": "5 M"
      }
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s15-kaya",
@@ -316,7 +325,8 @@
      "tip": "anlatici",
      "metin": "Çantayı açıyor. *Sekiz eşya,* hepsi yerinde."
     }
-   ]
+   ],
+   "gecis": "kesme"
   },
   {
    "id": "s17-telsiz",
@@ -352,7 +362,8 @@
      "tip": "anlatici",
      "metin": "Yorumlara tek kelime yaz: *cevap* ya da *sus.*"
     }
-   ]
+   ],
+   "gecis": "kesme"
   }
  ],
  "dizi": {
