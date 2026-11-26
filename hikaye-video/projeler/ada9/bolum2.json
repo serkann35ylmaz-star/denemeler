@@ -84,7 +84,10 @@
      "metin": "Kıyıya yirmi beş metre.",
      "duygu": "korkmus",
      "kutu": {
-      "MESAFE": "25 M"
+      "MESAFE": {
+       "deger": "25 M",
+       "gizli": false
+      }
      }
     },
     {
