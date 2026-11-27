@@ -1,0 +1,373 @@
+{
+ "format": "9:16",
+ "fps": 30,
+ "sesMotoru": "chatterbox",
+ "repliklerArasi": 0.25,
+ "anlatici": {
+  "ses": "tr-TR-AhmetNeural",
+  "hiz": "-6%",
+  "perde": "-8Hz"
+ },
+ "gorselStil": "Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.",
+ "karakterler": {
+  "kemal": {
+   "ad": "Kemal",
+   "gorselTarif": "Kemal, a 41-year-old ex-special-forces man (large round glossy pure-white cartoon head with a short black buzz-cut drawn in fine ink strokes on top, thick black furrowed eyebrows, two small oval black eyes, a small downturned mouth, a vertical stitched scar running through his left eyebrow down past his left eye, muscular build, a full black-ink sleeve tattoo covering his entire right arm from shoulder to wrist, black tactical wristwatch on his left wrist, worn olive-green t-shirt, white cartoon hands)",
+   "referans": "projeler/ada9/kemal-referans.jpg"
+  },
+  "kiz": {
+   "ad": "Kızı",
+   "gorselTarif": "Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands)"
+  },
+  "buyukbeyaz": {
+   "ad": "Büyük Beyaz",
+   "gorselTarif": "the single colossal six-meter great white shark (massive scarred grey body, a torn notch in its dorsal fin, an old rusted fishing hook stuck in the corner of its jaw trailing a short frayed piece of line)"
+  }
+ },
+ "baslik": "ADA 9 - Bolum 3 - Ilk Gece",
+ "ambiyans": [
+  {
+   "ad": "okyanus",
+   "bas": 0,
+   "seviye": 0.2
+  }
+ ],
+ "sahneler": [
+  {
+   "id": "s01-oy",
+   "gorsel": "gorseller/ada9/B2-09.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Oylar belli oldu. **Cevap.**",
+     "yer": "ADA 9 · 3. BÖLÜM"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kemal tuşa basıyor. Parmakları titriyor.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "\"Buradayım. Ben Kemal. Beni duyan var mı?\"",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s02-cizirti",
+   "gorsel": "gorseller/ada9/B3-01.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Cızırtı. Uzun, bitmeyen bir cızırtı.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Sonra bir ses geliyor. Kısık. Çok yakından.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "\"Kemal… hayattasın demek.\"",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s03-kimsin",
+   "gorsel": "gorseller/ada9/B2-09.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Kemal soruyor: \"Kimsin sen?\" Cevap yok.",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s04-fisilti",
+   "gorsel": "gorseller/ada9/B3-01.jpg",
+   "hareket": "yukari",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "**\"Ateş yakma. Işığı görürler.\"**",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s05-pil",
+   "gorsel": "gorseller/ada9/B3-02.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Telsiz susuyor. Pil tek çizgiye iniyor.",
+     "duygu": "dusunceli",
+     "kutu": {
+      "PİL": "%12"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s06-su",
+   "gorsel": "gorseller/ada9/B3-03.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Gün batımına yirmi dakika var. **Önce su.**",
+     "sayac": {
+      "mod": "geri",
+      "bas": "20:00",
+      "bitis": "08:00",
+      "hedefOlay": "sekiz",
+      "etiket": "GÜN BATIMI",
+      "bicim": "dk"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s07-cukur",
+   "gorsel": "gorseller/ada9/B3-04.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Ada kuru. Ama fırtına kayalardaki çukurlara yağmur bırakmış."
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Çukurda bir avuç su. Tabletle arıtıyor. **İlk yudum.**",
+     "duygu": "dusunceli",
+     "kutu": {
+      "SU": "1 L"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s08-baranak",
+   "gorsel": "gorseller/ada9/B3-05.jpg",
+   "hareket": "sola",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Sonra barınak. Rüzgârdan korunan bir kaya çatlağı."
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kıyıya vuran enkaz tahtaları. Gemisinin parçaları.",
+     "duygu": "uzgun"
+    }
+   ]
+  },
+  {
+   "id": "s09-misina",
+   "gorsel": "gorseller/ada9/B3-06.jpg",
+   "hareket": "asagi",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Sonra yemek. Canı sıkıldığında aldığı o misina artık **hayat sigortası.**"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kanca yok. Ama ilk yardım setinde çengelli iğne var. Yem: midye."
+    }
+   ]
+  },
+  {
+   "id": "s10-olta",
+   "gorsel": "gorseller/ada9/B3-07.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "İlk atış. Hiçbir şey. İkinci atış. Hiçbir şey.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Güneş kızarıyor. Sekiz dakika kaldı.",
+     "duygu": "korkmus",
+     "id": "sekiz",
+     "sayac": {
+      "mod": "geri",
+      "bas": "08:00",
+      "bitis": "00:00",
+      "hedefOlay": "gece",
+      "etiket": "GÜN BATIMI",
+      "bicim": "dk"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s11-balik",
+   "gorsel": "gorseller/ada9/B3-08.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Üçüncü atışta misina geriliyor.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Küçük bir balık. Ama canlı. Ve bu gece **onun yemeği.**",
+     "duygu": "dusunceli"
+    }
+   ]
+  },
+  {
+   "id": "s12-yemek",
+   "gorsel": "gorseller/ada9/B3-09.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Çiğ yiyor. Fener kapalı. Işık yok.",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s13-iz",
+   "gorsel": "gorseller/ada9/B3-10.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Gece çöküyor. Ve kumda, barınağa giden **çıplak ayak izleri.**",
+     "duygu": "korkmus",
+     "id": "gece"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kemal kendi ayağını yanına koyuyor. İzler **daha küçük.**",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s14-soguk",
+   "gorsel": "gorseller/ada9/B3-11.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Rüzgâr sertleşiyor. Tişört ıslak. Vücut ısısı düşüyor.",
+     "duygu": "korkmus",
+     "sayac": "dur"
+    }
+   ]
+  },
+  {
+   "id": "s15-fisilti",
+   "gorsel": "gorseller/ada9/B3-02.jpg",
+   "hareket": "yukari",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "**\"Ateş yakma dedim.\"**",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s16-karar",
+   "gorsel": "gorseller/ada9/B3-11.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Yakmazsa donacak. Yakarsa biri onu bulacak.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "**Ateş** mi yaksın, yoksa **karanlıkta** mı kalsın?",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Yorumlara tek kelime yaz: **ateş** ya da **karanlık.**"
+    }
+   ],
+   "sonBekleme": 4.8
+  }
+ ],
+ "dizi": {
+  "bolum": 3,
+  "toplamBolum": 9,
+  "finalEtiket": "F",
+  "kutular": [
+   {
+    "etiket": "ÇANTA",
+    "deger": "7 EŞYA",
+    "renk": "#e8344e"
+   },
+   {
+    "etiket": "SU",
+    "deger": "0 L",
+    "renk": "#4aa8ff"
+   },
+   {
+    "etiket": "PİL",
+    "deger": "%40",
+    "renk": "#ff9a2e"
+   }
+  ],
+  "oy": {
+   "baslik": "2. BÖLÜMÜN OYU",
+   "secim": "CEVAP",
+   "yuzde": 75,
+   "sure": 4.5
+  },
+  "anket": {
+   "a": "ATEŞ",
+   "b": "KARANLIK",
+   "alt": "Yorumlara tek kelime",
+   "not": "ADA 9 · 3. Bölüm",
+   "sure": 5
+  },
+  "sabitYorum": "Telsizdeki ses \"ateş yakma\" dedi. Sen yakar mıydın, karanlıkta mı kalırdın? ATEŞ mi, KARANLIK mı? 🔥🌑",
+  "etiketler": [
+   "Z",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "Ç"
+  ],
+  "bolumSerit": false
+ }
+}
