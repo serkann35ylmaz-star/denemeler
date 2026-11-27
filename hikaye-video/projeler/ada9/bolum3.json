@@ -41,7 +41,7 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "Oylar belli oldu. **Cevap.**",
+     "metin": "Oylar belli oldu. *Cevap.*",
      "yer": "ADA 9 · 3. BÖLÜM"
     },
     {
@@ -100,7 +100,7 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "**\"Ateş yakma. Işığı görürler.\"**",
+     "metin": "*\"Ateş yakma. Işığı görürler.\"*",
      "duygu": "korkmus"
     }
    ]
@@ -129,7 +129,7 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "Gün batımına yirmi dakika var. **Önce su.**",
+     "metin": "Gün batımına yirmi dakika var. *Önce su.*",
      "sayac": {
       "mod": "geri",
       "bas": "20:00",
@@ -153,7 +153,7 @@
     },
     {
      "tip": "anlatici",
-     "metin": "Çukurda bir avuç su. Tabletle arıtıyor. **İlk yudum.**",
+     "metin": "Çukurda bir avuç su. Tabletle arıtıyor. *İlk yudum.*",
      "duygu": "dusunceli",
      "kutu": {
       "SU": "1 L"
@@ -186,7 +186,7 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "Sonra yemek. Canı sıkıldığında aldığı o misina artık **hayat sigortası.**"
+     "metin": "Sonra yemek. Canı sıkıldığında aldığı o misina artık *hayat sigortası.*"
     },
     {
      "tip": "anlatici",
@@ -234,7 +234,7 @@
     },
     {
      "tip": "anlatici",
-     "metin": "Küçük bir balık. Ama canlı. Ve bu gece **onun yemeği.**",
+     "metin": "Küçük bir balık. Ama canlı. Ve bu gece *onun yemeği.*",
      "duygu": "dusunceli"
     }
    ]
@@ -260,13 +260,13 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "Gece çöküyor. Ve kumda, barınağa giden **çıplak ayak izleri.**",
+     "metin": "Gece çöküyor. Ve kumda, barınağa giden *çıplak ayak izleri.*",
      "duygu": "korkmus",
      "id": "gece"
     },
     {
      "tip": "anlatici",
-     "metin": "Kemal kendi ayağını yanına koyuyor. İzler **daha küçük.**",
+     "metin": "Kemal kendi ayağını yanına koyuyor. İzler *daha küçük.*",
      "duygu": "korkmus"
     }
    ]
@@ -293,7 +293,7 @@
    "olaylar": [
     {
      "tip": "anlatici",
-     "metin": "**\"Ateş yakma dedim.\"**",
+     "metin": "*\"Ateş yakma dedim.\"*",
      "duygu": "korkmus"
     }
    ]
@@ -311,12 +311,12 @@
     },
     {
      "tip": "anlatici",
-     "metin": "**Ateş** mi yaksın, yoksa **karanlıkta** mı kalsın?",
+     "metin": "*Ateş* mi yaksın, yoksa *karanlıkta* mı kalsın?",
      "duygu": "dusunceli"
     },
     {
      "tip": "anlatici",
-     "metin": "Yorumlara tek kelime yaz: **ateş** ya da **karanlık.**"
+     "metin": "Yorumlara tek kelime yaz: *ateş* ya da *karanlık.*"
     }
    ],
    "sonBekleme": 4.8
