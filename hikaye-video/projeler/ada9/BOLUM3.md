@@ -1,7 +1,7 @@
 # ADA 9 · 3. Bölüm: İLK GECE (taslak)
 
 Oylama sonucu: **CEVAP %75** (kullanıcının verdiği rakam). Oy kutusu: başlık **"2. BÖLÜMÜN OYU"**, altında **"CEVAP %75"**.
-Tür: korku, dram, gerilim, hayatta kalma. Bu bölümde ada hayatı başlıyor: su, barınak, av, soğuk. Ada kuru ve ağaçsız (1. bölümle tutarlı). Av: kancayı köpekbalığına bırakmadık, kanca yok, ilk yardım setinden çengelli iğne kullanılıyor.
+Tür: korku, dram, gerilim, hayatta kalma. Bu bölümde ada hayatı başlıyor: su, barınak, av, soğuk. Ada kuru ve ağaçsız ama yalnızca kaya değil: geniş kumsal, kumullar ve arada kaya çıkıntıları var. Av: kancayı köpekbalığına bırakmadık, kanca yok, ilk yardım setinden çengelli iğne kullanılıyor.
 
 **Süreklilik:** işaret fişeği 2. bölümde yandı, çantada 7 eşya kaldı. Kızının fotoğrafı yok. Dövmeli kol solda, saatli kol sağda.
 **Zaman:** sayaç gün batımına kalan süreyi gösterir: 20:00 → 00:00 (gece çöker).
@@ -45,8 +45,8 @@ Tür: korku, dram, gerilim, hayatta kalma. Bu bölümde ada hayatı başlıyor: 
 - B3-02: telsiz pil göstergesi tek çizgi, sönük ekran, akşam ışığı
 - B3-03: Kemal ayakta kayalıkta, geniş ada manzarası, ağaçsız, gün batımı
 - B3-04: kaya çukurunda yağmur suyu, Kemal diz çökmüş, tablet elinde
-- B3-05: kaya çatlağında enkaz tahtalarından barınak
-- B3-06: misina makarası, çengelli iğne, midyeler kayada
+- B3-05: kumsalda kaya çıkıntısına dayalı enkaz tahtalarından barınak
+- B3-06: misina makarası, çengelli iğne, midyeler ıslak kumda ve tahtada
 - B3-07: Kemal kayada olta atıyor, gün batımı
 - B3-08: misina geriliyor, suda küçük balık
 - B3-09: Kemal küçük balığı çiğ yiyor, alacakaranlık, fener yanında kapalı
