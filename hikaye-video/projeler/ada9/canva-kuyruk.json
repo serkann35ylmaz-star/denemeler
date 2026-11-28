@@ -1,0 +1,43 @@
+{
+ "referanslar": {
+  "kemal": "MAHb2sWrgXU",
+  "kemal_02a": "MAHb2rX0pjw",
+  "kopekbaligi_01b": "MAHb2vtaYPM",
+  "not": "Bu id'ler yalnızca bağlı Canva hesabında geçerli; hesap değişirse kemal-referans.jpg, gorseller/ada9/02a.jpg ve 01b.jpg yeniden yüklenmeli",
+  "hesap": "2026-11-24 baglantisi"
+ },
+ "kural": "Her promptta: üst %15 boş (gökyüzü), burun düzgün (X izi yok), köpekbalığı su altında/yalnız yüzgeç, kanca alt çenenin sol köşesinde yeşil misina. Kemal görsellerinde 2 Kemal referansı, köpekbalığı görsellerinde 01b referansı.",
+ "isler": [
+  {
+   "sahne": "03",
+   "durum": "uretildi-HD-bekliyor",
+   "kemal": false,
+   "ozet": "batan gemi, fırtına, kırmızı şimşek, düşen konteynerler, güvertede yuvarlak beyaz kafalı küçük mürettebat (kafatası değil)",
+   "media": "MAHb2v7jQnY"
+  },
+  {
+   "sahne": "04b",
+   "durum": "uretildi-HD-bekliyor",
+   "kemal": false,
+   "ozet": "yukarıdan eski deniz haritası, tek ada kalın kırmızı daire içinde, kesikli kırmızı rota, pusula, pergel; yazı/sayı yok",
+   "media": "MAHb2vQBz0g"
+  },
+  {
+   "sahne": "13a",
+   "durum": "tamam (canva/13a.jpg, onay bekliyor)",
+   "kemal": true,
+   "ozet": "Kemal kayaya sıkışmış çanta askısını iki elle çekiyor, çanta net görünür, köpekbalığı yok, kafa üst üçte birde",
+   "not_": "ilk deneme sunucu hatası verdi, tekrar üret",
+   "media": "MAHb2h27tsE"
+  },
+  {
+   "sahne": "07",
+   "durum": "bekliyor",
+   "kemal": true,
+   "ozet": "Kemal arkadan kıyıda, uzakta kayada çanta, etrafında yalnız yırtık sırt yüzgeci dönüyor (01b referansı), çantası yok",
+   "not_": "kısa prompt + tek referans (02a) kullan; çoklu referans/uzun prompt SERVER_GENERIC hatası veriyor"
+  }
+ ],
+ "hesap_durumu": "2026-11-24: üçüncü Canva hesabı bağlı; kota yine doldu. Referans id: kemal MAHb2iqCh3Q, 02a MAHb2tdQ4zw, köpekbalığı MAHb2stpJfY",
+ "ipucu": "Sunucu hatası: uzun prompt + 2-3 referans başarısız oluyor. Kısa prompt + tek referans (02a) çalıştı. Kota: hesap başına ~2 işlem, sonra quota_exceeded."
+}

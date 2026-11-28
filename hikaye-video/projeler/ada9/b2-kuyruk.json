@@ -1,0 +1,70 @@
+{
+ "aciklama": "2. bölüm görselleri (Canva). Her biri: generate -> create-design -> export 1080x1920 -> TAM BOYDA kontrol (yüz) -> gorseller/ada9/<id>.jpg. Cooldown ~6 dk.",
+ "kuyruk": [
+  {
+   "id": "B2-01",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) swims toward the camera on the sea surface, only head, shoulders and one arm above the water, backpack straps visible over his shoulders, tense determined face turned toward the camera, a small rock island far behind him. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAC_njZg"
+  },
+  {
+   "id": "B2-02",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Close-up of Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) swimming, water at chin level, strained face, backpack straps over both shoulders, water drops on his face, dark sea behind. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAUxKzMQ"
+  },
+  {
+   "id": "B2-03",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. View from underwater looking up: Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) swimming at the surface, his legs and backpack silhouetted against the bright surface, and far below a huge dark great white shark shadow rising slowly toward him (fully underwater, no hook visible), faint light rays. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAWsNFmU"
+  },
+  {
+   "id": "B2-04",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) treading water, his arm on the LEFT side of the image (the fully tattooed sleeve arm) reaching behind to pull a bright red emergency flare out of the open backpack, his other arm on the RIGHT side of the image (bare white arm wearing the black wristwatch) paddling, worried face, flare not lit yet. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAWineKA"
+  },
+  {
+   "id": "B2-05",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) in the foreground looking back over his shoulder in panic, water at his chest, and right behind him a large dark shark dorsal fin with a notch cutting through the water, white wake. Continuity: his tattooed sleeve arm is on the LEFT side of the image, his bare white arm wearing the black wristwatch is on the RIGHT side of the image. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAoljNKU"
+  },
+  {
+   "id": "B2-06",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. A bright red emergency flare burning on the sea surface far away throwing red-orange light and smoke over the dark water, a large dark shark dorsal fin with a notch turning toward the flare, and in the near foreground the back of Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) swimming away toward the shore. Continuity: his tattooed sleeve arm is on the LEFT side of the image, his bare white arm wearing the black wristwatch is on the RIGHT side of the image. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAjzJy6w"
+  },
+  {
+   "id": "B2-07",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) pulling himself up onto a dark wet rock at the shore with both arms, strained face, water streaming off him, and just behind him in the churning water a great white shark snout and open mouth snapping at the air a second too late. Continuity: his tattooed sleeve arm is on the LEFT side of the image, his bare white arm wearing the black wristwatch is on the RIGHT side of the image. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcAqH7UHQ"
+  },
+  {
+   "id": "B2-08",
+   "ref": "MAHb5wj30I4",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Kemal (round glossy white cartoon head with short black buzz-cut, stitched scar over the left eyebrow, tattooed right arm, black wristwatch, olive green t-shirt, black tactical backpack on his back) slumped exhausted on a dark rock at the shore, the black backpack open beside him, and laid out on the rock a radio, a flashlight, a combat knife, a first aid kit, water purification tablets, a pistol with magazine, a fishing line spool, all wet. Continuity: his tattooed sleeve arm is on the LEFT side of the image, his bare white arm wearing the black wristwatch is on the RIGHT side of the image. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcBguoKEc",
+   "not": "oturur poz, 8 esya fisek dahil; ilk versiyon tirmaniyor gibiydi"
+  },
+  {
+   "id": "B2-09",
+   "ref": "MAHb6gC8Ysk",
+   "prompt": "Same character and exactly the same art style as the reference image: clean bold comic-book style with thick black ink outlines, sharp smooth shapes, no noisy texture, no grain, no dithering. Dark slate blue-grey sea with white foam, stormy sky with red-orange sunset glow and pale white-blue lightning. Extreme close-up of a wet black handheld radio held in a white cartoon hand with a black wristwatch, small screen glowing green, antenna, water drops, dark wet rock background, red-orange sunset light on the edges. Top 15% of the frame is empty sky. No text.",
+   "durum": "tamam",
+   "media": "MAHcBkmykmQ",
+   "not": "Kemal oturuyor, elinde telsiz, aydinlik sahne; ilk versiyon gri gercekci el + cok karanlikti"
+  }
+ ]
+}

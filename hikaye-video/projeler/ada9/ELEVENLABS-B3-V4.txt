@@ -1,0 +1,55 @@
+[calm, low, steady narration] Oylar belli oldu. Cevap.
+
+[tense, hushed] Kemal tuşa basıyor. Parmakları titriyor.
+
+[tense, hushed] "Buradayım. Ben Kemal. Beni duyan var mı?"
+
+[tense, hushed, fearful] Cızırtı. Uzun, bitmeyen bir cızırtı.
+
+[tense, hushed, fearful] Sonra bir ses geliyor. Kısık. Çok yakından.
+
+[distorted radio voice, hoarse, weak] "Kemal… hayattasın demek."
+
+[tense, hushed] Kemal soruyor: "Kimsin sen?" Cevap yok.
+
+[distorted radio whisper, cold, low] "Ateş yakma. Işığı görürler."
+
+[thoughtful, quiet, slow] Telsiz susuyor. Pil tek çizgiye iniyor.
+
+[calm, low, steady narration] Gün batımına yirmi dakika var. Önce su.
+
+[calm, low, steady narration] Ada kuru. Ama fırtına kayalardaki çukurlara yağmur bırakmış.
+
+[thoughtful, quiet, slow] Çukurda bir avuç su. Tabletle arıtıyor. İlk yudum.
+
+[calm, low, steady narration] Sonra barınak. Rüzgârdan korunan bir kaya çatlağı.
+
+[sad, soft, heavy] Kıyıya vuran enkaz tahtaları. Gemisinin parçaları.
+
+[calm, low, steady narration] Sonra yemek. Canı sıkıldığında aldığı o misina artık hayat sigortası.
+
+[calm, low, steady narration] Kanca yok. Ama ilk yardım setinde çengelli iğne var. Yem: midye.
+
+[tense, hushed] İlk atış. Hiçbir şey. İkinci atış. Hiçbir şey.
+
+[tense, hushed] Güneş kızarıyor. Sekiz dakika kaldı.
+
+[tense, hushed] Üçüncü atışta misina geriliyor.
+
+[thoughtful, quiet, slow] Küçük bir balık. Ama canlı. Ve bu gece onun yemeği.
+
+[tense, hushed, fearful] Çiğ yiyor. Fener kapalı. Işık yok.
+
+[tense, hushed, fearful] Gece çöküyor. Ve kumda, barınağa giden çıplak ayak izleri.
+
+[tense, hushed, fearful] Kemal kendi ayağını yanına koyuyor. İzler daha küçük.
+
+[tense, hushed] Rüzgâr sertleşiyor. Tişört ıslak. Vücut ısısı düşüyor.
+
+[distorted radio whisper, cold, low] "Ateş yakma dedim."
+
+[tense, hushed, fearful] Yakmazsa donacak. Yakarsa biri onu bulacak.
+
+[thoughtful, quiet, slow] Ateş mi yaksın, yoksa karanlıkta mı kalsın?
+
+[calm, low, steady narration] Yorumlara tek kelime yaz: ateş ya da karanlık.

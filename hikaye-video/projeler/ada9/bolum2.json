@@ -1,0 +1,418 @@
+{
+ "format": "9:16",
+ "fps": 30,
+ "sesMotoru": "chatterbox",
+ "repliklerArasi": 0.25,
+ "anlatici": {
+  "ses": "tr-TR-AhmetNeural",
+  "hiz": "-6%",
+  "perde": "-8Hz"
+ },
+ "gorselStil": "Dark cinematic hand-drawn graphic-novel illustration, Hollywood survival-thriller mood: bold black ink outlines, fine cross-hatching, painterly shading, deep cold blue-teal ocean shadows with harsh red accents (storm lightning, emergency flare, sunset). Every person has a large round glossy pure-white cartoon head with simple ink facial features (small oval black eyes, thick ink eyebrows, small mouth), hair drawn as fine ink hatching, and white cartoon hands, no realistic human faces. Richly detailed painterly backgrounds. The shark is drawn realistic and menacing. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple for captions. No text, no letters, no numbers, no captions, no watermark.",
+ "karakterler": {
+  "kemal": {
+   "ad": "Kemal",
+   "gorselTarif": "Kemal, a 41-year-old ex-special-forces man (large round glossy pure-white cartoon head with a short black buzz-cut drawn in fine ink strokes on top, thick black furrowed eyebrows, two small oval black eyes, a small downturned mouth, a vertical stitched scar running through his left eyebrow down past his left eye, muscular build, a full black-ink sleeve tattoo covering his entire right arm from shoulder to wrist, black tactical wristwatch on his left wrist, worn olive-green t-shirt, white cartoon hands)",
+   "referans": "projeler/ada9/kemal-referans.jpg"
+  },
+  "kiz": {
+   "ad": "Kızı",
+   "gorselTarif": "Kemal's 8-year-old daughter (large round glossy pure-white cartoon head, small oval black eyes, thin ink eyebrows, small smile, two small pigtails, yellow raincoat, white cartoon hands)"
+  },
+  "buyukbeyaz": {
+   "ad": "Büyük Beyaz",
+   "gorselTarif": "the single colossal six-meter great white shark (massive scarred grey body, a torn notch in its dorsal fin, an old rusted fishing hook stuck in the corner of its jaw trailing a short frayed piece of line)"
+  }
+ },
+ "baslik": "ADA 9 - Bolum 2 - Don",
+ "ambiyans": [
+  {
+   "ad": "okyanus",
+   "bas": 0,
+   "seviye": 0.2
+  }
+ ],
+ "sahneler": [
+  {
+   "id": "s01-oy",
+   "gorsel": "gorseller/ada9/15.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Oylar belli oldu. *Dön.*",
+     "duygu": "dusunceli",
+     "kutu": {
+      "MESAFE": {
+       "gizli": true
+      }
+     },
+     "yer": "ADA 9 · 2. BÖLÜM"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kemal çantayı sıkıca tutuyor.",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Elinde sekiz eşya var. *Kızının fotoğrafı yok.*",
+     "duygu": "uzgun"
+    }
+   ]
+  },
+  {
+   "id": "s02-dip",
+   "gorsel": "gorseller/ada9/14a.jpg",
+   "hareket": "yukari",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Fotoğraf dipte kaldı. Ve *köpekbalığı* geliyor.",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s03-kiyi",
+   "gorsel": "gorseller/ada9/B2-01.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Kıyıya yirmi beş metre.",
+     "duygu": "korkmus",
+     "kutu": {
+      "MESAFE": {
+       "deger": "25 M",
+       "gizli": false
+      }
+     }
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Otuz saniye.",
+     "duygu": "korkmus",
+     "sayac": {
+      "mod": "geri",
+      "bas": "00:30",
+      "bitis": "00:07",
+      "hedefOlay": "ayak",
+      "etiket": "KALAN",
+      "bicim": "dk"
+     }
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kemal tek kural biliyor: *sıçratma.*"
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s04-kol",
+   "gorsel": "gorseller/ada9/B2-02.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Çanta ağır. Kolları yanıyor.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kalp atışı yüz seksen.",
+     "duygu": "korkmus",
+     "kutu": {
+      "NABIZ": "180"
+     }
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s05-golge",
+   "gorsel": "gorseller/ada9/B2-03.jpg",
+   "hareket": "yukari",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Dipte kocaman bir gölge dönüyor.",
+     "duygu": "dusunceli"
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s06-kanca",
+   "gorsel": "gorseller/ada9/09c.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "*Kanca* bir kez daha parlıyor.",
+     "duygu": "dusunceli"
+    }
+   ]
+  },
+  {
+   "id": "s07-yirmi",
+   "gorsel": "gorseller/ada9/B2-02.jpg",
+   "hareket": "sola",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Yirmi metre.",
+     "duygu": "korkmus",
+     "kutu": {
+      "MESAFE": "20 M"
+     }
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s08-hiz",
+   "gorsel": "gorseller/ada9/B2-03.jpg",
+   "hareket": "asagi",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Köpekbalığı hızlanıyor. Suda tek kıpırtı bile yok.",
+     "duygu": "korkmus"
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s09-fisek",
+   "gorsel": "gorseller/ada9/B2-04.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Çantada bir şey var: *işaret fişeği.*",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Ama yakarsa ışık da çıkar, ses de.",
+     "duygu": "korkmus"
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s10-onbes",
+   "gorsel": "gorseller/ada9/B2-02.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "On beş metre.",
+     "duygu": "korkmus",
+     "kutu": {
+      "MESAFE": "15 M"
+     }
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s11-yuzgec",
+   "gorsel": "gorseller/ada9/B2-05.jpg",
+   "hareket": "yaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Yüzgeç yüzeye çıkıyor. Tam arkasında.",
+     "duygu": "korkmus"
+    }
+   ]
+  },
+  {
+   "id": "s12-cikar",
+   "gorsel": "gorseller/ada9/B2-04.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Kemal fişeği çıkarıyor,"
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s13-firlat",
+   "gorsel": "gorseller/ada9/B2-06.jpg",
+   "hareket": "uzaklas",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "yakıyor ve *uzağa fırlatıyor.*"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Köpekbalığı ışığa dönüyor.",
+     "duygu": "dusunceli"
+    }
+   ]
+  },
+  {
+   "id": "s14-son",
+   "gorsel": "gorseller/ada9/B2-02.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "On metre.",
+     "duygu": "korkmus",
+     "kutu": {
+      "MESAFE": "10 M"
+     }
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Beş.",
+     "duygu": "korkmus",
+     "kutu": {
+      "MESAFE": "5 M"
+     }
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s15-kaya",
+   "gorsel": "gorseller/ada9/B2-07.jpg",
+   "hareket": "yukari",
+   "gecis": "kesme",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Ayağı kayaya değiyor.",
+     "duygu": "korkmus",
+     "id": "ayak",
+     "sayac": "dur",
+     "kutu": {
+      "MESAFE": "0 M"
+     }
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Kendini yukarı çekiyor. Köpekbalığı bir saniye geç kalıyor."
+    }
+   ]
+  },
+  {
+   "id": "s16-nefes",
+   "gorsel": "gorseller/ada9/B2-08.jpg",
+   "hareket": "yaklas",
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Kayaya yığılıyor. Nefes alamıyor.",
+     "duygu": "uzgun",
+     "kutu": {
+      "NABIZ": "150"
+     }
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Çantayı açıyor. *Sekiz eşya,* hepsi yerinde."
+    }
+   ],
+   "gecis": "kesme"
+  },
+  {
+   "id": "s17-telsiz",
+   "gorsel": "gorseller/ada9/B2-09.jpg",
+   "hareket": "yaklas",
+   "sonBekleme": 4.8,
+   "olaylar": [
+    {
+     "tip": "anlatici",
+     "metin": "Telsiz ıslak. Ama ışığı yanıyor."
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Düğmeye basıyor.",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Cızırtı. Sonra bir ses.",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Telsizden *Kemal'in adı* geliyor.",
+     "duygu": "korkmus"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Cevap versin mi, yoksa *susup dinlesin mi?*",
+     "duygu": "dusunceli"
+    },
+    {
+     "tip": "anlatici",
+     "metin": "Yorumlara tek kelime yaz: *cevap* ya da *sus.*"
+    }
+   ],
+   "gecis": "kesme"
+  }
+ ],
+ "dizi": {
+  "bolum": 2,
+  "toplamBolum": 9,
+  "finalEtiket": "F",
+  "kutular": [
+   {
+    "etiket": "ÇANTA",
+    "deger": "8 EŞYA",
+    "renk": "#e8344e"
+   },
+   {
+    "etiket": "MESAFE",
+    "deger": "25 M",
+    "renk": "#ff9a2e"
+   },
+   {
+    "etiket": "NABIZ",
+    "deger": "130",
+    "atis": true,
+    "esik": 120
+   }
+  ],
+  "oy": {
+   "baslik": "1. BÖLÜMÜN OYU",
+   "secim": "DÖN",
+   "yuzde": 58,
+   "sure": 4.5
+  },
+  "anket": {
+   "a": "CEVAP",
+   "b": "SUS",
+   "alt": "Yorumlara tek kelime",
+   "not": "ADA 9 · 2. Bölüm",
+   "sure": 5
+  },
+  "sabitYorum": "Telsizden adını duydun. Cevap verir miydin, susar mıydın? CEVAP mı, SUS mu? 📻",
+  "etiketler": [
+   "Z",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "Ç"
+  ],
+  "bolumSerit": false
+ }
+}

@@ -1,0 +1,18 @@
+{
+  "baslik": "Duygu Ornekleri",
+  "format": "9:16",
+  "sesMotoru": "chatterbox",
+  "anlatici": { "ses": "tr-TR-AhmetNeural", "ornekSes": "sesler/benim-sesim.wav" },
+  "karakterler": {},
+  "sahneler": [
+    { "id": "duygular", "olaylar": [
+      { "tip": "anlatici", "duygu": "notr", "metin": "Bu hikaye küçük bir mahallede başladı. Herkes birbirini tanırdı." },
+      { "tip": "anlatici", "duygu": "uzgun", "metin": "Kapıyı açtığında ev bomboştu. Annesinin sesi yoktu artık..." },
+      { "tip": "anlatici", "duygu": "heyecanli", "metin": "Bir dakika! Bu doğru olamaz! Bilet tutmuş, gerçekten tutmuş!" },
+      { "tip": "anlatici", "duygu": "mutlu", "metin": "Yıllar sonra ilk defa içinden gülmek geldi. Her şey yolundaydı." },
+      { "tip": "anlatici", "duygu": "kizgin", "metin": "Yeter artık! Bu evde bir daha kimse bana yalan söylemeyecek!" },
+      { "tip": "anlatici", "duygu": "korkmus", "metin": "Telefondaki ses adını biliyordu. Ve kapının önünde biri bekliyordu." },
+      { "tip": "anlatici", "duygu": "saskin", "metin": "Ne? Bunca yıl o adam aslında babası mıydı?" }
+    ]}
+  ]
+}

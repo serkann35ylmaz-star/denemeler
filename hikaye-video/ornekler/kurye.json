@@ -1,0 +1,96 @@
+{
+  "baslik": "Kuryenin Seçimi",
+  "format": "9:16",
+  "fps": 30,
+  "sesMotoru": "chatterbox",
+  "baslikBant": "SON TESLİMAT",
+  "anlatici": {
+    "ses": "tr-TR-AhmetNeural",
+    "hiz": "-6%",
+    "perde": "-8Hz"
+  },
+  "gorselStil": "Dark cinematic hand-drawn graphic-novel illustration: bold black ink outlines, fine cross-hatching, painterly shading, moody teal-blue shadows with warm amber lamplight. Every person has a round pure-white cartoon head with tiny black dot eyes and white cartoon hands, no realistic human faces. Vertical 9:16 composition, strong focal subject in the upper and lower thirds, vertical center kept simple. No text, no letters, no captions, no watermark.",
+  "karakterler": {
+    "kurye": {
+      "ad": "Kurye",
+      "gorselTarif": "the young courier (round pure-white cartoon head, tiny dot eyes, red motorcycle helmet with scratched visor, red padded jacket, dark cargo pants, white cartoon hands)"
+    },
+    "amca": {
+      "ad": "Bakkal Amca",
+      "gorselTarif": "the old grocer (round pure-white cartoon head, tiny dot eyes, thick grey mustache, flat brown cap, worn beige cardigan, white cartoon hands)"
+    }
+  },
+  "sahneler": [
+    {
+      "id": "yagmur",
+      "gorsel": "gorseller/kurye/01.jpg",
+      "hareket": "yaklas",
+      "gorselPrompt": "Low-angle tracking shot: [KURYE] riding a delivery motorcycle through a rain-soaked neon city street at night, headlight glare, red and teal reflections on wet asphalt, determined mood.",
+      "olaylar": [
+        {
+          "tip": "anlatici",
+          "metin": "Gece yarısı. Yağmur durmuyor ve sen *son teslimatın* peşindesin."
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Ara sokağa saptığında, çamurun içinde *bir çanta* görüyorsun.",
+          "gorsel": "gorseller/kurye/02.jpg",
+          "hareket": "asagi",
+          "gorselPrompt": "Top-down shot of a dark narrow alley in the rain: a black leather bag lying open in a puddle, bundles of banknotes spilling out, a single amber streetlamp, [KURYE]'s boots at the edge of the frame.",
+          "oynat": "nefes"
+        }
+      ],
+      "efekt": "yagmur",
+      "oynat": "surus"
+    },
+    {
+      "id": "karar",
+      "gecis": "kesme",
+      "gorsel": "gorseller/kurye/03.jpg",
+      "hareket": "yaklas",
+      "gorselPrompt": "Extreme close-up: [KURYE] kneeling in the rain, holding the open bag of money, visor reflecting the banknotes, tense and torn mood, hard rim light.",
+      "olaylar": [
+        {
+          "tip": "anlatici",
+          "metin": "İçinde bir yıllık kazancın var. Kimse görmedi. *Kimse bilmeyecek.*"
+        },
+        {
+          "tip": "anlatici",
+          "metin": "Ama çantanın cebinden *bir fotoğraf* düşüyor.",
+          "gorsel": "gorseller/kurye/04.jpg",
+          "hareket": "yaklas",
+          "gorselPrompt": "Macro shot: a worn family photograph on wet cobblestones showing [AMCA] smiling with a little girl in front of a small corner grocery store, raindrops on the photo, warm nostalgic light.",
+          "oynat": "salin"
+        }
+      ],
+      "efekt": "yagmur"
+    },
+    {
+      "id": "teslim",
+      "gecis": "karart",
+      "gorsel": "gorseller/kurye/05.jpg",
+      "hareket": "saga",
+      "gorselPrompt": "Over-the-shoulder shot from behind [KURYE] handing the black bag to [AMCA] at the doorway of a small corner grocery shop at night, warm light spilling out onto the wet street, emotional mood.",
+      "olaylar": [
+        {
+          "tip": "anlatici",
+          "metin": "Sabaha karşı, küçük bir bakkalın kapısını çalıyorsun."
+        },
+        {
+          "tip": "anlatici",
+          "metin": "O gece sana para kazandırmadı. Ama *kim olduğunu* gösterdi.",
+          "gorsel": "gorseller/kurye/06.jpg",
+          "hareket": "uzaklas",
+          "gorselPrompt": "Wide heroic shot: [KURYE] riding away on the motorcycle down an empty street at dawn, rain stopped, golden sunrise breaking through clouds, puddles reflecting the sky, hopeful mood.",
+          "oynat": "git"
+        },
+        {
+          "tip": "bekle",
+          "sure": 1.2
+        }
+      ],
+      "efekt": null,
+      "oynat": "nefes"
+    }
+  ]
+}
